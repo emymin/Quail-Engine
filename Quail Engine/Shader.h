@@ -3,10 +3,23 @@
 #include <glad/glad.h>
 #include "Utils.h"
 
-void DebugShaderCompilation(const unsigned int shader);
+class Shader {
+private:
+	unsigned int m_RendererID;
+	unsigned int m_FragmentID;
+	unsigned int m_VertexID;
 
-unsigned int CompileShader(const char* source, const unsigned int type);
+	const char* m_fragmentSource;
+	const char* m_vertexSource;
 
-unsigned int CreateShaderProgram(const unsigned int vertexShader, const unsigned int fragmentShader, bool deleteShaders = false);
-
-unsigned int CreateShaderProgram(const std::string& vertexShaderSource, const std::string& fragmentShaderSource);
+	unsigned int GetUniformLocation(const std::string& name);
+	bool DebugShaderCompilation(const unsigned int shader);
+	unsigned int CompileShader(const char* source, const unsigned int type);
+public:
+	Shader(std::string& fragmentSource, std::string& vertexSource);
+	~Shader();
+	bool Compile();
+	void Bind() const;
+	void Unbind() const;
+	void SetUniform4f(const std::string& name,float x,float y,float z,float w);
+};

@@ -1,11 +1,9 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "Renderer.h"
 #include <iostream>
-#include <imgui/imgui.h>
-#include <imgui/backends/imgui_impl_opengl3.h>
-#include <imgui/backends/imgui_impl_glfw.h>
 
-#include "Plane.h"
+#include "VertexBuffer.h"
+#include "IndexBuffer.h"
+#include "VertexArray.h"
 #include "Shader.h"
 #if _DEBUG
 #include "Debug.h"
@@ -24,6 +22,9 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 
 
 int main() {
+
+#pragma region Initialization
+
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -64,15 +65,43 @@ int main() {
 	ImGui::StyleColorsDark();
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 130");
+#pragma endregion
 
-	SetupPlane();
+
+
+#pragma region VertexObject
+
+
+	float vertices[] = {
+		//positions        //uv
+		-1.0f,1.0f,0.0f, 0.0f,0.0f,
+		1.0f,1.0f,0.0f,  1.0f,0.0f,
+		-1.0f,-1.0f,0.0f, 0.0f,1.0f,
+		1.0f,-1.0f,0.0f, 1.0f,1.0f
+	};
+	unsigned int indices[] = {
+		0,1,2,
+		1,3,2
+	};
+
+	VertexArray va;
+	VertexBuffer vb(vertices, sizeof(vertices));
+
+	VertexBufferLayout layout;
+	layout.Push<float>(3);
+	layout.Push<float>(2);
+
+	va.AddBuffer(vb, layout);
+
+	IndexBuffer ib(indices, 6);
+#pragma endregion
+
 
 	std::string vertexShaderSource = ReadTextFromFile("./Shaders/basicVertex.glsl");
 	std::string fragmentShaderSource = ReadTextFromFile("./Shaders/basicFragment.glsl");
-
-
-	unsigned int shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
-	glUseProgram(shaderProgram);
+	Shader shader(fragmentShaderSource, vertexShaderSource);
+	ASSERT(shader.Compile());
+	shader.Bind();
 
 	float lastTime = 0;
 	while (!glfwWindowShouldClose(window)) {
@@ -91,6 +120,8 @@ int main() {
 
 
 		glClear(GL_COLOR_BUFFER_BIT);
+
+		va.Bind();
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT,0);
 		
