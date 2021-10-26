@@ -5,6 +5,7 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Texture.h"
 #if _DEBUG
 #include "Debug.h"
 #endif
@@ -84,16 +85,17 @@ int main() {
 		1,3,2
 	};
 
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
+
 	VertexArray va;
 	VertexBuffer vb(vertices, sizeof(vertices));
-
 	VertexBufferLayout layout;
 	layout.Push<float>(3);
 	layout.Push<float>(2);
-
 	va.AddBuffer(vb, layout);
-
 	IndexBuffer ib(indices, 6);
+
 #pragma endregion
 
 
@@ -101,7 +103,13 @@ int main() {
 	std::string fragmentShaderSource = ReadTextFromFile("./Shaders/basicFragment.glsl");
 	Shader shader(fragmentShaderSource, vertexShaderSource);
 	ASSERT(shader.Compile());
-	shader.Bind();
+
+	Texture texture("./Textures/test.png");
+	texture.Bind();
+	shader.setUniform1i("u_Texture", 0);
+
+	Renderer renderer;
+
 
 	float lastTime = 0;
 	while (!glfwWindowShouldClose(window)) {
@@ -118,13 +126,10 @@ int main() {
 		}
 #pragma endregion
 
+		renderer.Clear();
 
-		glClear(GL_COLOR_BUFFER_BIT);
+		renderer.Draw(va, ib, shader);
 
-		va.Bind();
-
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT,0);
-		
 		std::stringstream ss;
 		ss << "Framerate: "<< fps;
 
