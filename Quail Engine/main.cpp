@@ -1,5 +1,7 @@
 #include "Renderer.h"
 #include <iostream>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
@@ -103,10 +105,18 @@ int main() {
 	std::string fragmentShaderSource = ReadTextFromFile("./Shaders/basicFragment.glsl");
 	Shader shader(fragmentShaderSource, vertexShaderSource);
 	ASSERT(shader.Compile());
+	shader.Bind();
+
+	glm::mat4 proj = glm::ortho(-4.f, 4.f, -4.f, 4.f,-1.f,1.f);
+	glm::mat4 view = glm::translate(glm::mat4(1.0f),glm::vec3(-2,0,0));
+	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(2, 0, 0));
+
+	glm::mat4 mvp = proj * view * model;
 
 	Texture texture("./Textures/test.png");
 	texture.Bind();
-	shader.setUniform1i("u_Texture", 0);
+	shader.SetUniform1i("u_Texture", 0);
+	shader.SetUniformMat4f("u_MVP", mvp);
 
 	Renderer renderer;
 

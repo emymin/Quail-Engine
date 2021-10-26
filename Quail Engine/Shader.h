@@ -2,6 +2,7 @@
 #include <iostream>
 #include <glad/glad.h>
 #include "Utils.h"
+#include <glm/glm.hpp>
 
 class Shader {
 private:
@@ -22,5 +23,6 @@ public:
 	void Bind() const;
 	void Unbind() const;
 	void SetUniform4f(const std::string& name,float x,float y,float z,float w);
-	void setUniform1i(const std::string& name, int value);
+	void SetUniform1i(const std::string& name, int value);
+	void SetUniformMat4f(const std::string& name, glm::mat4& matrix);
 };
