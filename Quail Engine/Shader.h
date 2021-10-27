@@ -1,8 +1,7 @@
 #pragma once
-#include <iostream>
-#include <glad/glad.h>
+#include "GLHeaders.h"
 #include "Utils.h"
-#include <glm/glm.hpp>
+
 
 class Shader {
 private:
@@ -15,7 +14,6 @@ private:
 
 	unsigned int GetUniformLocation(const std::string& name);
 	bool DebugShaderCompilation(const unsigned int shader);
-	unsigned int CompileShader(const char* source, const unsigned int type);
 public:
 	Shader(std::string& fragmentSource, std::string& vertexSource);
 	~Shader();

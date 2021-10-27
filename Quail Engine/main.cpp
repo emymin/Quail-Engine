@@ -68,6 +68,11 @@ int main() {
 	ImGui::StyleColorsDark();
 	ImGui_ImplGlfw_InitForOpenGL(window, true);
 	ImGui_ImplOpenGL3_Init("#version 130");
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 #pragma endregion
 
 
@@ -87,8 +92,6 @@ int main() {
 		1,3,2
 	};
 
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
 
 	VertexArray va;
 	VertexBuffer vb(vertices, sizeof(vertices));
@@ -107,16 +110,9 @@ int main() {
 	ASSERT(shader.Compile());
 	shader.Bind();
 
-	glm::mat4 proj = glm::ortho(-4.f, 4.f, -4.f, 4.f,-1.f,1.f);
-	glm::mat4 view = glm::translate(glm::mat4(1.0f),glm::vec3(-2,0,0));
-	glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(2, 0, 0));
-
-	glm::mat4 mvp = proj * view * model;
-
 	Texture texture("./Textures/test.png");
 	texture.Bind();
 	shader.SetUniform1i("u_Texture", 0);
-	shader.SetUniformMat4f("u_MVP", mvp);
 
 	Renderer renderer;
 
@@ -135,6 +131,14 @@ int main() {
 			glfwSetWindowShouldClose(window, true);
 		}
 #pragma endregion
+
+		glm::mat4 proj = glm::perspective(90.f, 1.f, 0.1f, 500.f);
+		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -2));
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+		model = glm::rotate(model, time, glm::vec3(0, 1, 0));
+		glm::mat4 mvp = proj * view * model;
+		shader.SetUniformMat4f("u_MVP", mvp);
+
 
 		renderer.Clear();
 

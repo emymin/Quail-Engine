@@ -316,6 +316,7 @@
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
     <ClInclude Include="Dependencies\stb_image\stb_image.h" />
+    <ClInclude Include="GLHeaders.h" />
     <ClInclude Include="IndexBuffer.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
@@ -492,6 +493,7 @@
     <Library Include="Dependencies\glfw\lib\glfw3_mt.lib" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Textures\neko.png" />
     <Image Include="Textures\test.png" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

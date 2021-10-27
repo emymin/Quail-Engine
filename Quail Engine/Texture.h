@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Renderer.h"
+#include "GLHeaders.h"
+#include <iostream>
 
 class Texture
 {
