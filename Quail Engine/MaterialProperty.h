@@ -11,10 +11,20 @@ struct IMaterialProperty {
 
 struct Float4Property : public IMaterialProperty {
 	glm::vec4 value;
-	Float4Property(std::string name, float v=0) : value(v),IMaterialProperty(name) {}
+	Float4Property(std::string name, glm::vec4 v=glm::vec4(0)) : value(v),IMaterialProperty(name) {}
 	void Apply(Shader& shader) const override
 	{
 		shader.SetUniform4f(name,value.x, value.y, value.z, value.w);
+	}
+
+};
+
+struct FloatProperty : public IMaterialProperty {
+	float value;
+	FloatProperty(std::string name, float v = 0) : value(v), IMaterialProperty(name) {}
+	void Apply(Shader& shader) const override
+	{
+		shader.SetUniform1f(name, value);
 	}
 
 };

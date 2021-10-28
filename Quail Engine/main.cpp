@@ -112,6 +112,7 @@ int main() {
 	shader.Bind();
 
 	Texture texture("./Textures/test.png");
+	Texture texture2("./Textures/neko.png");
 	
 	glm::vec4 color(1, 0, 1, 1);
 	glm::vec4 color2(0, 1, 0, 1);
@@ -121,7 +122,7 @@ int main() {
 	material.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture;
 
 	Material material2(shader);
-	material2.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture;
+	material2.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture2;
 	material2.GetProperty<Float4Property>("u_mainColor")->value = color2;
 
 	Renderer renderer;
@@ -165,15 +166,13 @@ int main() {
 
 
 
-		std::stringstream ss;
-		ss << "Framerate: "<< fps;
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
 		ImGui::Begin("Quail Engine");
-		ImGui::Text(ss.str().c_str());
+		ImGui::Text("Framerate: %1.f Render time: %1.f ms",fps,deltaTime*1000);
 		ImGui::End();
 
 		ImGui::Render();

@@ -13,7 +13,7 @@ public:
 	void ApplyUniforms() const;
 	
 	template <typename t>
-	t* GetProperty(std::string name) { return dynamic_cast<t*>( &(*(m_Properties[name])) ); }
+	t* GetProperty(std::string name) { return dynamic_cast<t*>( m_Properties[name].get() ); }
 
 };
 
