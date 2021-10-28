@@ -3,9 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "VertexArray.h"
+#include "Mesh.h"
 #include "Shader.h"
 #include "Material.h"
 #include "Texture.h"
@@ -77,32 +75,7 @@ int main() {
 #pragma endregion
 
 
-
-#pragma region VertexObject
-
-
-	float vertices[] = {
-		//positions        //uv
-		-1.0f,1.0f,0.0f, 0.0f,0.0f,
-		1.0f,1.0f,0.0f,  1.0f,0.0f,
-		-1.0f,-1.0f,0.0f, 0.0f,1.0f,
-		1.0f,-1.0f,0.0f, 1.0f,1.0f
-	};
-	unsigned int indices[] = {
-		0,1,2,
-		1,3,2
-	};
-
-
-	VertexArray va;
-	VertexBuffer vb(vertices, sizeof(vertices));
-	VertexBufferLayout layout;
-	layout.Push<float>(3);
-	layout.Push<float>(2);
-	va.AddBuffer(vb, layout);
-	IndexBuffer ib(indices, 6);
-
-#pragma endregion
+	Mesh plane = Mesh::Plane();
 
 
 	std::string vertexShaderSource = ReadTextFromFile("./Shaders/basicVertex.glsl");
@@ -125,6 +98,7 @@ int main() {
 	material2.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture2;
 	material2.GetProperty<Float4Property>("u_mainColor")->value = color2;
 
+
 	Renderer renderer;
 
 
@@ -145,24 +119,26 @@ int main() {
 
 		renderer.Clear();
 		
-		glm::mat4 proj = glm::perspective(90.f, 1.f, 0.1f, 500.f);
+		glm::mat4 proj = glm::perspective(90.f, ((float)vwidth)/vheight, 0.1f, 500.f);
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -2));
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-1, 0, 0));
 		model = glm::rotate(model, time, glm::vec3(0, 1, 0));
 
 		glm::mat4 mvp = proj * view * model;
 		shader.SetUniformMat4f("u_MVP", mvp);
 
-		material.ApplyUniforms();
+		plane.material = &material;
 
-		renderer.Draw(va, ib, shader);
+		renderer.Draw(plane);
 
 		model = glm::translate(glm::mat4(1.0f), glm::vec3(1, 0, 0));
+		model = glm::rotate(model, time, glm::vec3(0, 1, 0));
 		mvp = proj * view * model;
 		shader.SetUniformMat4f("u_MVP", mvp);
-		material2.ApplyUniforms();
+		
+		plane.material = &material2;
 
-		renderer.Draw(va, ib, shader);
+		renderer.Draw(plane);
 
 
 

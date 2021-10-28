@@ -14,3 +14,11 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
 	glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, 0);
 }
 
+void Renderer::Draw(const Mesh& mesh) const
+{
+	if (mesh.material != nullptr) {
+		mesh.Bind();
+		glDrawElements(GL_TRIANGLES, mesh.indexBuffer.GetCount(), GL_UNSIGNED_INT, 0);
+	}
+}
+
