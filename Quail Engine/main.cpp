@@ -75,7 +75,7 @@ int main() {
 #pragma endregion
 
 
-	Mesh plane = Mesh::Plane();
+	Mesh plane = Mesh::Plane(2.f);
 
 
 	std::string vertexShaderSource = ReadTextFromFile("./Shaders/basicVertex.glsl");

@@ -18,7 +18,7 @@ void Renderer::Draw(const Mesh& mesh) const
 {
 	if (mesh.material != nullptr) {
 		mesh.Bind();
-		glDrawElements(GL_TRIANGLES, mesh.indexBuffer.GetCount(), GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, mesh.indexBuffer->GetCount(), GL_UNSIGNED_INT, 0);
 	}
 }
 

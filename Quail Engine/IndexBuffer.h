@@ -6,7 +6,7 @@ private:
 	unsigned int m_Count;
 public:
 	IndexBuffer(const void* data, unsigned int count);
-	~IndexBuffer();
+//	~IndexBuffer();
 
 	void Bind() const;
 	void Unbind() const;

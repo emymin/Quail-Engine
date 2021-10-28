@@ -1355,6 +1355,7 @@
     <None Include="Shaders\basicVertex.glsl" />
     <None Include="Shaders\basicFragment.glsl" />
     <None Include="Dependencies\glfw\lib\glfw3.dll" />
+    <None Include="imgui.ini" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\glm\detail\glm.cpp">
