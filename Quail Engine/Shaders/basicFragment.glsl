@@ -2,10 +2,14 @@
 out vec4 FragColor;
 in vec2 in_UV;
 
-uniform sampler2D u_Texture;
+struct Material {
+    sampler2D u_mainTexture;
+    vec4 u_mainColor;
+};
+uniform Material material;
 
 void main()
 {
-    vec4 texColor = texture(u_Texture, in_UV);
-    FragColor = texColor;
+    vec4 texColor = texture(material.u_mainTexture, in_UV);
+    FragColor = texColor*material.u_mainColor;
 };

@@ -86,3 +86,31 @@ void Shader::SetUniformMat4f(const std::string& name, glm::mat4& matrix)
 {
 	glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
 }
+
+int Shader::GetUniformCount() const
+{
+	int count;
+	glGetProgramiv(m_RendererID, GL_ACTIVE_UNIFORMS, &count);
+	return count;
+}
+
+std::vector<UniformData> Shader::GetUniforms() const
+{
+	int uniformCount = GetUniformCount();
+	std::vector<UniformData> uniforms(uniformCount);
+	int length;
+	int size;
+	unsigned int type;
+	for (int i = 0; i < uniformCount; i++)
+	{
+		char name[MAXIMUM_UNIFORM_NAME_LENGTH];
+		UniformData uniform;
+		glGetActiveUniform(m_RendererID, (GLuint)i,MAXIMUM_UNIFORM_NAME_LENGTH , &length, &size, &type, name);
+		uniform.index = i;
+		uniform.type = type;
+		uniform.name = std::string(name);
+		uniforms[i] = uniform;
+	}
+	return uniforms;
+
+}

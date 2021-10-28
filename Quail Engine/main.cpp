@@ -7,6 +7,7 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Material.h"
 #include "Texture.h"
 #if _DEBUG
 #include "Debug.h"
@@ -111,8 +112,17 @@ int main() {
 	shader.Bind();
 
 	Texture texture("./Textures/test.png");
-	texture.Bind();
-	shader.SetUniform1i("u_Texture", 0);
+	
+	glm::vec4 color(1, 0, 1, 1);
+	glm::vec4 color2(0, 1, 0, 1);
+
+	Material material(shader);
+	material.GetProperty<Float4Property>("u_mainColor")->value = color;
+	material.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture;
+
+	Material material2(shader);
+	material2.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture;
+	material2.GetProperty<Float4Property>("u_mainColor")->value = color2;
 
 	Renderer renderer;
 
@@ -132,17 +142,28 @@ int main() {
 		}
 #pragma endregion
 
+		renderer.Clear();
+		
 		glm::mat4 proj = glm::perspective(90.f, 1.f, 0.1f, 500.f);
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -2));
 		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 		model = glm::rotate(model, time, glm::vec3(0, 1, 0));
+
 		glm::mat4 mvp = proj * view * model;
 		shader.SetUniformMat4f("u_MVP", mvp);
 
-
-		renderer.Clear();
+		material.ApplyUniforms();
 
 		renderer.Draw(va, ib, shader);
+
+		model = glm::translate(glm::mat4(1.0f), glm::vec3(1, 0, 0));
+		mvp = proj * view * model;
+		shader.SetUniformMat4f("u_MVP", mvp);
+		material2.ApplyUniforms();
+
+		renderer.Draw(va, ib, shader);
+
+
 
 		std::stringstream ss;
 		ss << "Framerate: "<< fps;

@@ -1,7 +1,15 @@
 #pragma once
 #include "GLHeaders.h"
 #include "Utils.h"
+#include <vector>
 
+#define MAXIMUM_UNIFORM_NAME_LENGTH 24
+
+struct UniformData {
+	int index;
+	std::string name;
+	unsigned int type;
+};
 
 class Shader {
 private:
@@ -14,6 +22,7 @@ private:
 
 	unsigned int GetUniformLocation(const std::string& name);
 	bool DebugShaderCompilation(const unsigned int shader);
+	int GetUniformCount() const;
 public:
 	Shader(std::string& fragmentSource, std::string& vertexSource);
 	~Shader();
@@ -23,4 +32,5 @@ public:
 	void SetUniform4f(const std::string& name,float x,float y,float z,float w);
 	void SetUniform1i(const std::string& name, int value);
 	void SetUniformMat4f(const std::string& name, glm::mat4& matrix);
+	std::vector<UniformData> GetUniforms() const;
 };
