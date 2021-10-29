@@ -26,7 +26,3 @@ void Scene::Rename(GameObject* gameObject, std::string name)
 	gameObject->m_Name = name;
 }
 
-void Scene::SetCamera(Camera* camera)
-{
-	this->camera = camera;
-}

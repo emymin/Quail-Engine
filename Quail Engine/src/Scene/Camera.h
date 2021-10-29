@@ -8,6 +8,7 @@ public:
 	virtual glm::mat4 GetProjectionMatrix() const = 0;
 	glm::mat4 GetViewMatrix() const;
 	glm::mat4 GetViewProjectionMatrix() const { return GetProjectionMatrix() * GetViewMatrix(); }
+	void SetAspectRatio(float width, float height) { return; }
 
 };
 

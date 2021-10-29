@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Scene\Camera.h" />
     <ClInclude Include="src\Scene\Debug.h" />
     <ClInclude Include="Dependencies\glad\glad\glad.h" />
@@ -477,6 +478,7 @@
     <None Include="Assets\Shaders\basicFragment.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="src\Scene\Camera.cpp" />
     <ClCompile Include="Dependencies\glm\detail\glm.cpp" />
     <ClCompile Include="Dependencies\imgui\backends\imgui_impl_glfw.cpp" />
@@ -582,12 +584,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Engine;$(ProjectDir)/src;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)/Dependencies/glfw/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Engine;$(ProjectDir)/src;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)/Dependencies/glfw/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
