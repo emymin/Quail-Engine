@@ -10,12 +10,14 @@ void Mesh::Bind() const
 
 Mesh Mesh::Plane(float size,Material* material)
 {
+	float front = 0.5f * size;
+	float back = -0.5f * size;
 	float vertices[] = {
 		//positions        //uv
-		-1.0f,1.0f,0.0f, 0.0f,0.0f,
-		1.0f,1.0f,0.0f,  1.0f,0.0f,
-		-1.0f,-1.0f,0.0f, 0.0f,1.0f,
-		1.0f,-1.0f,0.0f, 1.0f,1.0f
+		back,front,0.0f, 0.0f,0.0f,
+		front,front,0.0f,  1.0f,0.0f,
+		back,back,0.0f, 0.0f,1.0f,
+		front,back,0.0f, 1.0f,1.0f
 	};
 	unsigned int indices[] = {
 		0,1,2,

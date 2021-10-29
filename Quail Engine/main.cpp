@@ -3,10 +3,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Mesh.h"
-#include "Shader.h"
+#include "SceneObject.h"
 #include "Material.h"
-#include "Texture.h"
+
 #if _DEBUG
 #include "Debug.h"
 #endif
@@ -75,9 +74,6 @@ int main() {
 #pragma endregion
 
 
-	Mesh plane = Mesh::Plane(2.f);
-
-
 	std::string vertexShaderSource = ReadTextFromFile("./Shaders/basicVertex.glsl");
 	std::string fragmentShaderSource = ReadTextFromFile("./Shaders/basicFragment.glsl");
 	Shader shader(fragmentShaderSource, vertexShaderSource);
@@ -98,8 +94,17 @@ int main() {
 	material2.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture2;
 	material2.GetProperty<Float4Property>("u_mainColor")->value = color2;
 
+	SceneObject testPlane(Mesh::Plane(2.f));
+	SceneObject nekoPlane(Mesh::Plane(2.f));
 
-	Renderer renderer;
+	testPlane.transform.localPosition.x = -1;
+	nekoPlane.transform.localPosition.x = 1;
+
+
+	testPlane.meshes[0].material = &material;
+	nekoPlane.meshes[0].material = &material2;
+
+	Renderer renderer = Renderer();
 
 
 	float lastTime = 0;
@@ -121,25 +126,14 @@ int main() {
 		
 		glm::mat4 proj = glm::perspective(90.f, ((float)vwidth)/vheight, 0.1f, 500.f);
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -2));
-		glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(-1, 0, 0));
-		model = glm::rotate(model, time, glm::vec3(0, 1, 0));
+		glm::mat4 viewProjection = proj * view;
+		renderer.SetViewProjection(viewProjection);
 
-		glm::mat4 mvp = proj * view * model;
-		shader.SetUniformMat4f("u_MVP", mvp);
+		testPlane.transform.localRotation = glm::quat(glm::vec3(0, time, 0));
+		nekoPlane.transform.localRotation = glm::quat(glm::vec3(0, time, 0));
 
-		plane.material = &material;
-
-		renderer.Draw(plane);
-
-		model = glm::translate(glm::mat4(1.0f), glm::vec3(1, 0, 0));
-		model = glm::rotate(model, time, glm::vec3(0, 1, 0));
-		mvp = proj * view * model;
-		shader.SetUniformMat4f("u_MVP", mvp);
-		
-		plane.material = &material2;
-
-		renderer.Draw(plane);
-
+		renderer.Draw(testPlane);
+		renderer.Draw(nekoPlane);
 
 
 
