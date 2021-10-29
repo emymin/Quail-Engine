@@ -9,3 +9,5 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
+
+#define PI 3.1415926535897932384626433832795028841971

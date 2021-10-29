@@ -5,6 +5,7 @@
 
 #include "SceneObject.h"
 #include "Material.h"
+#include "Camera.h"
 
 #if _DEBUG
 #include "Debug.h"
@@ -106,6 +107,8 @@ int main() {
 
 	Renderer renderer = Renderer();
 
+	PerspectiveCamera camera = PerspectiveCamera();
+
 
 	float lastTime = 0;
 	while (!glfwWindowShouldClose(window)) {
@@ -124,16 +127,15 @@ int main() {
 
 		renderer.Clear();
 		
-		glm::mat4 proj = glm::perspective(90.f, ((float)vwidth)/vheight, 0.1f, 500.f);
-		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -2));
-		glm::mat4 viewProjection = proj * view;
-		renderer.SetViewProjection(viewProjection);
+		camera.SetAspectRatio(vwidth, vheight);
+		camera.transform.localPosition.z = 3;
 
-		testPlane.transform.localRotation = glm::quat(glm::vec3(0, time, 0));
-		nekoPlane.transform.localRotation = glm::quat(glm::vec3(0, time, 0));
 
-		renderer.Draw(testPlane);
-		renderer.Draw(nekoPlane);
+		testPlane.transform.SetRotation(0, time, 0);
+		nekoPlane.transform.SetRotation(0, time, 0);
+
+		renderer.Draw(testPlane,camera);
+		renderer.Draw(nekoPlane,camera);
 
 
 

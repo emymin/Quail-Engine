@@ -6,9 +6,9 @@ void Renderer::Clear() const
 }
 
 
-void Renderer::Draw(const SceneObject object)
+void Renderer::Draw(const SceneObject& object,Camera& camera)
 {
-	glm::mat4 MVP = m_viewProjection * object.transform.GetModelMatrix();
+	glm::mat4 MVP = camera.GetViewProjectionMatrix() * object.transform.GetModelMatrix();
 	for (const Mesh& mesh : object.meshes) {
 		if (mesh.material != nullptr) {
 			mesh.Bind();
