@@ -1459,4 +1459,9 @@
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Models\bunny.obj" />
+    <Media Include="Models\cube.obj" />
+    <Media Include="Models\plane.obj" />
+  </ItemGroup>
 </Project>

@@ -511,6 +511,17 @@
     <Image Include="Textures\neko.png" />
     <Image Include="Textures\test.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Models\bunny.obj">
+      <FileType>Document</FileType>
+    </Media>
+    <Media Include="Models\cube.obj">
+      <FileType>Document</FileType>
+    </Media>
+    <Media Include="Models\plane.obj">
+      <FileType>Document</FileType>
+    </Media>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
