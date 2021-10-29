@@ -37,12 +37,12 @@ Shader::Shader(std::string& fragmentSource, std::string& vertexSource)
 
 }
 
-Shader::~Shader()
+/*Shader::~Shader()
 {
 	glDeleteShader(m_FragmentID);
 	glDeleteShader(m_VertexID);
 	glDeleteProgram(m_RendererID);
-}
+}*/
 
 bool Shader::Compile()
 {

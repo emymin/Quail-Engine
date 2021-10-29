@@ -3,9 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "SceneObject.h"
 #include "Material.h"
-#include "Camera.h"
+#include "Scene.h"
 
 #if _DEBUG
 #include "Debug.h"
@@ -74,40 +73,43 @@ int main() {
 	glEnable(GL_BLEND);
 #pragma endregion
 
-
 	std::string vertexShaderSource = ReadTextFromFile("./Shaders/basicVertex.glsl");
 	std::string fragmentShaderSource = ReadTextFromFile("./Shaders/basicFragment.glsl");
-	Shader shader(fragmentShaderSource, vertexShaderSource);
-	ASSERT(shader.Compile());
-	shader.Bind();
+	Shader* shader = new Shader(fragmentShaderSource, vertexShaderSource);
+	ASSERT(shader->Compile());
+	shader->Bind();
 
-	Texture texture("./Textures/test.png");
-	Texture texture2("./Textures/neko.png",false);
+	Texture* testTexture = new Texture("./Textures/test.png");
+	Texture* nekoTexture = new Texture("./Textures/neko.png",false);
 	
 	glm::vec4 color2(1, 1, 1, 1);
 
-	Material material(&shader);
-	material.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture;
+	Material* material = new Material(shader);
+	material->GetProperty<TextureProperty>("u_mainTexture")->texture = testTexture;
 
-	Material material2(&shader);
-	material2.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture2;
-	material2.GetProperty<Float4Property>("u_mainColor")->value = color2;
+	Material* material2 = new Material(shader);
+	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
+	material2->GetProperty<Float4Property>("u_mainColor")->value = color2;
 
-	GameObject testPlane(Mesh::Plane(2.f));
-	GameObject nekoCube(Mesh::LoadOBJ("./Models/cube.obj"));
+	GameObject* testbun = new GameObject(Mesh::LoadOBJ("./Models/bunny.obj"), "test");
+	GameObject* nekoCube = new GameObject(Mesh::LoadOBJ("./Models/cube.obj"),"neko");
+	testbun->meshes[0].material = material;
+	nekoCube->meshes[0].material = material2;
 
-	testPlane.transform.localPosition.x = -1;
+	testbun->transform.localPosition.x = -1;
+	nekoCube->transform.localPosition.x = 1;
 
-	nekoCube.transform.localPosition.x = 1;
-	nekoCube.transform.localScale *= 0.5f;
+	nekoCube->transform.localScale *= 0.5f;
+	testbun->transform.localScale *= 1.f;
 
-
-	testPlane.meshes[0].material = &material;
-	nekoCube.meshes[0].material = &material2;
+	Scene scene;
+	scene.Add(testbun);
+	scene.Add(nekoCube);
 
 	Renderer renderer = Renderer();
 
-	PerspectiveCamera camera = PerspectiveCamera();
+	PerspectiveCamera* camera = new PerspectiveCamera();
+	scene.SetCamera(camera);
 
 
 	float lastTime = 0;
@@ -127,20 +129,16 @@ int main() {
 
 		renderer.Clear();
 		
-		camera.SetAspectRatio(vwidth, vheight);
-		camera.transform.localPosition.z = 3;
+		camera->SetAspectRatio(vwidth, vheight);
+		camera->transform.localPosition.z = 3;
 
 
-		testPlane.transform.SetRotation(0, time, 0);
-		nekoCube.transform.SetRotation(sin(time), cos(time), cos(time));
+		testbun->transform.SetRotation(0, time, 0);
+		nekoCube->transform.SetRotation(sin(time), cos(time), cos(time));
 
-		material.GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(abs(sin(time)),abs(cos(time)),1,1);
+		material->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(abs(sin(time)),abs(cos(time)),1,1);
 
-
-		renderer.Draw(testPlane,camera);
-		renderer.Draw(nekoCube,camera);
-
-
+		renderer.Draw(&scene);
 
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();

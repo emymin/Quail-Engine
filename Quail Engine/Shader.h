@@ -25,7 +25,7 @@ private:
 	int GetUniformCount() const;
 public:
 	Shader(std::string& fragmentSource, std::string& vertexSource);
-	~Shader();
+	//~Shader();
 	bool Compile();
 	void Bind() const;
 	void Unbind() const;
