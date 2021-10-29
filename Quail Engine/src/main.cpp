@@ -73,14 +73,16 @@ int main() {
 	glEnable(GL_BLEND);
 #pragma endregion
 
-	std::string vertexShaderSource = ReadTextFromFile("./Shaders/basicVertex.glsl");
-	std::string fragmentShaderSource = ReadTextFromFile("./Shaders/basicFragment.glsl");
+	std::string vertexShaderSource = ReadTextFromFile("./Assets/Shaders/basicVertex.glsl");
+	std::string fragmentShaderSource = ReadTextFromFile("./Assets/Shaders/basicFragment.glsl");
 	Shader* shader = new Shader(fragmentShaderSource, vertexShaderSource);
 	ASSERT(shader->Compile());
 	shader->Bind();
 
-	Texture* testTexture = new Texture("./Textures/test.png");
-	Texture* nekoTexture = new Texture("./Textures/neko.png",false);
+	Scene scene;
+
+	Texture* testTexture = new Texture("./Assets/Textures/test.png");
+	Texture* nekoTexture = new Texture("./Assets/Textures/neko.png",false);
 	
 	glm::vec4 color2(1, 1, 1, 1);
 
@@ -91,8 +93,9 @@ int main() {
 	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
 	material2->GetProperty<Float4Property>("u_mainColor")->value = color2;
 
-	GameObject* testbun = new GameObject(Mesh::LoadOBJ("./Models/bunny.obj"), "test");
-	GameObject* nekoCube = new GameObject(Mesh::LoadOBJ("./Models/cube.obj"),"neko");
+	GameObject* testbun = scene.CreateGameObject("test",Mesh::LoadOBJ("./Assets/Models/bunny.obj"));
+	GameObject* nekoCube = scene.CreateGameObject("neko",Mesh::LoadOBJ("./Assets/Models/cube.obj"));
+
 	testbun->meshes[0].material = material;
 	nekoCube->meshes[0].material = material2;
 
@@ -102,9 +105,6 @@ int main() {
 	nekoCube->transform.localScale *= 0.5f;
 	testbun->transform.localScale *= 1.f;
 
-	Scene scene;
-	scene.Add(testbun);
-	scene.Add(nekoCube);
 
 	Renderer renderer = Renderer();
 

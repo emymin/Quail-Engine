@@ -24,8 +24,8 @@ void Renderer::Draw(const Scene* scene)
 		std::cout << "Scene has no camera!" << std::endl;
 		return;
 	}
-	for (auto pair : scene->gameObjects) {
-		Draw(pair.second, scene->camera);
+	for (auto pair : scene->m_gameObjects) {
+		Draw(&(pair.second), scene->camera);
 	}
 }
 
