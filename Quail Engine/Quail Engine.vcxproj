@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\Downloads\tiny_obj_loader.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Dependencies\glad\glad\glad.h" />
@@ -316,6 +317,7 @@
     <ClInclude Include="Dependencies\imgui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
+    <ClInclude Include="Dependencies\OBJ_Loader.h" />
     <ClInclude Include="Dependencies\stb_image\stb_image.h" />
     <ClInclude Include="GLHeaders.h" />
     <ClInclude Include="IndexBuffer.h" />

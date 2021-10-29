@@ -1,12 +1,12 @@
 #pragma once
 #include "Mesh.h"
 #include "Transform.h"
-class SceneObject
+class GameObject
 {
 public:
 	std::vector<Mesh> meshes;
 	Transform transform;
-	SceneObject(std::vector<Mesh> meshes) : meshes(meshes) {}
-	SceneObject(Mesh mesh) : meshes({ mesh }) {}
+	GameObject(std::vector<Mesh> meshes) : meshes(meshes) {}
+	GameObject(Mesh mesh) : meshes({ mesh }) {}
 };
 

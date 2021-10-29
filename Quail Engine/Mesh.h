@@ -4,6 +4,7 @@
 #include "Material.h"
 
 
+
 class Mesh
 {
 public:
@@ -13,6 +14,6 @@ public:
 	Mesh(VertexArray& va, IndexBuffer& ib, Material* material = nullptr) : vertexArray(va), indexBuffer(ib), material(material) {}
 	void Bind() const;
 	static Mesh Plane(float size = 1.f,Material* material=nullptr);
-	static Mesh Cube(float size = 1.f, Material* material = nullptr);
+	static std::vector<Mesh> LoadOBJ(std::string modelPath,Material* material=nullptr);
 };
 

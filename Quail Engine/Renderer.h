@@ -6,6 +6,6 @@
 class Renderer {
 public:
 	void Clear() const;
-	void Draw(const SceneObject& object,Camera& camera);
+	void Draw(const GameObject& object,Camera& camera);
 
 };

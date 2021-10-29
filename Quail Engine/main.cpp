@@ -82,28 +82,28 @@ int main() {
 	shader.Bind();
 
 	Texture texture("./Textures/test.png");
-	Texture texture2("./Textures/neko.png");
+	Texture texture2("./Textures/neko.png",false);
 	
-	glm::vec4 color(1, 0, 1, 1);
-	glm::vec4 color2(0, 1, 0, 1);
+	glm::vec4 color2(1, 1, 1, 1);
 
-	Material material(shader);
-	material.GetProperty<Float4Property>("u_mainColor")->value = color;
+	Material material(&shader);
 	material.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture;
 
-	Material material2(shader);
+	Material material2(&shader);
 	material2.GetProperty<TextureProperty>("u_mainTexture")->texture = &texture2;
 	material2.GetProperty<Float4Property>("u_mainColor")->value = color2;
 
-	SceneObject testPlane(Mesh::Plane(2.f));
-	SceneObject nekoPlane(Mesh::Plane(2.f));
+	GameObject testPlane(Mesh::Plane(2.f));
+	GameObject nekoCube(Mesh::LoadOBJ("./Models/cube.obj"));
 
 	testPlane.transform.localPosition.x = -1;
-	nekoPlane.transform.localPosition.x = 1;
+
+	nekoCube.transform.localPosition.x = 1;
+	nekoCube.transform.localScale *= 0.5f;
 
 
 	testPlane.meshes[0].material = &material;
-	nekoPlane.meshes[0].material = &material2;
+	nekoCube.meshes[0].material = &material2;
 
 	Renderer renderer = Renderer();
 
@@ -132,10 +132,13 @@ int main() {
 
 
 		testPlane.transform.SetRotation(0, time, 0);
-		nekoPlane.transform.SetRotation(0, time, 0);
+		nekoCube.transform.SetRotation(sin(time), cos(time), cos(time));
+
+		material.GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(abs(sin(time)),abs(cos(time)),1,1);
+
 
 		renderer.Draw(testPlane,camera);
-		renderer.Draw(nekoPlane,camera);
+		renderer.Draw(nekoCube,camera);
 
 
 

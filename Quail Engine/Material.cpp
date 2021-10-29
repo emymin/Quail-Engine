@@ -1,8 +1,8 @@
 #include "Material.h"
 
-Material::Material(Shader& shader)
+Material::Material(Shader* shader) : shader(shader)
 {	
-	std::vector<UniformData> uniforms = shader.GetUniforms();
+	std::vector<UniformData> uniforms = shader->GetUniforms();
 	for (UniformData& uniform : uniforms) {
 		if (string_startswith(uniform.name, "material.")) {
 			std::string propertyKey = uniform.name.substr(9, MAXIMUM_UNIFORM_NAME_LENGTH);
@@ -15,7 +15,6 @@ Material::Material(Shader& shader)
 			}
 		}
 	}
-	this->shader = &shader;
 }
 
 void Material::ApplyUniforms() const

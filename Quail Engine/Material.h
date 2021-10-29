@@ -9,7 +9,7 @@ private:
 	std::unordered_map<std::string, std::unique_ptr<IMaterialProperty>> m_Properties;
 public:
 	Shader* shader;
-	Material(Shader& shader);
+	Material(Shader* shader);
 	void ApplyUniforms() const;
 	
 	template <typename t>

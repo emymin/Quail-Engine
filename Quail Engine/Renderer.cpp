@@ -6,7 +6,7 @@ void Renderer::Clear() const
 }
 
 
-void Renderer::Draw(const SceneObject& object,Camera& camera)
+void Renderer::Draw(const GameObject& object,Camera& camera)
 {
 	glm::mat4 MVP = camera.GetViewProjectionMatrix() * object.transform.GetModelMatrix();
 	for (const Mesh& mesh : object.meshes) {
