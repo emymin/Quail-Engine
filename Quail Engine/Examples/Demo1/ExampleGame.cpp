@@ -2,6 +2,7 @@
 
 void ExampleGame::OnInitialize()
 {
+
 	std::string vertexShaderSource = ReadTextFromFile("./Examples/Assets/Shaders/basicVertex.glsl");
 	std::string fragmentShaderSource = ReadTextFromFile("./Examples/Assets/Shaders/basicFragment.glsl");
 	Shader* shader = new Shader(fragmentShaderSource, vertexShaderSource);
@@ -20,8 +21,8 @@ void ExampleGame::OnInitialize()
 	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
 	material2->GetProperty<Float4Property>("u_mainColor")->value = color2;
 
-	GameObject* testbun = engine->scene.CreateGameObject("bun", Mesh::LoadOBJ("./Examples/Assets/Models/bunny.obj"));
-	GameObject* nekoCube = engine->scene.CreateGameObject("neko", Mesh::LoadOBJ("./Examples/Assets/Models/cube.obj"));
+	GameObject* testbun = Engine::Scene()->CreateGameObject("bun", Mesh::LoadOBJ("./Examples/Assets/Models/bunny.obj"));
+	GameObject* nekoCube = Engine::Scene()->CreateGameObject("neko", Mesh::LoadOBJ("./Examples/Assets/Models/cube.obj"));
 
 	testbun->meshes[0].material = material;
 	nekoCube->meshes[0].material = material2;
@@ -34,25 +35,25 @@ void ExampleGame::OnInitialize()
 
 	PerspectiveCamera* camera = new PerspectiveCamera();
 	camera->transform.localPosition.z = 3;
-	engine->scene.camera = camera;
+	Engine::Scene()->camera = camera;
 }
 
 void ExampleGame::OnUpdate()
 {
-	GameObject* testbun = engine->scene.Get("bun");
-	GameObject* nekoCube = engine->scene.Get("neko");
+	GameObject* testbun = Engine::Scene()->Get("bun");
+	GameObject* nekoCube = Engine::Scene()->Get("neko");
 
-	testbun->transform.SetRotation(0, engine->time.currentTime, 0);
-	nekoCube->transform.SetRotation(sin(engine->time.currentTime), cos(engine->time.currentTime), cos(engine->time.currentTime));
+	testbun->transform.SetRotation(0, Engine::Time().currentTime, 0);
+	nekoCube->transform.SetRotation(sin(Engine::Time().currentTime), cos(Engine::Time().currentTime), cos(Engine::Time().currentTime));
 
-	testbun->meshes[0].material->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(abs(sin(engine->time.currentTime)), abs(cos(engine->time.currentTime)), 1, 1);
+	testbun->meshes[0].material->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(abs(sin(Engine::Time().currentTime)), abs(cos(Engine::Time().currentTime)), 1, 1);
 }
 
 void ExampleGame::OnGui()
 {
 
 	ImGui::Begin("Quail Engine");
-	ImGui::Text("Framerate: %1.f Render time: %1.f ms", engine->time.fps, engine->time.deltaTime * 1000);
+	ImGui::Text("Framerate: %1.f Render time: %1.f ms", Engine::Time().fps, Engine::Time().deltaTime * 1000);
 	ImGui::End();
 }
 

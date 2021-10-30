@@ -4,13 +4,25 @@
 #include "Debug.h"
 #endif
 
-bool Engine::Initialize(Game* game,int width,int height)
-{
-	m_Width = width;
-	m_Height = height;
+Engine* Engine::instance;
 
+void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	Engine::SetResolution(width, height);
+}
+
+Engine::Engine(Game* game)
+{
+	if (instance != nullptr) { return; }
+	instance = this;
 	m_Game = game;
-	m_Game->engine = this;
+
+}
+
+bool Engine::Initialize(int width,int height)
+{
+	instance->m_Width = width;
+	instance->m_Height = height;
 
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -18,20 +30,22 @@ bool Engine::Initialize(Game* game,int width,int height)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	std::cout << "Quail Engine is running..." << std::endl;
+	std::cout << "Game: " << instance->m_Game->name << std::endl;
 
 
-	window = glfwCreateWindow(1000, 1000, "Quail Engine", NULL, NULL);
-	if (window == NULL) {
+	instance->window = glfwCreateWindow(width, height, instance->m_Game->name.c_str(), NULL, NULL);
+	if (instance->window == NULL) {
 		std::cout << "Error Creating Window" << std::endl;
 		glfwTerminate();
 		return false;
 	}
-	glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(instance->window);
 	glfwSwapInterval(1);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return false;
 	}
+	glfwSetFramebufferSizeCallback(instance->window, framebuffer_size_callback);
 #if _DEBUG
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 	int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
@@ -42,14 +56,14 @@ bool Engine::Initialize(Game* game,int width,int height)
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 	}
 #endif
-	glViewport(0, 0, m_Width, m_Height);
+	glViewport(0, 0, instance->m_Width, instance->m_Height);
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(window, true);
+	ImGui_ImplGlfw_InitForOpenGL(instance->window, true);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
 	glEnable(GL_DEPTH_TEST);
@@ -57,49 +71,75 @@ bool Engine::Initialize(Game* game,int width,int height)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-	m_Game->OnInitialize();
+	instance->m_Game->OnInitialize();
 
 	return true;
 
 }
 
+void Engine::SetResolution(int width, int height)
+{
+	std::cout << "Setting resolution "<<width<<" "<<height<< std::endl;
+	glViewport(0, 0, width, height);
+	instance->scene.camera->SetAspectRatio(width, height);
+	instance->m_Width = width;
+	instance->m_Height = height;
+}
+
+bool Engine::ShouldClose()
+{
+	return glfwWindowShouldClose(instance->window);
+}
+
 void Engine::Update()
 {
-	time.currentTime = GameTime::GetTime();
-	time.deltaTime = time.currentTime - time.lastTime;
-	time.lastTime = time.currentTime;
-	time.fps = 1 / time.deltaTime;
+	instance->time.currentTime = GameTime::GetTime();
+	instance->time.deltaTime = instance->time.currentTime - instance->time.lastTime;
+	instance->time.lastTime = instance->time.currentTime;
+	instance->time.fps = 1 / instance->time.deltaTime;
 
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, true);
-	}
+	HandleInput();
 	
-	m_Game->OnUpdate();
-
-	scene.camera->SetAspectRatio(m_Width,m_Height);
+	instance->m_Game->OnUpdate();
 	
-	m_Renderer.Clear();
-	m_Renderer.Draw(&scene);
+	instance->m_Renderer.Clear();
+	instance->m_Renderer.Draw(&instance->scene);
 
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplGlfw_NewFrame();
-	ImGui::NewFrame();
+	HandleUI();
 
-	m_Game->OnGui();
-
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-	glfwSwapBuffers(window);
+	glfwSwapBuffers(instance->window);
 	glfwPollEvents();
 
 }
 
+
+
+void Engine::HandleInput()
+{
+	if (glfwGetKey(instance->window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(instance->window, true);
+	}
+}
+
+void Engine::HandleUI()
+{
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplGlfw_NewFrame();
+	ImGui::NewFrame();
+
+	instance->m_Game->OnGui();
+
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+
 void Engine::Destroy()
 {
-	m_Game->OnClose();
+	instance->m_Game->OnClose();
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
+	glfwDestroyWindow(instance->window);
 	glfwTerminate();
 }

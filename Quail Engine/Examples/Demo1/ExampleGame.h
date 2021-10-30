@@ -4,6 +4,8 @@ class ExampleGame : public Game
 {
 
 public:
+	ExampleGame() { name = "Quail Test"; }
+
 	void OnInitialize() override;
 
 

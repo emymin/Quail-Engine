@@ -7,7 +7,7 @@ class Engine;
 class Game
 {
 public:
-	Engine* engine;
+	std::string name;
 	virtual void OnInitialize()=0;
 	virtual void OnUpdate() = 0;
 	virtual void OnGui() = 0;
