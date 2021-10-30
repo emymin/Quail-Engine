@@ -4,10 +4,13 @@
 #include "Debug.h"
 #endif
 
-bool Engine::Initialize(int width,int height)
+bool Engine::Initialize(Game* game,int width,int height)
 {
 	m_Width = width;
 	m_Height = height;
+
+	m_Game = game;
+	m_Game->engine = this;
 
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -54,42 +57,7 @@ bool Engine::Initialize(int width,int height)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-#pragma region TemporaryUserCode
-	std::string vertexShaderSource = ReadTextFromFile("./Assets/Shaders/basicVertex.glsl");
-	std::string fragmentShaderSource = ReadTextFromFile("./Assets/Shaders/basicFragment.glsl");
-	Shader* shader = new Shader(fragmentShaderSource, vertexShaderSource);
-	ASSERT(shader->Compile());
-	shader->Bind();
-
-	Texture* testTexture = new Texture("./Assets/Textures/test.png");
-	Texture* nekoTexture = new Texture("./Assets/Textures/neko.png", false);
-
-	glm::vec4 color2(1, 1, 1, 1);
-
-	Material* material = new Material(shader);
-	material->GetProperty<TextureProperty>("u_mainTexture")->texture = testTexture;
-
-	Material* material2 = new Material(shader);
-	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
-	material2->GetProperty<Float4Property>("u_mainColor")->value = color2;
-
-	GameObject* testbun = m_Scene.CreateGameObject("bun", Mesh::LoadOBJ("./Assets/Models/bunny.obj"));
-	GameObject* nekoCube = m_Scene.CreateGameObject("neko", Mesh::LoadOBJ("./Assets/Models/cube.obj"));
-
-	testbun->meshes[0].material = material;
-	nekoCube->meshes[0].material = material2;
-
-	testbun->transform.localPosition.x = -1;
-	nekoCube->transform.localPosition.x = 1;
-
-	nekoCube->transform.localScale *= 0.5f;
-	testbun->transform.localScale *= 1.f;
-
-	PerspectiveCamera* camera=new PerspectiveCamera();
-	camera->transform.localPosition.z = 3;
-	m_Scene.camera = camera;
-
-#pragma endregion
+	m_Game->OnInitialize();
 
 	return true;
 
@@ -97,39 +65,27 @@ bool Engine::Initialize(int width,int height)
 
 void Engine::Update()
 {
-	float time = glfwGetTime();
-	float deltaTime = time - lastTime;
-	lastTime = time;
-
-	float fps = 1 / deltaTime;
-
-#pragma region TemporaryUserCode
-	GameObject* testbun = m_Scene.Get("bun");
-	GameObject* nekoCube = m_Scene.Get("neko");
-
-	testbun->transform.SetRotation(0, time, 0);
-	nekoCube->transform.SetRotation(sin(time), cos(time), cos(time));
-
-	testbun->meshes[0].material->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(abs(sin(time)), abs(cos(time)), 1, 1);
-#pragma endregion
-
+	time.currentTime = GameTime::GetTime();
+	time.deltaTime = time.currentTime - time.lastTime;
+	time.lastTime = time.currentTime;
+	time.fps = 1 / time.deltaTime;
 
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
+	
+	m_Game->OnUpdate();
 
-	m_Scene.camera->SetAspectRatio(m_Width,m_Height);
+	scene.camera->SetAspectRatio(m_Width,m_Height);
 	
 	m_Renderer.Clear();
-	m_Renderer.Draw(&m_Scene);
+	m_Renderer.Draw(&scene);
 
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::Begin("Quail Engine");
-	ImGui::Text("Framerate: %1.f Render time: %1.f ms", fps, deltaTime * 1000);
-	ImGui::End();
+	m_Game->OnGui();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -141,6 +97,7 @@ void Engine::Update()
 
 void Engine::Destroy()
 {
+	m_Game->OnClose();
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();

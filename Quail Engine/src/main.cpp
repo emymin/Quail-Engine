@@ -5,8 +5,11 @@
 
 #include "Engine.h"
 
+#include "../Examples/Demo1/ExampleGame.h"
+#include "../Examples/Demo2/Demo2.h"
 
 Engine engine;
+ExampleGame game;
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	engine.SetResolution(width, height);
@@ -15,7 +18,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 
 
 int main() {
-	engine.Initialize();
+	engine.Initialize(&game);
 
 	float lastTime = 0;
 	while (!engine.ShouldClose()) {

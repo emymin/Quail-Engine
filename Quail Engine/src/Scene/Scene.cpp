@@ -15,6 +15,13 @@ GameObject* Scene::CreateGameObject(std::string name, std::vector<Mesh> meshes)
 	
 }
 
+GameObject* Scene::CreateGameObject(std::string name, Mesh mesh)
+{
+	std::vector<Mesh> meshes;
+	meshes.push_back(mesh);
+	return CreateGameObject(name, meshes);
+}
+
 GameObject* Scene::Get(std::string name)
 {
 	return &(m_gameObjects[name]);

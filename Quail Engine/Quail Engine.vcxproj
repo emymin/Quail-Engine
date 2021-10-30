@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Examples\Demo2\Demo2.h" />
+    <ClInclude Include="Examples\Demo1\ExampleGame.h" />
+    <ClInclude Include="src\Engine\Game.h" />
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Scene\Camera.h" />
     <ClInclude Include="src\Scene\Debug.h" />
@@ -334,6 +337,7 @@
     <ClInclude Include="src\Rendering\VertexArray.h" />
     <ClInclude Include="src\Rendering\VertexBuffer.h" />
     <ClInclude Include="src\Rendering\VertexBufferLayout.h" />
+    <ClInclude Include="src\Engine\GameTime.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\glfw\lib\glfw3.dll" />
@@ -474,10 +478,13 @@
     <None Include="Dependencies\glm\gtx\vector_query.inl" />
     <None Include="Dependencies\glm\gtx\wrap.inl" />
     <None Include="src\imgui.ini" />
-    <None Include="Assets\Shaders\basicVertex.glsl" />
-    <None Include="Assets\Shaders\basicFragment.glsl" />
+    <None Include="Examples\Assets\Shaders\basicVertex.glsl" />
+    <None Include="Examples\Assets\Shaders\basicFragment.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Examples\Demo2\Demo2.cpp" />
+    <ClCompile Include="Examples\Demo1\ExampleGame.cpp" />
+    <ClCompile Include="src\Engine\Game.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="src\Scene\Camera.cpp" />
     <ClCompile Include="Dependencies\glm\detail\glm.cpp" />
@@ -509,14 +516,14 @@
     <Library Include="Dependencies\glfw\lib\glfw3_mt.lib" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Textures\neko.png" />
-    <Image Include="Assets\Textures\test.png" />
+    <Image Include="Examples\Assets\Textures\neko.png" />
+    <Image Include="Examples\Assets\Textures\test.png" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\Models\bunny.obj">
+    <Media Include="Examples\Assets\Models\bunny.obj">
       <FileType>Document</FileType>
     </Media>
-    <Media Include="Assets\Models\cube.obj">
+    <Media Include="Examples\Assets\Models\cube.obj">
       <FileType>Document</FileType>
     </Media>
   </ItemGroup>

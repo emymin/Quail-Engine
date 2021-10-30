@@ -10,7 +10,7 @@ private:
 public:
 	Camera* camera;
 	GameObject* CreateGameObject(std::string name, std::vector<Mesh> meshes);
-	GameObject* CreateGameObject(std::string name, Mesh mesh) { CreateGameObject(name, { mesh }); }
+	GameObject* CreateGameObject(std::string name, Mesh mesh);
 	GameObject* Get(std::string name);
 	void Rename(GameObject* gameObject, std::string name);
 

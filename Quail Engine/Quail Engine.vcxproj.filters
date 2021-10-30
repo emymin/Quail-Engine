@@ -960,6 +960,18 @@
     <ClInclude Include="src\Engine\Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\GameTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\Demo1\ExampleGame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\Demo2\Demo2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\glm\detail\func_common.inl">
@@ -1370,8 +1382,8 @@
     <None Include="Dependencies\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Assets\Shaders\basicVertex.glsl" />
-    <None Include="Assets\Shaders\basicFragment.glsl" />
+    <None Include="Examples\Assets\Shaders\basicVertex.glsl" />
+    <None Include="Examples\Assets\Shaders\basicFragment.glsl" />
     <None Include="Dependencies\glfw\lib\glfw3.dll" />
     <None Include="src\imgui.ini" />
   </ItemGroup>
@@ -1448,6 +1460,15 @@
     <ClCompile Include="src\Engine\Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\Demo1\ExampleGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\Demo2\Demo2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\glfw\lib\glfw3.lib" />
@@ -1455,15 +1476,15 @@
     <Library Include="Dependencies\glfw\lib\glfw3dll.lib" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\Textures\test.png">
+    <Image Include="Examples\Assets\Textures\test.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Assets\Textures\neko.png">
+    <Image Include="Examples\Assets\Textures\neko.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\Models\bunny.obj" />
-    <Media Include="Assets\Models\cube.obj" />
+    <Media Include="Examples\Assets\Models\bunny.obj" />
+    <Media Include="Examples\Assets\Models\cube.obj" />
   </ItemGroup>
 </Project>

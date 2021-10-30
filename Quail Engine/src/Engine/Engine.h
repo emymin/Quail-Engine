@@ -1,19 +1,21 @@
 #pragma once
 #include "Scene.h"
 #include "Renderer.h"
+#include "Game.h"
+
+class Game;
 
 class Engine
 {
 private:
-	Scene m_Scene;
 	Renderer m_Renderer;
-	int m_Width; int m_Height;
-	float fps;
-	float deltaTime;
-	float lastTime;
+	Game* m_Game;
+	int m_Width, m_Height;
 public:
+	GameTime time;
+	Scene scene;
 	GLFWwindow* window;
-	bool Initialize(int width=1000,int height=1000);
+	bool Initialize(Game* game,int width=1000,int height=1000);
 	void SetResolution(int width, int height) {
 		m_Width = width;
 		m_Height = height;
@@ -24,5 +26,7 @@ public:
 	}
 	void Update();
 	void Destroy();
+
+
 };
 
