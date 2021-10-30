@@ -52,3 +52,7 @@ void Demo2::OnGui()
 void Demo2::OnClose()
 {
 }
+
+void Demo2::OnKey(KeyEvent key)
+{
+}

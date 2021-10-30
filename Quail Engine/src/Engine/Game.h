@@ -3,6 +3,7 @@
 #include "Engine.h"
 
 class Engine;
+class KeyEvent;
 
 class Game
 {
@@ -12,5 +13,6 @@ public:
 	virtual void OnUpdate() = 0;
 	virtual void OnGui() = 0;
 	virtual void OnClose() = 0;
+	virtual void OnKey(KeyEvent key) = 0;
 };
 

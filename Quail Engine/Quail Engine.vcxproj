@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Examples\Demo2\Demo2.h" />
     <ClInclude Include="Examples\Demo1\ExampleGame.h" />
+    <ClInclude Include="src\Engine\Key.h" />
     <ClInclude Include="src\Engine\Game.h" />
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Scene\Camera.h" />
@@ -333,7 +334,8 @@
     <ClInclude Include="src\Rendering\Shader.h" />
     <ClInclude Include="src\Rendering\Texture.h" />
     <ClInclude Include="src\Scene\Transform.h" />
-    <ClInclude Include="src\Utils.h" />
+    <ClInclude Include="src\Utils\NoClipController.h" />
+    <ClInclude Include="src\Utils\Utils.h" />
     <ClInclude Include="src\Rendering\VertexArray.h" />
     <ClInclude Include="src\Rendering\VertexBuffer.h" />
     <ClInclude Include="src\Rendering\VertexBufferLayout.h" />
@@ -590,12 +592,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Engine;$(ProjectDir)/src;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Engine;$(ProjectDir)/src/Utils;$(ProjectDir)/src;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)/Dependencies/glfw/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Engine;$(ProjectDir)/src;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Engine;$(ProjectDir)/src/Utils;$(ProjectDir)/src;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)/Dependencies/glfw/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

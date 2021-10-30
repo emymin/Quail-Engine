@@ -1,19 +1,15 @@
-#include "Renderer.h"
-#include <iostream>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-
 #include "Engine.h"
 
 #include "../Examples/Demo1/ExampleGame.h"
 #include "../Examples/Demo2/Demo2.h"
 
-ExampleGame game;
-
-Engine engine(&game);
 
 
 int main() {
+
+	ExampleGame game;
+	Engine engine(&game);
+	
 	engine.Initialize(1000,1000);
 
 	float lastTime = 0;

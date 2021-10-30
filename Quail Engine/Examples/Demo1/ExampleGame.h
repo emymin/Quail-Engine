@@ -1,10 +1,13 @@
 #pragma once
 #include "Game.h"
+#include "NoClipController.h"
 class ExampleGame : public Game
 {
 
 public:
 	ExampleGame() { name = "Quail Test"; }
+
+	NoClipController controller;
 
 	void OnInitialize() override;
 
@@ -16,6 +19,9 @@ public:
 
 
 	void OnClose() override;
+
+
+	void OnKey(KeyEvent key) override;
 
 };
 

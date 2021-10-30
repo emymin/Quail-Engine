@@ -34,12 +34,16 @@ void ExampleGame::OnInitialize()
 	testbun->transform.localScale *= 1.f;
 
 	PerspectiveCamera* camera = new PerspectiveCamera();
-	camera->transform.localPosition.z = 3;
+	camera->transform.localPosition.z = -3;
 	Engine::Scene()->camera = camera;
+
+	controller = NoClipController(&(camera->transform), 2.f);
 }
 
 void ExampleGame::OnUpdate()
 {
+	controller.Update();
+
 	GameObject* testbun = Engine::Scene()->Get("bun");
 	GameObject* nekoCube = Engine::Scene()->Get("neko");
 
@@ -53,10 +57,17 @@ void ExampleGame::OnGui()
 {
 
 	ImGui::Begin("Quail Engine");
-	ImGui::Text("Framerate: %1.f Render time: %1.f ms", Engine::Time().fps, Engine::Time().deltaTime * 1000);
+	ImGui::Text("Framerate: %1.f Render time: %.3f ms", Engine::Time().fps, Engine::Time().lastRenderTime * 1000);
 	ImGui::End();
 }
 
 void ExampleGame::OnClose()
 {
+}
+
+void ExampleGame::OnKey(KeyEvent key)
+{
+	if (key.key == Esc && key.action == PRESS) {
+		Engine::SetShouldClose();
+	}
 }

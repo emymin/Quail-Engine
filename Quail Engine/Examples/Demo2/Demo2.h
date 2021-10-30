@@ -17,5 +17,8 @@ public:
 
 	void OnClose() override;
 
+
+	void OnKey(KeyEvent key) override;
+
 };
 

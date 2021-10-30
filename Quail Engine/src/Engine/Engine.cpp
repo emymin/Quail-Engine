@@ -4,7 +4,7 @@
 #include "Debug.h"
 #endif
 
-Engine* Engine::instance;
+Engine* Engine::_instance;
 
 void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -13,16 +13,16 @@ void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height
 
 Engine::Engine(Game* game)
 {
-	if (instance != nullptr) { return; }
-	instance = this;
+	if (_instance != nullptr) { return; }
+	_instance = this;
 	m_Game = game;
 
 }
 
 bool Engine::Initialize(int width,int height)
 {
-	instance->m_Width = width;
-	instance->m_Height = height;
+	_instance->m_Width = width;
+	_instance->m_Height = height;
 
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -30,22 +30,24 @@ bool Engine::Initialize(int width,int height)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	std::cout << "Quail Engine is running..." << std::endl;
-	std::cout << "Game: " << instance->m_Game->name << std::endl;
+	std::cout << "Game: " << _instance->m_Game->name << std::endl;
 
 
-	instance->window = glfwCreateWindow(width, height, instance->m_Game->name.c_str(), NULL, NULL);
-	if (instance->window == NULL) {
+	_instance->window = glfwCreateWindow(width, height, _instance->m_Game->name.c_str(), NULL, NULL);
+	if (_instance->window == NULL) {
 		std::cout << "Error Creating Window" << std::endl;
 		glfwTerminate();
 		return false;
 	}
-	glfwMakeContextCurrent(instance->window);
+	glfwMakeContextCurrent(_instance->window);
 	glfwSwapInterval(1);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return false;
 	}
-	glfwSetFramebufferSizeCallback(instance->window, framebuffer_size_callback);
+	glfwSetFramebufferSizeCallback(_instance->window, framebuffer_size_callback);
+	glfwSetKeyCallback(_instance->window, input_callback);
+
 #if _DEBUG
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 	int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
@@ -56,14 +58,14 @@ bool Engine::Initialize(int width,int height)
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 	}
 #endif
-	glViewport(0, 0, instance->m_Width, instance->m_Height);
+	glViewport(0, 0, _instance->m_Width, _instance->m_Height);
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui::StyleColorsDark();
-	ImGui_ImplGlfw_InitForOpenGL(instance->window, true);
+	ImGui_ImplGlfw_InitForOpenGL(_instance->window, true);
 	ImGui_ImplOpenGL3_Init("#version 130");
 
 	glEnable(GL_DEPTH_TEST);
@@ -71,7 +73,7 @@ bool Engine::Initialize(int width,int height)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-	instance->m_Game->OnInitialize();
+	_instance->m_Game->OnInitialize();
 
 	return true;
 
@@ -81,44 +83,54 @@ void Engine::SetResolution(int width, int height)
 {
 	std::cout << "Setting resolution "<<width<<" "<<height<< std::endl;
 	glViewport(0, 0, width, height);
-	instance->scene.camera->SetAspectRatio(width, height);
-	instance->m_Width = width;
-	instance->m_Height = height;
+	_instance->scene.camera->SetAspectRatio(width, height);
+	_instance->m_Width = width;
+	_instance->m_Height = height;
+}
+
+void Engine::SetShouldClose()
+{
+	glfwSetWindowShouldClose(_instance->window, true);
 }
 
 bool Engine::ShouldClose()
 {
-	return glfwWindowShouldClose(instance->window);
+	return glfwWindowShouldClose(_instance->window);
+}
+
+KeyEvent Engine::GetKey(Key key)
+{
+	int state = glfwGetKey(_instance->window,key);
+	return KeyEvent(key, state);
 }
 
 void Engine::Update()
 {
-	instance->time.currentTime = GameTime::GetTime();
-	instance->time.deltaTime = instance->time.currentTime - instance->time.lastTime;
-	instance->time.lastTime = instance->time.currentTime;
-	instance->time.fps = 1 / instance->time.deltaTime;
-
-	HandleInput();
+	_instance->time.currentTime = GameTime::GetTime();
+	_instance->time.deltaTime = _instance->time.currentTime - _instance->time.lastTime;
+	_instance->time.lastTime = _instance->time.currentTime;
+	_instance->time.fps = 1 / _instance->time.deltaTime;
 	
-	instance->m_Game->OnUpdate();
+	_instance->m_Game->OnUpdate();
 	
-	instance->m_Renderer.Clear();
-	instance->m_Renderer.Draw(&instance->scene);
+	_instance->m_Renderer.Clear();
+	_instance->m_Renderer.Draw(&_instance->scene);
 
 	HandleUI();
 
-	glfwSwapBuffers(instance->window);
+	_instance->time.lastRenderTime = GameTime::GetTime() - _instance->time.currentTime;
+
+	glfwSwapBuffers(_instance->window);
 	glfwPollEvents();
+
 
 }
 
 
 
-void Engine::HandleInput()
+void Engine::input_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	if (glfwGetKey(instance->window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		glfwSetWindowShouldClose(instance->window, true);
-	}
+	_instance->m_Game->OnKey(KeyEvent(key,action));
 }
 
 void Engine::HandleUI()
@@ -127,7 +139,7 @@ void Engine::HandleUI()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	instance->m_Game->OnGui();
+	_instance->m_Game->OnGui();
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -136,10 +148,10 @@ void Engine::HandleUI()
 
 void Engine::Destroy()
 {
-	instance->m_Game->OnClose();
+	_instance->m_Game->OnClose();
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();
-	glfwDestroyWindow(instance->window);
+	glfwDestroyWindow(_instance->window);
 	glfwTerminate();
 }
