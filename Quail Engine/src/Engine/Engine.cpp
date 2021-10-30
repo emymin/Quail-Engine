@@ -11,6 +11,11 @@ void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height
 	Engine::SetResolution(width, height);
 }
 
+void Engine::window_focus_callback(GLFWwindow* window, int focused)
+{
+	_instance->m_Focused = focused != 0;
+}
+
 Engine::Engine(Game* game)
 {
 	if (_instance != nullptr) { return; }
@@ -45,8 +50,11 @@ bool Engine::Initialize(int width,int height)
 		std::cout << "Failed to initialize GLAD" << std::endl;
 		return false;
 	}
+
+	//SET CALLBACKS
 	glfwSetFramebufferSizeCallback(_instance->window, framebuffer_size_callback);
 	glfwSetKeyCallback(_instance->window, input_callback);
+	glfwSetWindowFocusCallback(_instance->window, window_focus_callback);
 
 #if _DEBUG
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
@@ -102,6 +110,14 @@ KeyEvent Engine::GetKey(Key key)
 {
 	int state = glfwGetKey(_instance->window,key);
 	return KeyEvent(key, state);
+}
+
+MouseInfo Engine::GetMouse()
+{
+	double xpos, ypos;
+	glfwGetCursorPos(_instance->window, &xpos, &ypos);
+	return MouseInfo(xpos, ypos);
+
 }
 
 void Engine::Update()

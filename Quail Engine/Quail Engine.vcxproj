@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Examples\Demo2\Demo2.h" />
     <ClInclude Include="Examples\Demo1\ExampleGame.h" />
-    <ClInclude Include="src\Engine\Key.h" />
+    <ClInclude Include="src\Engine\Input.h" />
     <ClInclude Include="src\Engine\Game.h" />
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Scene\Camera.h" />

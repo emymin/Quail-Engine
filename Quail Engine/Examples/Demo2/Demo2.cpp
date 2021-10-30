@@ -27,8 +27,10 @@ void Demo2::OnInitialize()
 	}
 
 	PerspectiveCamera* camera = new PerspectiveCamera();
-	camera->transform.localPosition.z = 10;
+	camera->transform.localPosition.z = -10;
 	Engine::Scene()->camera=camera;
+
+	controller = NoClipController(&(camera->transform));
 
 }
 
@@ -39,13 +41,13 @@ void Demo2::OnUpdate()
 		nekoCube->transform.SetRotation(glm::vec3(0, Engine::Time().currentTime, 0));
 		nekoCube->transform.localPosition.y = sin(i + Engine::Time().currentTime);
 	}
-	Engine::Scene()->camera->transform.localPosition.x = sin(Engine::Time().currentTime*0.1f) * 50;
+	controller.Update();
 }
 
 void Demo2::OnGui()
 {
 	ImGui::Begin("Quail Engine");
-	ImGui::Text("Framerate: %1.f Render time: %1.f ms", Engine::Time().fps, Engine::Time().deltaTime * 1000);
+	ImGui::Text("Framerate: %1.f Render time: %1.f ms", Engine::Time().fps, Engine::Time().lastRenderTime * 1000);
 	ImGui::End();
 }
 

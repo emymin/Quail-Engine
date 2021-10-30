@@ -37,7 +37,7 @@ void ExampleGame::OnInitialize()
 	camera->transform.localPosition.z = -3;
 	Engine::Scene()->camera = camera;
 
-	controller = NoClipController(&(camera->transform), 2.f);
+	controller = NoClipController(&(camera->transform));
 }
 
 void ExampleGame::OnUpdate()
@@ -67,7 +67,10 @@ void ExampleGame::OnClose()
 
 void ExampleGame::OnKey(KeyEvent key)
 {
-	if (key.key == Esc && key.action == PRESS) {
-		Engine::SetShouldClose();
+	if (key.action == PRESS) {
+		switch (key.key) {
+		case Esc: {Engine::SetShouldClose(); break; }
+		default: {break; }
+		}
 	}
 }

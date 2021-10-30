@@ -972,7 +972,7 @@
     <ClInclude Include="Examples\Demo2\Demo2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Key.h">
+    <ClInclude Include="src\Engine\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\NoClipController.h">

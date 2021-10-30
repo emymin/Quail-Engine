@@ -2,7 +2,7 @@
 #include "Scene.h"
 #include "Renderer.h"
 #include "Game.h"
-#include "Key.h"
+#include "Input.h"
 
 class Game;
 
@@ -16,6 +16,8 @@ private:
 	static void HandleUI();
 	static void input_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+	static void window_focus_callback(GLFWwindow* window, int focused);
+	bool m_Focused=true;
 public:
 	Engine(Game* game);
 	GameTime time;
@@ -29,11 +31,15 @@ public:
 	static void SetResolution(int width, int height);
 	static void SetShouldClose();
 	static bool ShouldClose();
+
 	static KeyEvent GetKey(Key key);
+	static MouseInfo GetMouse();
+	static bool IsFocused() { return _instance->m_Focused; }
 
 	static Scene* Scene() { return &(_instance->scene); }
 	static GLFWwindow* Window() { return _instance->window; }
 	static GameTime Time() { return _instance->time; }
 
+	static Engine* GetInstance() { return _instance; }
 };
 

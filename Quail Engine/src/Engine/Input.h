@@ -1,5 +1,6 @@
 #pragma once
-#include "GLHeaders.h"
+#include <iostream>
+#include <GLFW/glfw3.h>
 
 enum KeyAction : int {
 	PRESS = GLFW_PRESS,
@@ -129,5 +130,12 @@ public:
 		const char* key_name = glfwGetKeyName(key, 0);
 		return std::string(key_name);
 	}
+};
 
+class MouseInfo {
+public:
+	double xPos;
+	double yPos;
+	MouseInfo(){}
+	MouseInfo(double x, double y) :xPos(x), yPos(y) {}
 };
