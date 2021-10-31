@@ -1,5 +1,6 @@
 #include "Engine.h"
-#include "GLHeaders.h"
+#include "Console.h"
+
 #if _DEBUG
 #include "Debug.h"
 #endif
@@ -13,19 +14,22 @@ void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height
 
 void Engine::window_focus_callback(GLFWwindow* window, int focused)
 {
-	_instance->m_Focused = focused != 0;
+	_instance->m_Focused = (focused != 0);
 }
 
 Engine::Engine(Game* game)
 {
+	Console::Log(game->name);
 	if (_instance != nullptr) { return; }
 	_instance = this;
 	m_Game = game;
-
 }
 
 bool Engine::Initialize(int width,int height)
 {
+
+	Console::Log("Initializing Quail Engine...");
+	
 	_instance->m_Width = width;
 	_instance->m_Height = height;
 
@@ -34,20 +38,16 @@ bool Engine::Initialize(int width,int height)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	std::cout << "Quail Engine is running..." << std::endl;
-	std::cout << "Game: " << _instance->m_Game->name << std::endl;
-
-
 	_instance->window = glfwCreateWindow(width, height, _instance->m_Game->name.c_str(), NULL, NULL);
 	if (_instance->window == NULL) {
-		std::cout << "Error Creating Window" << std::endl;
+		Console::Error("Error creating window!");
 		glfwTerminate();
 		return false;
 	}
 	glfwMakeContextCurrent(_instance->window);
 	glfwSwapInterval(1);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		std::cout << "Failed to initialize GLAD" << std::endl;
+		Console::Error("Failed to initialize GLAD");
 		return false;
 	}
 
@@ -81,6 +81,8 @@ bool Engine::Initialize(int width,int height)
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
+	Console::Log("Initialized engine, initializing game...");
+
 	_instance->m_Game->OnInitialize();
 
 	return true;
@@ -89,7 +91,7 @@ bool Engine::Initialize(int width,int height)
 
 void Engine::SetResolution(int width, int height)
 {
-	std::cout << "Setting resolution "<<width<<" "<<height<< std::endl;
+	Console::Log(fmt::format("Setting resolution to {} {}", width, height));
 	glViewport(0, 0, width, height);
 	_instance->scene.camera->SetAspectRatio(width, height);
 	_instance->m_Width = width;
@@ -164,6 +166,7 @@ void Engine::HandleUI()
 
 void Engine::Destroy()
 {
+	Console::Log("Shutdown...");
 	_instance->m_Game->OnClose();
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();

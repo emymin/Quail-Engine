@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Console.h"
 
 void Renderer::Clear() const
 {
@@ -21,7 +22,7 @@ void Renderer::Draw(const GameObject* object,Camera* camera)
 void Renderer::Draw(const Scene* scene)
 {
 	if (scene->camera == nullptr) {
-		std::cout << "Scene has no camera!" << std::endl;
+		Console::Warning("Scene has no camera");
 		return;
 	}
 	for (auto pair : scene->m_gameObjects) {

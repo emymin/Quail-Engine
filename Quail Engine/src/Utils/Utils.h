@@ -1,8 +1,8 @@
 #pragma once
 #include <fstream>
 #include <sstream>
-#include <iostream>
 #include <algorithm>
+#include "Console.h"
 
 #if _DEBUG
 #define ASSERT(x) if(!x)__debugbreak();
@@ -22,7 +22,7 @@ static std::string ReadTextFromFile(std::string filePath) {
 		text = fileStream.str();
 	}
 	catch (std::ifstream::failure e) {
-		std::cout << "Error reading file " << filePath << std::endl;
+		Console::Error("Error reading file " + filePath);
 	}
 	return text;
 }

@@ -19,8 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dependencies\fmt\fmt\core.h" />
+    <ClInclude Include="Dependencies\fmt\fmt\format-inl.h" />
+    <ClInclude Include="Dependencies\fmt\fmt\format.h" />
     <ClInclude Include="Examples\Demo2\Demo2.h" />
     <ClInclude Include="Examples\Demo1\ExampleGame.h" />
+    <ClInclude Include="src\Engine\Console.h" />
     <ClInclude Include="src\Engine\Input.h" />
     <ClInclude Include="src\Engine\Game.h" />
     <ClInclude Include="src\Engine\Engine.h" />
@@ -484,10 +488,11 @@
     <None Include="Examples\Assets\Shaders\basicFragment.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Dependencies\fmt\src\format.cc" />
     <ClCompile Include="Examples\Demo2\Demo2.cpp" />
     <ClCompile Include="Examples\Demo1\ExampleGame.cpp" />
+    <ClCompile Include="src\Engine\Console.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />
-    <ClCompile Include="src\Scene\Camera.cpp" />
     <ClCompile Include="Dependencies\glm\detail\glm.cpp" />
     <ClCompile Include="Dependencies\imgui\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="Dependencies\imgui\backends\imgui_impl_opengl3.cpp" />
@@ -503,6 +508,7 @@
     <ClCompile Include="src\Rendering\Material.cpp" />
     <ClCompile Include="src\Rendering\Mesh.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
+    <ClCompile Include="src\Scene\Camera.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />
     <ClCompile Include="src\Scene\GameObject.cpp" />
     <ClCompile Include="src\Rendering\Shader.cpp" />
@@ -592,12 +598,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Engine;$(ProjectDir)/src/Utils;$(ProjectDir)/src;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/fmt;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Engine;$(ProjectDir)/src/Utils;$(ProjectDir)/src;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)/Dependencies/glfw/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Engine;$(ProjectDir)/src/Utils;$(ProjectDir)/src;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/fmt;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Engine;$(ProjectDir)/src/Utils;$(ProjectDir)/src;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)/Dependencies/glfw/lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

@@ -1,10 +1,7 @@
 #pragma once
-#include "Scene.h"
 #include "Renderer.h"
 #include "Game.h"
-#include "Input.h"
-
-class Game;
+#include "GameTime.h"
 
 class Engine
 {
@@ -39,6 +36,7 @@ public:
 	static Scene* Scene() { return &(_instance->scene); }
 	static GLFWwindow* Window() { return _instance->window; }
 	static GameTime Time() { return _instance->time; }
+	static Game* GetGame() { return _instance->m_Game; }
 
 	static Engine* GetInstance() { return _instance; }
 };

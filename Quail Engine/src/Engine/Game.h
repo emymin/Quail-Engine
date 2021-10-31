@@ -1,9 +1,5 @@
 #pragma once
-#include "GameTime.h"
-#include "Engine.h"
-
-class Engine;
-class KeyEvent;
+#include "Input.h"
 
 class Game
 {

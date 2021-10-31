@@ -13,7 +13,7 @@ public:
 	void SetRotation(float x, float y, float z);
 	void Rotate(float angle, glm::vec3 axis);
 
-	glm::vec3 RotateDirection(glm::vec3 dir) {return (GetModelMatrix() * glm::vec4(dir, 0));}
+	glm::vec3 RotateDirection(glm::vec3 dir) {return GetModelMatrix()*glm::vec4(dir,0);}
 	glm::vec3 RotatePoint(glm::vec3 pos){ return GetModelMatrix() * glm::vec4(pos, 1); }
 };
 

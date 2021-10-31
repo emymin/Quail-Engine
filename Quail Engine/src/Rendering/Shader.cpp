@@ -1,10 +1,11 @@
 #include "Shader.h"
+#include "Console.h"
 
 unsigned int Shader::GetUniformLocation(const std::string& name)
 {
 	int location = glGetUniformLocation(m_RendererID, name.c_str());
 	if (location == -1) {
-		std::cout << "Uniform " << name << " not found" << std::endl;
+		Console::Warning(fmt::format("Uniform {} not found", name));
 	}
 	return location;
 }
@@ -18,7 +19,7 @@ bool Shader::DebugShaderCompilation(const unsigned int shader)
 		glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &length);
 		char* message = (char*)alloca(sizeof(char) * length);
 		glGetShaderInfoLog(shader, length, &length, message);
-		std::cout << "Shader compilation error\n" << message << std::endl;
+		Console::Error(fmt::format("Shader compilation error\n{}",message));
 		return false;
 	}
 	return true;
