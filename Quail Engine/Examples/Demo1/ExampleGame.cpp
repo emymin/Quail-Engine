@@ -11,6 +11,7 @@ void ExampleGame::OnInitialize()
 
 	Texture* testTexture = new Texture("./Examples/Assets/Textures/test.png");
 	Texture* nekoTexture = new Texture("./Examples/Assets/Textures/neko.png", false);
+	Texture* skytexture = new Texture("./Examples/Assets/Textures/skybox.png");
 
 	glm::vec4 color2(1, 1, 1, 1);
 
@@ -21,20 +22,30 @@ void ExampleGame::OnInitialize()
 	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
 	material2->GetProperty<Float4Property>("u_mainColor")->value = color2;
 
+	Material* skymat = new Material(shader);
+	skymat->GetProperty<TextureProperty>("u_mainTexture")->texture = skytexture;
+	skymat->GetProperty<Float4Property>("u_mainColor")->value = color2;
+
 	GameObject* testbun = Engine::Scene()->CreateGameObject("bun", Mesh::LoadOBJ("./Examples/Assets/Models/bunny.obj"));
 	GameObject* nekoCube = Engine::Scene()->CreateGameObject("neko", Mesh::LoadOBJ("./Examples/Assets/Models/cube.obj"));
+	GameObject* sky = Engine::Scene()->CreateGameObject("sky", Mesh::LoadOBJ("./Examples/Assets/Models/sphere.obj"));
+
 
 	testbun->meshes[0].material = material;
 	nekoCube->meshes[0].material = material2;
+	sky->meshes[0].material = skymat;
 
 	testbun->transform.localPosition.x = -1;
 	nekoCube->transform.localPosition.x = 1;
 
+	sky->transform.localScale *= 100.f;
 	nekoCube->transform.localScale *= 0.5f;
 	testbun->transform.localScale *= 1.f;
 
+	sky->transform.Rotate(PI, sky->transform.Right());
+
 	PerspectiveCamera* camera = new PerspectiveCamera();
-	camera->transform.localPosition.z = -3;
+	camera->transform.localPosition.z = 3;
 	Engine::Scene()->camera = camera;
 
 	controller = NoClipController(&(camera->transform));

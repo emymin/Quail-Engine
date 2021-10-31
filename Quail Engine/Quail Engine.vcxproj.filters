@@ -1503,9 +1503,16 @@
     <Image Include="Examples\Assets\Textures\neko.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\..\..\..\Desktop\skybox.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Textures\skybox.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Examples\Assets\Models\bunny.obj" />
     <Media Include="Examples\Assets\Models\cube.obj" />
+    <Media Include="Examples\Assets\Models\sphere.obj" />
   </ItemGroup>
 </Project>

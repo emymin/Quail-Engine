@@ -523,7 +523,9 @@
     <Library Include="Dependencies\glfw\lib\glfw3_mt.lib" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\Desktop\skybox.png" />
     <Image Include="Examples\Assets\Textures\neko.png" />
+    <Image Include="Examples\Assets\Textures\skybox.png" />
     <Image Include="Examples\Assets\Textures\test.png" />
   </ItemGroup>
   <ItemGroup>
@@ -531,6 +533,11 @@
       <FileType>Document</FileType>
     </Media>
     <Media Include="Examples\Assets\Models\cube.obj">
+      <FileType>Document</FileType>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Examples\Assets\Models\sphere.obj">
       <FileType>Document</FileType>
     </Media>
   </ItemGroup>

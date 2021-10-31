@@ -13,7 +13,11 @@ public:
 	void ApplyUniforms() const;
 	
 	template <typename t>
-	t* GetProperty(std::string name) { return dynamic_cast<t*>( m_Properties[name].get() ); }
+	t* GetProperty(std::string name) {
+		t* property = dynamic_cast<t*>( m_Properties[name].get() );
+		if (property == NULL) { Console::Error(name + " property was not found"); }
+		return property;
+	}
 
 };
 

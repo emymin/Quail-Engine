@@ -38,6 +38,7 @@ Mesh Mesh::Plane(float size,Material* material)
 
 std::vector<Mesh> Mesh::LoadOBJ(std::string modelPath,Material* material)
 {
+	Console::Log("Loading model " + modelPath);
 	std::vector<Mesh> meshes;
 	
 	objl::Loader loader;
@@ -70,5 +71,10 @@ std::vector<Mesh> Mesh::LoadOBJ(std::string modelPath,Material* material)
 
 		meshes.push_back(Mesh(va, ib, material));
 	}
+	if (meshes.empty()) { Console::Warning("No meshes found in file " + modelPath); }
+	else {
+		Console::Log("Loaded model " + modelPath);
+	}
+
 	return meshes;
 }

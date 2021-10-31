@@ -11,7 +11,9 @@ Material::Material(Shader* shader) : shader(shader)
 			case GL_FLOAT: {m_Properties[propertyKey] = std::unique_ptr<FloatProperty>(new FloatProperty(uniform.name)); break; }
 			case GL_SAMPLER_2D: { m_Properties[propertyKey] = std::unique_ptr<TextureProperty>(new TextureProperty(uniform.name)); break; }
 
-			default: {std::cout << "Unsupported uniform type: " << uniform.type << std::endl; }
+			default: {
+				Console::Warning(fmt::format("Unsupported uniform type: {}", uniform.type));
+			}
 			}
 		}
 	}

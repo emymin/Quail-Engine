@@ -2,10 +2,10 @@
 
 glm::mat4 Camera::GetViewMatrix() const
 {
-	glm::mat4 identity(1.0f);
-	glm::mat4 translation = glm::translate(identity, transform.localPosition*glm::vec3(-1,-1,1));
-	glm::mat4 rotation = glm::toMat4((transform.localRotation));
-	return rotation*translation;
+	glm::mat4 identity = glm::mat4(1.0f);
+	glm::mat4 translation = glm::translate(identity, transform.localPosition);
+	glm::mat4 rotation = glm::toMat4(transform.localRotation);
+	return glm::inverse(translation * rotation);
 }
 
 void PerspectiveCamera::GenerateProjectionMatrix()

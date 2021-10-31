@@ -20,7 +20,10 @@ void Engine::window_focus_callback(GLFWwindow* window, int focused)
 Engine::Engine(Game* game)
 {
 	Console::Log(game->name);
-	if (_instance != nullptr) { return; }
+	if (_instance != nullptr) { 
+		Console::Warning("Attempted creation of a second Engine instance, ignoring");
+		return;
+	}
 	_instance = this;
 	m_Game = game;
 }
@@ -57,6 +60,7 @@ bool Engine::Initialize(int width,int height)
 	glfwSetWindowFocusCallback(_instance->window, window_focus_callback);
 
 #if _DEBUG
+	Console::Log("Started in DEBUG mode");
 	glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 	int flags; glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 	if (GL_CONTEXT_FLAG_DEBUG_BIT) {
@@ -68,20 +72,22 @@ bool Engine::Initialize(int width,int height)
 #endif
 	glViewport(0, 0, _instance->m_Width, _instance->m_Height);
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
+	Console::Log("OpenGL initialized");
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui::StyleColorsDark();
 	ImGui_ImplGlfw_InitForOpenGL(_instance->window, true);
-	ImGui_ImplOpenGL3_Init("#version 130");
+	ImGui_ImplOpenGL3_Init("#version 430");
+	Console::Log("ImGui initialized");
 
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
 
-	Console::Log("Initialized engine, initializing game...");
+	Console::Log("Finished initializing Quail Engine, initializing game...");
 
 	_instance->m_Game->OnInitialize();
 
@@ -166,7 +172,7 @@ void Engine::HandleUI()
 
 void Engine::Destroy()
 {
-	Console::Log("Shutdown...");
+	Console::Log("Shutting down Quail Engine...");
 	_instance->m_Game->OnClose();
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();

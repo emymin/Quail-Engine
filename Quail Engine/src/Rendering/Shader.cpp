@@ -5,7 +5,7 @@ unsigned int Shader::GetUniformLocation(const std::string& name)
 {
 	int location = glGetUniformLocation(m_RendererID, name.c_str());
 	if (location == -1) {
-		Console::Warning(fmt::format("Uniform {} not found", name));
+		Console::Error(fmt::format("Uniform {} not found", name));
 	}
 	return location;
 }

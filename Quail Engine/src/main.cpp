@@ -7,7 +7,7 @@
 
 int main() {
 
-	Demo2 game;
+	ExampleGame game;
 	Engine engine(&game);
 	
 	engine.Initialize(1000,1000);
