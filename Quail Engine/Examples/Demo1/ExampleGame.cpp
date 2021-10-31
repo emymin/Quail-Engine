@@ -42,8 +42,6 @@ void ExampleGame::OnInitialize()
 	nekoCube->transform.localScale *= 0.5f;
 	testbun->transform.localScale *= 1.f;
 
-	sky->transform.Rotate(PI, sky->transform.Right());
-
 	PerspectiveCamera* camera = new PerspectiveCamera();
 	camera->transform.localPosition.z = 3;
 	Engine::Scene()->camera = camera;
