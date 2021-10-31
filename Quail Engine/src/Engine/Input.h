@@ -3,13 +3,13 @@
 #include "GLHeaders.h"
 
 
-enum KeyAction : int {
+enum class KeyAction : int {
 	PRESS = GLFW_PRESS,
 	RELEASE = GLFW_RELEASE,
 	REPEAT = GLFW_REPEAT
 };
 
-enum Key : int{
+enum class Key : int{
 	Unknown = GLFW_KEY_UNKNOWN,
 	LeftShift = GLFW_KEY_LEFT_SHIFT,
 	RightShift = GLFW_KEY_RIGHT_SHIFT,
@@ -124,11 +124,12 @@ enum Key : int{
 class KeyEvent
 {
 public:
-	KeyEvent(int key,int action) :key((Key)key), action((KeyAction)action) {}
+	KeyEvent(Key key, KeyAction action) :key(key), action(action) {}
+	KeyEvent(int key, int action) :KeyEvent((Key)key, (KeyAction)action) {}
 	Key key;
 	KeyAction action;
 	static std::string GetName(Key key) {
-		const char* key_name = glfwGetKeyName(key, 0);
+		const char* key_name = glfwGetKeyName((int)key, 0);
 		return std::string(key_name);
 	}
 };

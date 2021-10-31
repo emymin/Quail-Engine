@@ -67,9 +67,9 @@ void ExampleGame::OnClose()
 
 void ExampleGame::OnKey(KeyEvent key)
 {
-	if (key.action == PRESS) {
+	if (key.action == KeyAction::PRESS) {
 		switch (key.key) {
-		case Esc: {Engine::SetShouldClose(); break; }
+		case Key::Esc: {Engine::SetShouldClose(); break; }
 		default: {break; }
 		}
 	}

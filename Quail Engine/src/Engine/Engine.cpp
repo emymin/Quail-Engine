@@ -110,8 +110,8 @@ bool Engine::ShouldClose()
 
 KeyEvent Engine::GetKey(Key key)
 {
-	int state = glfwGetKey(_instance->window,key);
-	return KeyEvent(key, state);
+	int state = glfwGetKey(_instance->window,(int)key);
+	return KeyEvent((int)key,state);
 }
 
 MouseInfo Engine::GetMouse()

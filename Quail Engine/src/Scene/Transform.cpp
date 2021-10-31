@@ -27,5 +27,5 @@ void Transform::SetRotation(float x, float y, float z)
 void Transform::Rotate(float angle, glm::vec3 axis)
 {
 	glm::quat rotation = glm::angleAxis(angle,axis);
-	localRotation = localRotation * rotation;
+	localRotation = localRotation*rotation;
 }
