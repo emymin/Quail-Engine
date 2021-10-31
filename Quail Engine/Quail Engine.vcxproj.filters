@@ -1506,9 +1506,6 @@
     <Image Include="..\..\..\..\Desktop\skybox.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Examples\Assets\Textures\skybox.png">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Examples\Assets\Models\bunny.obj" />

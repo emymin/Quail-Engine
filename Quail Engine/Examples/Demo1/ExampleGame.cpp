@@ -11,7 +11,7 @@ void ExampleGame::OnInitialize()
 
 	Texture* testTexture = new Texture("./Examples/Assets/Textures/test.png");
 	Texture* nekoTexture = new Texture("./Examples/Assets/Textures/neko.png", false);
-	Texture* skytexture = new Texture("./Examples/Assets/Textures/skybox.png");
+	Texture* skytexture = new Texture("./Examples/Assets/Textures/skybox.hdr");
 
 	glm::vec4 color2(1, 1, 1, 1);
 

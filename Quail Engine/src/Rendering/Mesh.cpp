@@ -36,6 +36,7 @@ Mesh Mesh::Plane(float size,Material* material)
 	return Mesh(va, ib, material);
 }
 
+
 std::vector<Mesh> Mesh::LoadOBJ(std::string modelPath,Material* material)
 {
 	Console::Log("Loading model " + modelPath);

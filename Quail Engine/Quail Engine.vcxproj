@@ -525,7 +525,6 @@
   <ItemGroup>
     <Image Include="..\..\..\..\Desktop\skybox.png" />
     <Image Include="Examples\Assets\Textures\neko.png" />
-    <Image Include="Examples\Assets\Textures\skybox.png" />
     <Image Include="Examples\Assets\Textures\test.png" />
   </ItemGroup>
   <ItemGroup>
