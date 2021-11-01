@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include "Console.h"
+#include "Resources.h"
 
 unsigned int Shader::GetUniformLocation(const std::string& name)
 {
@@ -35,6 +36,11 @@ Shader::Shader(std::string& fragmentSource, std::string& vertexSource)
 	m_fragmentSource = fragmentSource.c_str();
 	m_vertexSource = vertexSource.c_str();
 
+
+}
+
+Shader::Shader()
+{
 
 }
 
@@ -101,6 +107,7 @@ int Shader::GetUniformCount() const
 	return count;
 }
 
+
 std::vector<UniformData> Shader::GetUniforms() const
 {
 	int uniformCount = GetUniformCount();
@@ -121,3 +128,7 @@ std::vector<UniformData> Shader::GetUniforms() const
 	return uniforms;
 
 }
+
+
+
+Shader Shader::BasicShader;

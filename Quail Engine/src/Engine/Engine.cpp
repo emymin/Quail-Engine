@@ -5,6 +5,8 @@
 #include "Debug.h"
 #endif
 
+#include "Resources.h"
+
 Engine* Engine::_instance;
 
 void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -32,7 +34,7 @@ bool Engine::Initialize(int width,int height)
 {
 
 	Console::Log("Initializing Quail Engine...");
-	
+
 	_instance->m_Width = width;
 	_instance->m_Height = height;
 
@@ -73,6 +75,7 @@ bool Engine::Initialize(int width,int height)
 	glViewport(0, 0, _instance->m_Width, _instance->m_Height);
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 	Console::Log("OpenGL initialized");
+	
 
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -86,6 +89,8 @@ bool Engine::Initialize(int width,int height)
 	glDepthFunc(GL_LESS);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_BLEND);
+
+	Resources::Initialize();
 
 	Console::Log("Finished initializing Quail Engine, initializing game...");
 

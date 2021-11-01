@@ -1,3 +1,5 @@
+R""(
+
 #version 430 core
 layout (location=0) in vec3 aPos;
 layout(location = 1) in vec2 aUV;
@@ -12,3 +14,5 @@ void main()
     gl_Position = u_MVP * gl_Position;
     in_UV = aUV;
 };
+
+)""

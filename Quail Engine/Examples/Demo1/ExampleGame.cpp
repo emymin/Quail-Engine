@@ -3,9 +3,7 @@
 void ExampleGame::OnInitialize()
 {
 
-	std::string vertexShaderSource = ReadTextFromFile("./Examples/Assets/Shaders/basicVertex.glsl");
-	std::string fragmentShaderSource = ReadTextFromFile("./Examples/Assets/Shaders/basicFragment.glsl");
-	Shader* shader = new Shader(fragmentShaderSource, vertexShaderSource);
+	Shader* shader = &(Shader::BasicShader);
 	ASSERT(shader->Compile());
 	shader->Bind();
 

@@ -990,6 +990,9 @@
     <ClInclude Include="src\Engine\Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Utils\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\glm\detail\func_common.inl">
@@ -1400,8 +1403,8 @@
     <None Include="Dependencies\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="Examples\Assets\Shaders\basicVertex.glsl" />
-    <None Include="Examples\Assets\Shaders\basicFragment.glsl" />
+    <None Include="src\Resources\Shaders\basicVertex.glsl" />
+    <None Include="src\Resources\Shaders\basicFragment.glsl" />
     <None Include="Dependencies\glfw\lib\glfw3.dll" />
     <None Include="src\imgui.ini" />
   </ItemGroup>
@@ -1488,6 +1491,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dependencies\fmt\src\format.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\Resources.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

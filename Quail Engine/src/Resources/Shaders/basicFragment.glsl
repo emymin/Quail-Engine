@@ -1,3 +1,4 @@
+R""(
 #version 430 core
 out vec4 FragColor;
 in vec2 in_UV;
@@ -13,3 +14,5 @@ void main()
     vec4 texColor = texture(material.u_mainTexture, in_UV);
     FragColor = texColor*material.u_mainColor;
 };
+
+)""

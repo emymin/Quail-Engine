@@ -24,6 +24,7 @@
     <ClInclude Include="Dependencies\fmt\fmt\format.h" />
     <ClInclude Include="Examples\Demo2\Demo2.h" />
     <ClInclude Include="Examples\Demo1\ExampleGame.h" />
+    <ClInclude Include="src\Utils\Resources.h" />
     <ClInclude Include="src\Engine\Console.h" />
     <ClInclude Include="src\Engine\Input.h" />
     <ClInclude Include="src\Engine\Game.h" />
@@ -484,13 +485,14 @@
     <None Include="Dependencies\glm\gtx\vector_query.inl" />
     <None Include="Dependencies\glm\gtx\wrap.inl" />
     <None Include="src\imgui.ini" />
-    <None Include="Examples\Assets\Shaders\basicVertex.glsl" />
-    <None Include="Examples\Assets\Shaders\basicFragment.glsl" />
+    <None Include="src\Resources\Shaders\basicVertex.glsl" />
+    <None Include="src\Resources\Shaders\basicFragment.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\fmt\src\format.cc" />
     <ClCompile Include="Examples\Demo2\Demo2.cpp" />
     <ClCompile Include="Examples\Demo1\ExampleGame.cpp" />
+    <ClCompile Include="src\Utils\Resources.cpp" />
     <ClCompile Include="src\Engine\Console.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />
     <ClCompile Include="Dependencies\glm\detail\glm.cpp" />

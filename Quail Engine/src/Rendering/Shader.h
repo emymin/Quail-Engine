@@ -23,6 +23,9 @@ private:
 	unsigned int GetUniformLocation(const std::string& name);
 	bool DebugShaderCompilation(const unsigned int shader);
 	int GetUniformCount() const;
+
+	Shader();
+	
 public:
 	Shader(std::string& fragmentSource, std::string& vertexSource);
 	//~Shader();
@@ -34,4 +37,8 @@ public:
 	void SetUniform1i(const std::string& name, int value);
 	void SetUniformMat4f(const std::string& name, glm::mat4& matrix);
 	std::vector<UniformData> GetUniforms() const;
+	
+	static Shader BasicShader;
+	static Shader SkyboxShader;
+	friend class Resources;
 };
