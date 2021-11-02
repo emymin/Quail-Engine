@@ -990,7 +990,10 @@
     <ClInclude Include="src\Engine\Console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\Resources.h">
+    <ClInclude Include="src\Resources\Resources.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rendering\Skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1404,9 +1407,10 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="src\Resources\Shaders\basicVertex.glsl" />
-    <None Include="src\Resources\Shaders\basicFragment.glsl" />
+    <None Include="src\Resources\Shaders\standardFragment.glsl" />
     <None Include="Dependencies\glfw\lib\glfw3.dll" />
     <None Include="src\imgui.ini" />
+    <None Include="src\Resources\Shaders\skybox.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\glm\detail\glm.cpp">
@@ -1493,7 +1497,10 @@
     <ClCompile Include="Dependencies\fmt\src\format.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utils\Resources.cpp">
+    <ClCompile Include="src\Resources\Resources.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,9 +3,7 @@
 void Demo2::OnInitialize()
 {
 
-	std::string vertexShaderSource = ReadTextFromFile("./Examples/Assets/Shaders/basicVertex.glsl");
-	std::string fragmentShaderSource = ReadTextFromFile("./Examples/Assets/Shaders/basicFragment.glsl");
-	Shader* shader = new Shader(fragmentShaderSource, vertexShaderSource);
+	Shader* shader = &(Shader::BasicShader);
 	ASSERT(shader->Compile());
 	shader->Bind();
 
@@ -13,9 +11,8 @@ void Demo2::OnInitialize()
 
 	Material* material = new Material(shader);
 	material->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
-	material->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(1, 1, 1, 1);
 
-	Mesh cube = Mesh::LoadOBJ("./Examples/Assets/Models/cube.obj")[0];
+	Mesh cube = Mesh::Cube();
 	cube.material = material;
 
 	int cubecount = 100;

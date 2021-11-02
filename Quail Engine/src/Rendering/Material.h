@@ -15,7 +15,12 @@ public:
 	template <typename t>
 	t* GetProperty(std::string name) {
 		t* property = dynamic_cast<t*>( m_Properties[name].get() );
-		if (property == NULL) { Console::Error(name + " property was not found"); }
+		if (property == NULL) {
+			m_Properties.erase(name);
+			Console::Warning(name + " property was not found");
+			Console::Warning("Make sure the shader has the property and is actively using it");
+			return new t(name);
+		}
 		return property;
 	}
 

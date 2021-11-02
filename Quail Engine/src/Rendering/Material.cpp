@@ -25,3 +25,5 @@ void Material::ApplyUniforms() const
 		pair.second->Apply(*shader);
 	}
 }
+
+

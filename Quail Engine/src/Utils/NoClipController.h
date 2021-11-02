@@ -34,9 +34,8 @@ public:
 				glm::vec3 yawAxis = glm::vec3(0, 1, 0);
 				glm::vec3 pitchAxis = transform->Right();
 
-				float dirSign = glm::dot(transform->Forward(), glm::vec3(0, 1, 0)) > 0 ? 1 : -1;
-
-				if ( (abs(pitch) <= (PI / 2.f)) || (dirSign * dy < 0)){
+				
+				if ( (abs(pitch+dy) <= (PI / 2.f))){
 					transform->Rotate(-dy, pitchAxis);
 					pitch += dy;
 					//Console::Log(fmt::format("Pitch: {}", pitch));

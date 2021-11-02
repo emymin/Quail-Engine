@@ -6,7 +6,7 @@ unsigned int Shader::GetUniformLocation(const std::string& name)
 {
 	int location = glGetUniformLocation(m_RendererID, name.c_str());
 	if (location == -1) {
-		Console::Error(fmt::format("Uniform {} not found", name));
+		//Console::Error(fmt::format("Uniform {} not found", name));
 	}
 	return location;
 }
@@ -84,6 +84,10 @@ void Shader::SetUniform4f(const std::string& name, float x, float y, float z, fl
 	glUniform4f(GetUniformLocation(name), x, y, z, w);
 }
 
+void Shader::SetUniform3f(const std::string& name, float x, float y, float z) {
+	glUniform3f(GetUniformLocation(name), x, y, z);
+}
+
 void Shader::SetUniform1f(const std::string& name, float value)
 {
 	glUniform1f(GetUniformLocation(name), value);
@@ -132,3 +136,5 @@ std::vector<UniformData> Shader::GetUniforms() const
 
 
 Shader Shader::BasicShader;
+
+Shader Shader::Standard;

@@ -33,6 +33,14 @@ Texture::Texture(const std::string& path,bool clamp) : m_RendererID(0),m_FilePat
 	}
 }
 
+Texture::Texture(unsigned char* buffer,int width,int height):m_LocalBuffer(buffer),m_Width(width),m_Height(height),m_FilePath("INTERNAL"),m_BPP(0),m_RendererID(0)
+{
+	glGenTextures(1, &m_RendererID);
+	glBindTexture(GL_TEXTURE_2D, m_RendererID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer);
+	Unbind();
+}
+
 Texture::~Texture()
 {
 	glDeleteTextures(1, &m_RendererID);
@@ -48,3 +56,5 @@ void Texture::Unbind()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+Texture Texture::White;

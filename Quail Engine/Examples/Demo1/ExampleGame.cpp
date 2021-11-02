@@ -3,41 +3,36 @@
 void ExampleGame::OnInitialize()
 {
 
-	Shader* shader = &(Shader::BasicShader);
-	ASSERT(shader->Compile());
-	shader->Bind();
+	Shader* unlit = &(Shader::BasicShader);
+	Shader* standard = &(Shader::Standard);
 
 	Texture* testTexture = new Texture("./Examples/Assets/Textures/test.png");
 	Texture* nekoTexture = new Texture("./Examples/Assets/Textures/neko.png", false);
 	Texture* skytexture = new Texture("./Examples/Assets/Textures/skybox.hdr");
 
-	glm::vec4 color2(1, 1, 1, 1);
-
-	Material* material = new Material(shader);
+	Material* material = new Material(standard);
 	material->GetProperty<TextureProperty>("u_mainTexture")->texture = testTexture;
 
-	Material* material2 = new Material(shader);
+	Material* material2 = new Material(unlit);
 	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
-	material2->GetProperty<Float4Property>("u_mainColor")->value = color2;
 
-	Material* skymat = new Material(shader);
+	Material* skymat = new Material(unlit);
 	skymat->GetProperty<TextureProperty>("u_mainTexture")->texture = skytexture;
-	skymat->GetProperty<Float4Property>("u_mainColor")->value = color2;
 
 	GameObject* testbun = Engine::Scene()->CreateGameObject("bun", Mesh::LoadOBJ("./Examples/Assets/Models/bunny.obj"));
-	GameObject* nekoCube = Engine::Scene()->CreateGameObject("neko", Mesh::LoadOBJ("./Examples/Assets/Models/cube.obj"));
+	//GameObject* nekoCube = Engine::Scene()->CreateGameObject("neko", Mesh::Cube());
 	GameObject* sky = Engine::Scene()->CreateGameObject("sky", Mesh::LoadOBJ("./Examples/Assets/Models/sphere.obj"));
 
 
 	testbun->meshes[0].material = material;
-	nekoCube->meshes[0].material = material2;
+	//nekoCube->meshes[0].material = material2;
 	sky->meshes[0].material = skymat;
 
 	testbun->transform.localPosition.x = -1;
-	nekoCube->transform.localPosition.x = 1;
+	//nekoCube->transform.localPosition.x = 1;
 
 	sky->transform.localScale *= 100.f;
-	nekoCube->transform.localScale *= 0.5f;
+	//nekoCube->transform.localScale *= 0.5f;
 	testbun->transform.localScale *= 1.f;
 
 	PerspectiveCamera* camera = new PerspectiveCamera();
@@ -52,12 +47,12 @@ void ExampleGame::OnUpdate()
 	controller.Update();
 
 	GameObject* testbun = Engine::Scene()->Get("bun");
-	GameObject* nekoCube = Engine::Scene()->Get("neko");
+	//GameObject* nekoCube = Engine::Scene()->Get("neko");
 
 	testbun->transform.SetRotation(0, Engine::Time().currentTime, 0);
-	nekoCube->transform.SetRotation(sin(Engine::Time().currentTime), cos(Engine::Time().currentTime), cos(Engine::Time().currentTime));
+	//nekoCube->transform.SetRotation(sin(Engine::Time().currentTime), cos(Engine::Time().currentTime), cos(Engine::Time().currentTime));
 
-	testbun->meshes[0].material->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(abs(sin(Engine::Time().currentTime)), abs(cos(Engine::Time().currentTime)), 1, 1);
+	//testbun->meshes[0].material->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(abs(sin(Engine::Time().currentTime)), abs(cos(Engine::Time().currentTime)), 1, 1);
 }
 
 void ExampleGame::OnGui()
