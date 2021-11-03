@@ -7,6 +7,7 @@
 
 class Mesh
 {
+
 public:
 	VertexArray vertexArray;
 	IndexBuffer indexBuffer;

@@ -29,6 +29,16 @@ void Renderer::Draw(const Scene* scene)
 		Console::Warning("Scene has no camera");
 		return;
 	}
+	if (scene->skybox != nullptr) {
+		scene->skybox->m_Mesh.Bind();
+		glm::vec3 cameraPos = scene->camera->transform.localPosition;
+		glm::mat4 v = glm::mat4(glm::mat3(scene->camera->GetViewMatrix()));
+		glm::mat4 MVP = scene->camera->GetProjectionMatrix() * v;
+		glm::mat4 m;
+		scene->skybox->m_Mesh.material->shader->SetUniformMat4f("u_MVP", MVP);
+		scene->skybox->m_Mesh.material->shader->SetUniform3f("u_cameraPos", cameraPos.x, cameraPos.y, cameraPos.z);
+	}
+
 	for (auto pair : scene->m_gameObjects) {
 		Draw(&(pair.second), scene->camera);
 	}

@@ -15,11 +15,16 @@ void Resources::Initialize()
 	std::string standardFragment =
 #include "Resources/Shaders/standardFragment.glsl"
 		;
+	std::string skyboxVertex =
+#include "Resources/Shaders/skyboxVertex.glsl"
+		;
 	
 	Shader::BasicShader = Shader(basicFragment, basicVertex);
 	Shader::BasicShader.Compile();
-	Shader::Standard = Shader(standardFragment, basicVertex);
-	Shader::Standard.Compile();
+	Shader::StandardShader = Shader(standardFragment, basicVertex);
+	Shader::StandardShader.Compile();
+	Shader::SkyboxShader = Shader(basicFragment,skyboxVertex);
+	Shader::SkyboxShader.Compile();
 	unsigned char whiteBuffer[4] = { 255,255,255,255 };
 	Texture::White = Texture(whiteBuffer, 1, 1);
 }

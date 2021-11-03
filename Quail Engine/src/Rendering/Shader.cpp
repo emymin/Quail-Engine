@@ -137,4 +137,6 @@ std::vector<UniformData> Shader::GetUniforms() const
 
 Shader Shader::BasicShader;
 
-Shader Shader::Standard;
+Shader Shader::StandardShader;
+
+Shader Shader::SkyboxShader;

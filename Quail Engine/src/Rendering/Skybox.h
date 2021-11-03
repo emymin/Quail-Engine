@@ -6,8 +6,11 @@ class Skybox
 private:
 	Mesh m_Mesh;
 	Material m_Material;
-	Texture m_Texture;
 public:
-	Skybox(Texture& texture);
+	Texture* texture;
+	Skybox(Texture* texture);
+
+	friend class Renderer;
+	friend class Scene;
 };
 

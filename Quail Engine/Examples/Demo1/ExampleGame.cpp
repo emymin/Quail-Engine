@@ -4,11 +4,13 @@ void ExampleGame::OnInitialize()
 {
 
 	Shader* unlit = &(Shader::BasicShader);
-	Shader* standard = &(Shader::Standard);
+	Shader* standard = &(Shader::StandardShader);
 
 	Texture* testTexture = new Texture("./Examples/Assets/Textures/test.png");
 	Texture* nekoTexture = new Texture("./Examples/Assets/Textures/neko.png", false);
 	Texture* skytexture = new Texture("./Examples/Assets/Textures/skybox.hdr");
+
+	Engine::Scene()->skybox = new Skybox(skytexture);
 
 	Material* material = new Material(standard);
 	material->GetProperty<TextureProperty>("u_mainTexture")->texture = testTexture;
@@ -16,22 +18,17 @@ void ExampleGame::OnInitialize()
 	Material* material2 = new Material(unlit);
 	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
 
-	Material* skymat = new Material(unlit);
-	skymat->GetProperty<TextureProperty>("u_mainTexture")->texture = skytexture;
 
 	GameObject* testbun = Engine::Scene()->CreateGameObject("bun", Mesh::LoadOBJ("./Examples/Assets/Models/bunny.obj"));
 	//GameObject* nekoCube = Engine::Scene()->CreateGameObject("neko", Mesh::Cube());
-	GameObject* sky = Engine::Scene()->CreateGameObject("sky", Mesh::LoadOBJ("./Examples/Assets/Models/sphere.obj"));
 
 
 	testbun->meshes[0].material = material;
 	//nekoCube->meshes[0].material = material2;
-	sky->meshes[0].material = skymat;
 
 	testbun->transform.localPosition.x = -1;
 	//nekoCube->transform.localPosition.x = 1;
 
-	sky->transform.localScale *= 100.f;
 	//nekoCube->transform.localScale *= 0.5f;
 	testbun->transform.localScale *= 1.f;
 

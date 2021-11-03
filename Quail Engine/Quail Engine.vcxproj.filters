@@ -1410,7 +1410,8 @@
     <None Include="src\Resources\Shaders\standardFragment.glsl" />
     <None Include="Dependencies\glfw\lib\glfw3.dll" />
     <None Include="src\imgui.ini" />
-    <None Include="src\Resources\Shaders\skybox.glsl" />
+    <None Include="src\Resources\Shaders\skyboxVertex.glsl" />
+    <None Include="src\Resources\Shaders\basicFragment.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\glm\detail\glm.cpp">

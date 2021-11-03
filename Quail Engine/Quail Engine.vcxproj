@@ -486,9 +486,10 @@
     <None Include="Dependencies\glm\gtx\vector_query.inl" />
     <None Include="Dependencies\glm\gtx\wrap.inl" />
     <None Include="src\imgui.ini" />
+    <None Include="src\Resources\Shaders\basicFragment.glsl" />
     <None Include="src\Resources\Shaders\basicVertex.glsl" />
+    <None Include="src\Resources\Shaders\skyboxVertex.glsl" />
     <None Include="src\Resources\Shaders\standardFragment.glsl" />
-    <None Include="src\Resources\Shaders\skybox.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\fmt\src\format.cc" />

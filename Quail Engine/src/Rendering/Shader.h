@@ -40,7 +40,7 @@ public:
 	std::vector<UniformData> GetUniforms() const;
 	
 	static Shader BasicShader;
-	static Shader Standard;
+	static Shader StandardShader;
 	static Shader SkyboxShader;
 	friend class Resources;
 };

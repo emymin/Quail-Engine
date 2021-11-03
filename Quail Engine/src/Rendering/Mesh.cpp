@@ -49,30 +49,30 @@ Mesh Mesh::Cube(float width, float height, float depth, Material* material /*= n
 	float top = 0.5f * height;
 
 	float vertices[] = {
-		-side,-top,front,0,0,
-		-side,top,front,0,1,
-		-side,top,-front,-1,1,
-		-side,-top,-front,-1,0,
-		-side,-top,-front,-1,2,
-		-side,top,-front,-1,1,
-		side,top,-front,0,1,
-		side,-top,-front,0,2,
-		side,-top,-front,1,1,
-		side,top,-front,0,1,
-		side,top,front,0,0,
-		side,-top,front,1,0,
-		side,-top,front,2,0,
-		side,top,front,1,0,
-		-side,top,front,1,-1,
-		-side,-top,front,2,-1,
-		-side,-top,-front,-1,-1,
-		side,-top,-front,0,-1,
-		side,-top,front,0,0,
-		-side,-top,front,-1,0,
-		side,top,-front,1,0,
-		-side,top,-front,0,0,
-		-side,top,front,0,-1,
-		side,top,front,1,-1
+		-side,-top,front,0,0,-1,0,0,
+		-side,top,front,0,1,-1,0,0,
+		-side,top,-front,-1,1,-1,0,0,
+		-side,-top,-front,-1,0,-1,0,0,
+		-side,-top,-front,-1,2,0,0,-1,
+		-side,top,-front,-1,1,0,0,-1,
+		side,top,-front,0,1,0,0,-1,
+		side,-top,-front,0,2,0,0,-1,
+		side,-top,-front,1,1,1,0,0,
+		side,top,-front,0,1,1,0,0,
+		side,top,front,0,0,1,0,0,
+		side,-top,front,1,0,1,0,0,
+		side,-top,front,2,0,0,0,1,
+		side,top,front,1,0,0,0,1,
+		-side,top,front,1,-1,0,0,1,
+		-side,-top,front,2,-1,0,0,1,
+		-side,-top,-front,-1,-1,0,-1,0,
+		side,-top,-front,0,-1,0,-1,0,
+		side,-top,front,0,0,0,-1,0,
+		-side,-top,front,-1,0,0,-1,0,
+		side,top,-front,1,0,0,1,0,
+		-side,top,-front,0,0,0,1,0,
+		-side,top,front,0,-1,0,1,0,
+		side,top,front,1,-1,0,1,0
 	};
 	unsigned int indices[] = {
 		0,1,3,1,2,3,4,5,7,5,6,7,8,9,11,9,10,11,12,13,15,13,14,15,16,17,19,17,18,19,20,21,23,21,22,23
@@ -117,8 +117,8 @@ std::vector<Mesh> Mesh::LoadOBJ(std::string modelPath,Material* material)
 		for (const float& index : indices) {
 			std::cout << index << ",";
 		}
-		std::cout << std::endl;*/
-
+		std::cout << std::endl;
+		*/
 
 		float* vertices_buffer = &vertices[0];
 		unsigned int* indices_buffer = &indices[0];

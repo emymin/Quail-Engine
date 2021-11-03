@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include "GameObject.h"
 #include "Camera.h"
+#include "Skybox.h"
 class Scene
 {
 private:
@@ -9,6 +10,7 @@ private:
 	std::unordered_map<std::string,GameObject> m_gameObjects;
 public:
 	Camera* camera;
+	Skybox* skybox;
 	GameObject* CreateGameObject(std::string name, std::vector<Mesh> meshes);
 	GameObject* CreateGameObject(std::string name, Mesh mesh);
 	GameObject* Get(std::string name);
