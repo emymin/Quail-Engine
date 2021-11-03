@@ -26,11 +26,12 @@ Texture::Texture(const std::string& path,bool clamp) : m_RendererID(0),m_FilePat
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_Width, m_Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_LocalBuffer);
 
 	glGenerateMipmap(GL_TEXTURE_2D);
-	Unbind();
 
 	if (m_LocalBuffer) {
 		stbi_image_free(m_LocalBuffer);
 	}
+
+	Unbind();
 }
 
 Texture::Texture(unsigned char* buffer,int width,int height):m_LocalBuffer(buffer),m_Width(width),m_Height(height),m_FilePath("INTERNAL"),m_BPP(0),m_RendererID(0)

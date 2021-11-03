@@ -12,24 +12,25 @@ void ExampleGame::OnInitialize()
 
 	Engine::Scene()->skybox = new Skybox(skytexture);
 
+	Material* material2 = new Material(standard);
+	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
+
 	Material* material = new Material(standard);
 	material->GetProperty<TextureProperty>("u_mainTexture")->texture = testTexture;
 
-	Material* material2 = new Material(unlit);
-	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
 
 
 	GameObject* testbun = Engine::Scene()->CreateGameObject("bun", Mesh::LoadOBJ("./Examples/Assets/Models/bunny.obj"));
-	//GameObject* nekoCube = Engine::Scene()->CreateGameObject("neko", Mesh::Cube());
+	GameObject* nekoCube = Engine::Scene()->CreateGameObject("neko", Mesh::Cube());
 
 
 	testbun->meshes[0].material = material;
-	//nekoCube->meshes[0].material = material2;
+	nekoCube->meshes[0].material = material2;
 
 	testbun->transform.localPosition.x = -1;
-	//nekoCube->transform.localPosition.x = 1;
+	nekoCube->transform.localPosition.x = 1;
 
-	//nekoCube->transform.localScale *= 0.5f;
+	nekoCube->transform.localScale *= 0.5f;
 	testbun->transform.localScale *= 1.f;
 
 	PerspectiveCamera* camera = new PerspectiveCamera();
@@ -44,12 +45,12 @@ void ExampleGame::OnUpdate()
 	controller.Update();
 
 	GameObject* testbun = Engine::Scene()->Get("bun");
-	//GameObject* nekoCube = Engine::Scene()->Get("neko");
+	GameObject* nekoCube = Engine::Scene()->Get("neko");
 
 	testbun->transform.SetRotation(0, Engine::Time().currentTime, 0);
-	//nekoCube->transform.SetRotation(sin(Engine::Time().currentTime), cos(Engine::Time().currentTime), cos(Engine::Time().currentTime));
+	nekoCube->transform.SetRotation(sin(Engine::Time().currentTime), cos(Engine::Time().currentTime), cos(Engine::Time().currentTime));
 
-	//testbun->meshes[0].material->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(abs(sin(Engine::Time().currentTime)), abs(cos(Engine::Time().currentTime)), 1, 1);
+	testbun->meshes[0].material->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(abs(sin(Engine::Time().currentTime)), abs(cos(Engine::Time().currentTime)), 1, 1);
 }
 
 void ExampleGame::OnGui()

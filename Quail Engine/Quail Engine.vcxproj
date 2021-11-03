@@ -488,6 +488,7 @@
     <None Include="src\imgui.ini" />
     <None Include="src\Resources\Shaders\basicFragment.glsl" />
     <None Include="src\Resources\Shaders\basicVertex.glsl" />
+    <None Include="src\Resources\Shaders\skyboxFragment.glsl" />
     <None Include="src\Resources\Shaders\skyboxVertex.glsl" />
     <None Include="src\Resources\Shaders\standardFragment.glsl" />
   </ItemGroup>

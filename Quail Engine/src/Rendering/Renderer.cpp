@@ -1,13 +1,27 @@
 #include "Renderer.h"
 #include "Console.h"
 
+void Renderer::DrawSkybox(const Scene* scene) const
+{
+	glDepthMask(GL_FALSE);
+	scene->skybox->m_Mesh.Bind();
+	glm::vec3 cameraPos = scene->camera->transform.localPosition;
+	glm::mat4 v = glm::mat4(glm::mat3(scene->camera->GetViewMatrix()));
+	glm::mat4 MVP = scene->camera->GetProjectionMatrix() * v;
+	glm::mat4 m;
+	scene->skybox->m_Mesh.material->shader->SetUniformMat4f("u_MVP", MVP);
+	scene->skybox->m_Mesh.material->shader->SetUniform3f("u_cameraPos", cameraPos.x, cameraPos.y, cameraPos.z);
+	glDrawElements(GL_TRIANGLES, scene->skybox->m_Mesh.indexBuffer.GetCount(), GL_UNSIGNED_INT, 0);
+	glDepthMask(GL_TRUE);
+}
+
 void Renderer::Clear() const
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 
-void Renderer::Draw(const GameObject* object,Camera* camera)
+void Renderer::Draw(const GameObject* object,Camera* camera) const
 {
 	glm::mat4 M = object->transform.GetModelMatrix();
 	glm::mat4 MVP = camera->GetViewProjectionMatrix() * M;
@@ -23,20 +37,14 @@ void Renderer::Draw(const GameObject* object,Camera* camera)
 	}
 }
 
-void Renderer::Draw(const Scene* scene)
+void Renderer::Draw(const Scene* scene) const
 {
 	if (scene->camera == nullptr) {
 		Console::Warning("Scene has no camera");
 		return;
 	}
 	if (scene->skybox != nullptr) {
-		scene->skybox->m_Mesh.Bind();
-		glm::vec3 cameraPos = scene->camera->transform.localPosition;
-		glm::mat4 v = glm::mat4(glm::mat3(scene->camera->GetViewMatrix()));
-		glm::mat4 MVP = scene->camera->GetProjectionMatrix() * v;
-		glm::mat4 m;
-		scene->skybox->m_Mesh.material->shader->SetUniformMat4f("u_MVP", MVP);
-		scene->skybox->m_Mesh.material->shader->SetUniform3f("u_cameraPos", cameraPos.x, cameraPos.y, cameraPos.z);
+		DrawSkybox(scene);
 	}
 
 	for (auto pair : scene->m_gameObjects) {
