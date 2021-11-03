@@ -6,19 +6,19 @@
 
 void Resources::Initialize()
 {
-	std::string basicFragment =
+	const std::string basicFragment =
 #include "Resources/Shaders/basicFragment.glsl"
 		;
-	std::string basicVertex =
+	const std::string basicVertex =
 #include "Resources/Shaders/basicVertex.glsl"
 		;
-	std::string standardFragment =
+	const std::string standardFragment =
 #include "Resources/Shaders/standardFragment.glsl"
 		;
-	std::string skyboxVertex =
+	const std::string skyboxVertex =
 #include "Resources/Shaders/skyboxVertex.glsl"
 		;
-	std::string skyboxFragment =
+	const std::string skyboxFragment =
 #include "Resources/Shaders/skyboxFragment.glsl"
 		;
 	

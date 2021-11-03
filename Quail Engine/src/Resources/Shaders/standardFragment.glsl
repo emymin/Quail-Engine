@@ -16,9 +16,13 @@ uniform Material material;
 
 void main()
 {
+    vec3 lightDir = vec3(1);
+    
+    float cosTheta = clamp(dot(in_worldNormal,lightDir),0,1);
+    
     vec4 texColor = texture(material.u_mainTexture, in_UV);
     FragColor = texColor*material.u_mainColor;
-    FragColor.rgb*=clamp(dot(in_worldNormal,vec3(0,1,0)),0,1);
+    FragColor.rgb*=cosTheta;
 };
 
 )""

@@ -8,7 +8,7 @@ public:
 	virtual glm::mat4 GetProjectionMatrix() const = 0;
 	glm::mat4 GetViewMatrix() const;
 	glm::mat4 GetViewProjectionMatrix() const { return GetProjectionMatrix() * GetViewMatrix(); }
-	void SetAspectRatio(float width, float height) { return; }
+	virtual void SetAspectRatio(float width, float height) = 0;
 
 };
 
@@ -25,7 +25,7 @@ public:
 	glm::mat4 GetProjectionMatrix() const override;
 	void SetFOV(float value);
 	void SetAspectRatio(float value);
-	void SetAspectRatio(float width, float height);
+	virtual void SetAspectRatio(float width, float height) override;
 
 
 };

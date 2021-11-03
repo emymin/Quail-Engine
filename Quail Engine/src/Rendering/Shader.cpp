@@ -27,7 +27,7 @@ bool Shader::DebugShaderCompilation(const unsigned int shader)
 }
 
 
-Shader::Shader(std::string& fragmentSource, std::string& vertexSource)
+Shader::Shader(const std::string& fragmentSource,const std::string& vertexSource)
 {
 	m_FragmentID = glCreateShader(GL_FRAGMENT_SHADER);
 	m_VertexID = glCreateShader(GL_VERTEX_SHADER);

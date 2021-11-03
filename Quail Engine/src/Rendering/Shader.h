@@ -27,7 +27,7 @@ private:
 	Shader();
 	
 public:
-	Shader(std::string& fragmentSource, std::string& vertexSource);
+	Shader(const std::string& fragmentSource,const std::string& vertexSource);
 	//~Shader();
 	bool Compile();
 	void Bind() const;
