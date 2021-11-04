@@ -33,7 +33,6 @@ void ExampleGame::OnInitialize()
 
 	nekoCube->transform.localScale *= 0.5f;
 	testbun->transform.localScale *= 1.f;
-	sponza->transform.localScale *= 0.01f;
 
 	PerspectiveCamera* camera = new PerspectiveCamera();
 	camera->transform.localPosition.z = 3;

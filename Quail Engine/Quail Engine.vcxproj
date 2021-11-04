@@ -22,6 +22,9 @@
     <ClInclude Include="Dependencies\fmt\fmt\core.h" />
     <ClInclude Include="Dependencies\fmt\fmt\format-inl.h" />
     <ClInclude Include="Dependencies\fmt\fmt\format.h" />
+    <ClInclude Include="Dependencies\OBJ_Loader.h" />
+    <ClInclude Include="Dependencies\tiny_obj_loader\tiny_obj_loader_opt.h" />
+    <ClInclude Include="Dependencies\tiny_obj_loader\tiny_obj_loader.h" />
     <ClInclude Include="Examples\Demo2\Demo2.h" />
     <ClInclude Include="Examples\Demo1\ExampleGame.h" />
     <ClInclude Include="src\Rendering\Skybox.h" />
@@ -327,7 +330,6 @@
     <ClInclude Include="Dependencies\imgui\imstb_rectpack.h" />
     <ClInclude Include="Dependencies\imgui\imstb_textedit.h" />
     <ClInclude Include="Dependencies\imgui\imstb_truetype.h" />
-    <ClInclude Include="Dependencies\OBJ_Loader.h" />
     <ClInclude Include="Dependencies\stb_image\stb_image.h" />
     <ClInclude Include="src\Rendering\GLHeaders.h" />
     <ClInclude Include="src\Rendering\IndexBuffer.h" />

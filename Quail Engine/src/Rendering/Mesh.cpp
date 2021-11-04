@@ -1,6 +1,14 @@
 #include "Mesh.h"
-#include <OBJ_Loader.h>
 #include <filesystem>
+
+//#define TINYOBJLOADER_IMPLEMENTATION
+
+#ifdef TINYOBJLOADER_IMPLEMENTATION
+#include <tiny_obj_loader/tiny_obj_loader.h>
+#else
+#include <OBJ_Loader.h>
+#endif
+
 namespace fs = std::filesystem;
 
 
@@ -88,54 +96,91 @@ Mesh Mesh::Cube(float width, float height, float depth, Material* material /*= n
 std::vector<Mesh> Mesh::LoadOBJ(std::string modelPath,Material* material)
 {
 	std::vector<Mesh> meshes;
+	auto start = std::chrono::steady_clock::now();
 	fs::path dir = find_directory_of_path(modelPath);
-	Material* appliedMaterial = material;
 	Console::Log("Loading model " + modelPath);
+#ifdef TINYOBJLOADER_IMPLEMENTATION
+
+	Material* appliedMaterial = material;
 	
-	objl::Loader loader;
-	loader.LoadFile(modelPath);
+	tinyobj::ObjReaderConfig reader_config;
+	reader_config.triangulate = true;
+	tinyobj::ObjReader reader;
+	if (!reader.ParseFromFile(modelPath, reader_config)) {
+		if (!reader.Error().empty()) {
+			Console::Error("TinyObj error: " + reader.Error());
+			return meshes;
+		}
 
+	}
+	auto& attrib = reader.GetAttrib();
+	auto& shapes = reader.GetShapes();
+	auto& materials = reader.GetMaterials();
 
-	for (const objl::Mesh& mesh : loader.LoadedMeshes) {
+	for (size_t s = 0; s < shapes.size();s++) {
+
+		size_t index_offset = 0;
 		std::vector<float> vertices;
-		vertices.resize(mesh.Vertices.size() * 8);
-		std::vector<unsigned int> indices = mesh.Indices;
-		for (int i=0;i<mesh.Vertices.size();i++){
-			int offset = i * 8;
-			objl::Vertex vertex = mesh.Vertices[i];
-			vertices[offset+0] = (vertex.Position.X);
-			vertices[offset + 1] = (vertex.Position.Y);
-			vertices[offset + 2] = (vertex.Position.Z);
-			vertices[offset + 3] = (vertex.TextureCoordinate.X);
-			vertices[offset + 4] = (vertex.TextureCoordinate.Y);
-			vertices[offset + 5] = (vertex.Normal.X);
-			vertices[offset + 6] = (vertex.Normal.Y);
-			vertices[offset + 7] = (vertex.Normal.Z);
+		std::vector<unsigned int> indices;
+		indices.resize(shapes[s].mesh.indices.size());
+
+		for (int i = 0; i < indices.size(); i++) {
+			indices[i] = shapes[s].mesh.indices[i].vertex_index;
+		}
+		
+		for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
+			size_t face_vertices = size_t(shapes[s].mesh.num_face_vertices[f]);
+			for (size_t v = 0; v < face_vertices; v++) {
+				tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
+				
+				float vx = attrib.vertices[3 * size_t(idx.vertex_index) + 0];
+				float vy = attrib.vertices[3 * size_t(idx.vertex_index) + 1];
+				float vz = attrib.vertices[3 * size_t(idx.vertex_index) + 2];
+
+				float nx, ny, nz;
+				if (idx.normal_index >= 0) {
+					nx = attrib.normals[3 * size_t(idx.normal_index) + 0];
+					ny = attrib.normals[3 * size_t(idx.normal_index) + 1];
+					nz = attrib.normals[3 * size_t(idx.normal_index) + 2];
+				}
+				float tx, ty;
+				if (idx.texcoord_index >= 0) {
+					tx = attrib.texcoords[2 * size_t(idx.texcoord_index) + 0];
+					ty = attrib.texcoords[2 * size_t(idx.texcoord_index) + 1];
+				}
+
+				vertices.push_back(vx);
+				vertices.push_back(vy);
+				vertices.push_back(vz);
+				vertices.push_back(tx);
+				vertices.push_back(ty);
+				vertices.push_back(nx);
+				vertices.push_back(ny);
+				vertices.push_back(nz);
+			}
+			index_offset += face_vertices;
 
 		}
-
-		/*Console::Log(modelPath + " vertices");
-		for (const float& vertex : vertices) {
-			std::cout << vertex << ",";
-		}
-		std::cout << std::endl;
-		Console::Log(modelPath + " indices");
-		for (const float& index : indices) {
-			std::cout << index << ",";
-		}
-		std::cout << std::endl;
-		*/
 
 		float* vertices_buffer = &vertices[0];
 		unsigned int* indices_buffer = &indices[0];
 
 		if (material == nullptr) {
-			if (mesh.MeshMaterial.map_Kd != "") {
-				appliedMaterial = new Material(&Shader::BasicShader);
-				fs::path textPath = mesh.MeshMaterial.map_Kd;
-				Texture* texture = Texture::Create((dir / textPath).string());
-				appliedMaterial->GetProperty<TextureProperty>("u_mainTexture")->texture = texture;
-				Console::Log(mesh.MeshMaterial.map_Kd);
+			if (materials.size() > 0) {
+
+				auto matindex = shapes[s].mesh.material_ids[0];
+				tinyobj::material_t meshMaterial = materials[matindex];
+				std::string diffuseMap = meshMaterial.diffuse_texname;
+				Console::Log(diffuseMap);
+				if (diffuseMap != "") {
+					appliedMaterial = new Material(&Shader::BasicShader);
+					fs::path textPath = diffuseMap;
+					Texture* texture = Texture::Create((dir / textPath).string(),false);
+					appliedMaterial->GetProperty<TextureProperty>("u_mainTexture")->texture = texture;
+				}
+				else {
+					appliedMaterial = nullptr;
+				}
 			}
 			else {
 				appliedMaterial = nullptr;
@@ -145,10 +190,65 @@ std::vector<Mesh> Mesh::LoadOBJ(std::string modelPath,Material* material)
 
 		meshes.push_back(Mesh(vertices_buffer,vertices.size()*sizeof(float), indices_buffer,indices.size(), appliedMaterial));
 	}
-	if (meshes.empty()) { Console::Warning("No meshes found in file " + modelPath); }
-	else {
-		Console::Log("Loaded model " + modelPath);
+#else
+Material* appliedMaterial = material;
+
+objl::Loader loader;
+loader.LoadFile(modelPath);
+
+
+for (const objl::Mesh& mesh : loader.LoadedMeshes) {
+	std::vector<float> vertices;
+	vertices.resize(mesh.Vertices.size() * 8);
+	std::vector<unsigned int> indices = mesh.Indices;
+	for (int i = 0; i < mesh.Vertices.size(); i++) {
+		int offset = i * 8;
+		objl::Vertex vertex = mesh.Vertices[i];
+		vertices[offset + 0] = (vertex.Position.X);
+		vertices[offset + 1] = (vertex.Position.Y);
+		vertices[offset + 2] = (vertex.Position.Z);
+		vertices[offset + 3] = (vertex.TextureCoordinate.X);
+		vertices[offset + 4] = (vertex.TextureCoordinate.Y);
+		vertices[offset + 5] = (vertex.Normal.X);
+		vertices[offset + 6] = (vertex.Normal.Y);
+		vertices[offset + 7] = (vertex.Normal.Z);
+
 	}
 
+	/*Console::Log(modelPath + " vertices");
+	for (const float& vertex : vertices) {
+		std::cout << vertex << ",";
+	}
+	std::cout << std::endl;
+	Console::Log(modelPath + " indices");
+	for (const float& index : indices) {
+		std::cout << index << ",";
+	}
+	std::cout << std::endl;
+	*/
+
+	float* vertices_buffer = &vertices[0];
+	unsigned int* indices_buffer = &indices[0];
+
+	if (material == nullptr) {
+		if (mesh.MeshMaterial.map_Kd != "") {
+			appliedMaterial = new Material(&Shader::BasicShader);
+			fs::path textPath = mesh.MeshMaterial.map_Kd;
+			Texture* texture = Texture::Create((dir / textPath).string(),false);
+			appliedMaterial->GetProperty<TextureProperty>("u_mainTexture")->texture = texture;
+			Console::Log(mesh.MeshMaterial.map_Kd);
+		}
+		else {
+			appliedMaterial = nullptr;
+		}
+	}
+	meshes.push_back(Mesh(vertices_buffer, vertices.size() * sizeof(float), indices_buffer, indices.size(), appliedMaterial));
+}
+#endif
+	auto finish = std::chrono::steady_clock::now();
+	double elapsed_seconds = std::chrono::duration_cast<
+		std::chrono::duration<double>>(finish - start).count();
+	Console::Log(fmt::format("Loaded model {} in {} seconds", modelPath, elapsed_seconds));
+	if (meshes.empty()) { Console::Warning("No meshes found in file " + modelPath); }
 	return meshes;
 }
