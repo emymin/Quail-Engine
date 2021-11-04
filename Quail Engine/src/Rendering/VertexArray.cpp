@@ -1,6 +1,6 @@
 #include "VertexArray.h"
 
-VertexArray::VertexArray()
+VertexArray::VertexArray() : m_LocalBuffer(nullptr,0)
 {
 	glGenVertexArrays(1, &m_RendererID);
 }
@@ -12,6 +12,9 @@ VertexArray::VertexArray()
 
 void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& layout)
 {
+	m_LocalBuffer = vb;
+	m_layout = layout;
+
 	Bind();
 	vb.Bind();
 
