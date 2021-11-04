@@ -1,7 +1,7 @@
 #include "Mesh.h"
 #include <filesystem>
 
-//#define TINYOBJLOADER_IMPLEMENTATION
+#define TINYOBJLOADER_IMPLEMENTATION
 
 #ifdef TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader/tiny_obj_loader.h>
@@ -122,17 +122,14 @@ std::vector<Mesh> Mesh::LoadOBJ(std::string modelPath,Material* material)
 		size_t index_offset = 0;
 		std::vector<float> vertices;
 		std::vector<unsigned int> indices;
-		indices.resize(shapes[s].mesh.indices.size());
-
-		for (int i = 0; i < indices.size(); i++) {
-			indices[i] = shapes[s].mesh.indices[i].vertex_index;
-		}
 		
 		for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
 			size_t face_vertices = size_t(shapes[s].mesh.num_face_vertices[f]);
 			for (size_t v = 0; v < face_vertices; v++) {
+
 				tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
-				
+				indices.push_back(index_offset+v);
+
 				float vx = attrib.vertices[3 * size_t(idx.vertex_index) + 0];
 				float vy = attrib.vertices[3 * size_t(idx.vertex_index) + 1];
 				float vz = attrib.vertices[3 * size_t(idx.vertex_index) + 2];
@@ -215,17 +212,6 @@ for (const objl::Mesh& mesh : loader.LoadedMeshes) {
 
 	}
 
-	/*Console::Log(modelPath + " vertices");
-	for (const float& vertex : vertices) {
-		std::cout << vertex << ",";
-	}
-	std::cout << std::endl;
-	Console::Log(modelPath + " indices");
-	for (const float& index : indices) {
-		std::cout << index << ",";
-	}
-	std::cout << std::endl;
-	*/
 
 	float* vertices_buffer = &vertices[0];
 	unsigned int* indices_buffer = &indices[0];
