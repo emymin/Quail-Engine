@@ -6,9 +6,9 @@ void ExampleGame::OnInitialize()
 	Shader* unlit = &(Shader::BasicShader);
 	Shader* standard = &(Shader::StandardShader);
 
-	Texture* testTexture = new Texture("./Examples/Assets/Textures/test.png");
-	Texture* nekoTexture = new Texture("./Examples/Assets/Textures/neko.png", false);
-	Texture* skytexture = new Texture("./Examples/Assets/Textures/skybox.hdr");
+	Texture* testTexture = Texture::Create("./Examples/Assets/Textures/test.png");
+	Texture* nekoTexture = Texture::Create("./Examples/Assets/Textures/neko.png", false);
+	Texture* skytexture = Texture::Create("./Examples/Assets/Textures/skybox.hdr");
 
 	Engine::Scene()->skybox = new Skybox(skytexture);
 
@@ -22,6 +22,7 @@ void ExampleGame::OnInitialize()
 
 	GameObject* testbun = Engine::Scene()->CreateGameObject("bun", Mesh::LoadOBJ("./Examples/Assets/Models/bunny.obj"));
 	GameObject* nekoCube = Engine::Scene()->CreateGameObject("neko", Mesh::Cube());
+	GameObject* sponza = Engine::Scene()->CreateGameObject("sponza", Mesh::LoadOBJ("./Examples/Assets/Models/sponza/sponza.obj"));
 
 
 	testbun->meshes[0].material = material;
@@ -32,6 +33,7 @@ void ExampleGame::OnInitialize()
 
 	nekoCube->transform.localScale *= 0.5f;
 	testbun->transform.localScale *= 1.f;
+	sponza->transform.localScale *= 0.01f;
 
 	PerspectiveCamera* camera = new PerspectiveCamera();
 	camera->transform.localPosition.z = 3;

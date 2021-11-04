@@ -1,5 +1,8 @@
 #include "Mesh.h"
 #include <OBJ_Loader.h>
+#include <filesystem>
+namespace fs = std::filesystem;
+
 
 Mesh::Mesh(float* vertices, int vertices_size, unsigned int* indices, int indices_count,Material* material) : material(material),indexBuffer(indices,indices_count)
 {
@@ -84,11 +87,14 @@ Mesh Mesh::Cube(float width, float height, float depth, Material* material /*= n
 
 std::vector<Mesh> Mesh::LoadOBJ(std::string modelPath,Material* material)
 {
-	Console::Log("Loading model " + modelPath);
 	std::vector<Mesh> meshes;
+	fs::path dir = find_directory_of_path(modelPath);
+	Material* appliedMaterial = material;
+	Console::Log("Loading model " + modelPath);
 	
 	objl::Loader loader;
 	loader.LoadFile(modelPath);
+
 
 	for (const objl::Mesh& mesh : loader.LoadedMeshes) {
 		std::vector<float> vertices;
@@ -123,8 +129,21 @@ std::vector<Mesh> Mesh::LoadOBJ(std::string modelPath,Material* material)
 		float* vertices_buffer = &vertices[0];
 		unsigned int* indices_buffer = &indices[0];
 
+		if (material == nullptr) {
+			if (mesh.MeshMaterial.map_Kd != "") {
+				appliedMaterial = new Material(&Shader::BasicShader);
+				fs::path textPath = mesh.MeshMaterial.map_Kd;
+				Texture* texture = Texture::Create((dir / textPath).string());
+				appliedMaterial->GetProperty<TextureProperty>("u_mainTexture")->texture = texture;
+				Console::Log(mesh.MeshMaterial.map_Kd);
+			}
+			else {
+				appliedMaterial = nullptr;
+			}
+		}
 
-		meshes.push_back(Mesh(vertices_buffer,vertices.size()*sizeof(float), indices_buffer,indices.size(), material));
+
+		meshes.push_back(Mesh(vertices_buffer,vertices.size()*sizeof(float), indices_buffer,indices.size(), appliedMaterial));
 	}
 	if (meshes.empty()) { Console::Warning("No meshes found in file " + modelPath); }
 	else {

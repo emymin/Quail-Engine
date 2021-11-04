@@ -485,6 +485,9 @@
     <None Include="Dependencies\glm\gtx\vector_angle.inl" />
     <None Include="Dependencies\glm\gtx\vector_query.inl" />
     <None Include="Dependencies\glm\gtx\wrap.inl" />
+    <None Include="Examples\Assets\Models\sponza\sponza.mtl">
+      <FileType>Text</FileType>
+    </None>
     <None Include="src\imgui.ini" />
     <None Include="src\Resources\Shaders\basicFragment.glsl" />
     <None Include="src\Resources\Shaders\basicVertex.glsl" />
@@ -531,6 +534,60 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Desktop\skybox.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\background.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\background_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\chain_texture.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\chain_texture_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\chain_texture_mask.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\floor_gloss.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\lion.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\lion2_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\lion_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\spnza_bricks_a_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\spnza_bricks_a_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\spnza_bricks_a_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_arch_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_arch_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_arch_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_ceiling_a_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_ceiling_a_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_a_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_a_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_a_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_b_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_b_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_b_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_c_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_c_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_c_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_curtain_blue_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_curtain_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_curtain_green_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_details_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_details_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_fabric_blue_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_fabric_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_fabric_green_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_fabric_purple.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_fabric_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_flagpole_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_flagpole_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_floor_a_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_floor_a_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_roof_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_thorn_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_thorn_diff.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_thorn_mask.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_thorn_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_dif.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_hanging.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_plant.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_plant_mask.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_plant_spec.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_round.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_round_bump.png" />
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_round_spec.png" />
     <Image Include="Examples\Assets\Textures\neko.png" />
     <Image Include="Examples\Assets\Textures\test.png" />
   </ItemGroup>
@@ -544,6 +601,11 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="Examples\Assets\Models\sphere.obj">
+      <FileType>Document</FileType>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Examples\Assets\Models\sponza\sponza.obj">
       <FileType>Document</FileType>
     </Media>
   </ItemGroup>
@@ -655,6 +717,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -669,6 +732,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -1413,6 +1413,7 @@
     <None Include="src\Resources\Shaders\skyboxVertex.glsl" />
     <None Include="src\Resources\Shaders\basicFragment.glsl" />
     <None Include="src\Resources\Shaders\skyboxFragment.glsl" />
+    <None Include="Examples\Assets\Models\sponza\sponza.mtl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\glm\detail\glm.cpp">
@@ -1521,10 +1522,173 @@
     <Image Include="..\..\..\..\Desktop\skybox.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\background.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\background_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\chain_texture.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\chain_texture_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\chain_texture_mask.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\floor_gloss.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\lion.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\lion_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\lion2_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\spnza_bricks_a_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\spnza_bricks_a_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\spnza_bricks_a_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_arch_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_arch_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_arch_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_ceiling_a_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_ceiling_a_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_a_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_a_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_a_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_b_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_b_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_b_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_c_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_c_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_column_c_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_curtain_blue_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_curtain_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_curtain_green_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_details_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_details_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_fabric_blue_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_fabric_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_fabric_green_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_fabric_purple.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_fabric_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_flagpole_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_flagpole_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_floor_a_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_floor_a_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_roof_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_thorn_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_thorn_diff.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_thorn_mask.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\sponza_thorn_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_dif.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_hanging.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_plant.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_plant_mask.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_plant_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_round.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_round_bump.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Examples\Assets\Models\sponza\textures\vase_round_spec.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Examples\Assets\Models\bunny.obj" />
     <Media Include="Examples\Assets\Models\cube.obj" />
     <Media Include="Examples\Assets\Models\sphere.obj" />
+    <Media Include="Examples\Assets\Models\sponza\sponza.obj" />
   </ItemGroup>
 </Project>

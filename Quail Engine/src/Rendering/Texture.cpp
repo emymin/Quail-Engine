@@ -2,6 +2,8 @@
 #include <stb_image/stb_image.h>
 #include "Console.h"
 
+std::unordered_map<std::string, Texture> Texture::_cache;
+
 Texture::Texture(const std::string& path,bool clamp) : m_RendererID(0),m_FilePath(path),m_LocalBuffer(nullptr),m_Width(0),m_Height(0),m_BPP(0)
 {
 	stbi_set_flip_vertically_on_load(1);
@@ -42,10 +44,21 @@ Texture::Texture(unsigned char* buffer,int width,int height):m_LocalBuffer(buffe
 	Unbind();
 }
 
-Texture::~Texture()
+Texture* Texture::Create(const std::string& path, bool clamp /*= true*/)
+{
+	if (_cache.find(path) == _cache.end()) {
+		_cache[path] = Texture(path, clamp);
+		return &(_cache[path]);
+	}
+	else {
+		return &(_cache[path]);
+	}
+}
+
+/*Texture::~Texture()
 {
 	glDeleteTextures(1, &m_RendererID);
-}
+}*/
 
 void Texture::Bind(unsigned int slot /*= 0*/) const
 {

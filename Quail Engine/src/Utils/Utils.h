@@ -1,4 +1,5 @@
 #pragma once
+
 #include <fstream>
 #include <sstream>
 #include <algorithm>
@@ -35,4 +36,12 @@ static inline std::string string_replace(const std::string& in, const std::strin
 static inline bool string_startswith(const std::string& in, const std::string& prefix) {
 	if (in.length() < prefix.length()) { return false; }
 	return std::mismatch(prefix.begin(), prefix.end(), in.begin()).first == prefix.end();
+}
+
+static inline std::string find_directory_of_path(const std::string& fname)
+{
+	size_t pos = fname.find_last_of("\\/");
+	return (std::string::npos == pos)
+		? ""
+		: fname.substr(0, pos);
 }

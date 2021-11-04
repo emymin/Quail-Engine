@@ -7,7 +7,7 @@ void Demo2::OnInitialize()
 	ASSERT(shader->Compile());
 	shader->Bind();
 
-	Texture* nekoTexture = new Texture("./Examples/Assets/Textures/neko.png", false);
+	Texture* nekoTexture = Texture::Create("./Examples/Assets/Textures/neko.png", false);
 
 	Material* material = new Material(shader);
 	material->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
