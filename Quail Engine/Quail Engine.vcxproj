@@ -344,6 +344,7 @@
     <ClInclude Include="src\Scene\Transform.h" />
     <ClInclude Include="src\Utils\EngineUI.h" />
     <ClInclude Include="src\Utils\NoClipController.h" />
+    <ClInclude Include="src\Utils\RotateBehaviour.h" />
     <ClInclude Include="src\Utils\Utils.h" />
     <ClInclude Include="src\Rendering\VertexArray.h" />
     <ClInclude Include="src\Rendering\VertexBuffer.h" />

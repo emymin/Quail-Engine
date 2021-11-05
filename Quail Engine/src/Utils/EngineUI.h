@@ -3,6 +3,10 @@
 class EngineUI : Behaviour {
 
 public:
+	EngineUI() {
+		name = "EngineUI";
+	}
+
 	void OnInitialize() override
 	{
 	}

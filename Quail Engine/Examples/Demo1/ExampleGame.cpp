@@ -31,6 +31,7 @@ void ExampleGame::OnInitialize()
 
 	testbun->transform.localPosition.x = -1;
 	testbun->transform.localPosition.y = 1;
+
 	nekoCube->transform.localPosition.x = 1;
 	nekoCube->transform.localPosition.y = 1;
 

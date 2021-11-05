@@ -40,7 +40,8 @@ public:
 
 	static Scene* Scene() { return &(_instance->scene); }
 	static GLFWwindow* Window() { return _instance->window; }
-	static GameTime Time() { return _instance->time; }
+	static const GameTime Time() { return _instance->time; }
+	static Behaviour* GetBehaviour(std::string name);
 
 	static Engine* GetInstance() { return _instance; }
 };

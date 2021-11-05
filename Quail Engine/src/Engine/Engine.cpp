@@ -134,6 +134,13 @@ MouseInfo Engine::GetMouse()
 
 }
 
+Behaviour* Engine::GetBehaviour(std::string name)
+{
+	for (auto behaviour : _instance->behaviours) {
+		if (behaviour->name == name) { return behaviour; }
+	}
+}
+
 void Engine::Update()
 {
 	_instance->time.currentTime = GameTime::GetTime();
