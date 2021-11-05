@@ -170,7 +170,7 @@ std::vector<Mesh> Mesh::LoadOBJ(std::string modelPath,Material* material)
 				std::string diffuseMap = meshMaterial.diffuse_texname;
 				Console::Log(diffuseMap);
 				if (diffuseMap != "") {
-					appliedMaterial = new Material(&Shader::BasicShader);
+					appliedMaterial = new Material(&Shader::StandardShader);
 					fs::path textPath = diffuseMap;
 					Texture* texture = Texture::Create((dir / textPath).string(),false);
 					appliedMaterial->GetProperty<TextureProperty>("u_mainTexture")->texture = texture;

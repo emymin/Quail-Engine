@@ -8,12 +8,13 @@ void ExampleGame::OnInitialize()
 
 	Texture* testTexture = Texture::Create("./Examples/Assets/Textures/test.png");
 	Texture* nekoTexture = Texture::Create("./Examples/Assets/Textures/neko.png", false);
-	Texture* skytexture = Texture::Create("./Examples/Assets/Textures/skybox.hdr");
+	Texture* skytexture = Texture::Create("./Examples/Assets/Textures/skybox.hdr",true,false);
 
 	Engine::Scene()->skybox = new Skybox(skytexture);
 
 	Material* material2 = new Material(standard);
-	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
+	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = &Texture::White;
+	material2->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(Engine::Scene()->skybox->ambientColor,1);
 
 	Material* material = new Material(standard);
 	material->GetProperty<TextureProperty>("u_mainTexture")->texture = testTexture;
@@ -29,7 +30,9 @@ void ExampleGame::OnInitialize()
 	nekoCube->meshes[0].material = material2;
 
 	testbun->transform.localPosition.x = -1;
+	testbun->transform.localPosition.y = 1;
 	nekoCube->transform.localPosition.x = 1;
+	nekoCube->transform.localPosition.y = 1;
 
 	nekoCube->transform.localScale *= 0.5f;
 	testbun->transform.localScale *= 1.f;

@@ -5,4 +5,6 @@ Skybox::Skybox(Texture* texture) : m_Mesh(Mesh::Cube()),m_Material(&Shader::Skyb
 	this->texture = texture;
 	m_Mesh.material = &m_Material;
 	m_Material.GetProperty<TextureProperty>("u_mainTexture")->texture = texture;
+	
+	ambientColor = texture->GetAverageColor();
 }

@@ -16,15 +16,17 @@ private:
 public:
 	Texture() {}
 	Texture(unsigned char* buffer,int width,int height);
-	Texture(const std::string& path,bool clamp=true);
+	Texture(const std::string& path,bool clamp=true,bool mipmap=true);
 
-	static Texture* Create(const std::string& path, bool clamp = true);
+	static Texture* Create(const std::string& path, bool clamp = true,bool mipmap=true);
 
 	void Bind(unsigned int slot = 0) const;
 	void Unbind();
 
 	inline int GetWidth() const { return m_Width; }
 	inline int GetHeight() const { return m_Height; }
+
+	glm::vec4 GetAverageColor();
 
 	static Texture White;
 
