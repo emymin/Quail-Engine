@@ -59,10 +59,6 @@ void ExampleGame::OnUpdate()
 
 void ExampleGame::OnGui()
 {
-
-	ImGui::Begin("Quail Engine");
-	ImGui::Text("Framerate: %1.f Render time: %.3f ms", Engine::Time().fps, Engine::Time().lastRenderTime * 1000);
-	ImGui::End();
 }
 
 void ExampleGame::OnClose()
@@ -71,10 +67,4 @@ void ExampleGame::OnClose()
 
 void ExampleGame::OnKey(KeyEvent key)
 {
-	if (key.action == KeyAction::PRESS) {
-		switch (key.key) {
-		case Key::Esc: {Engine::SetShouldClose(); break; }
-		default: {break; }
-		}
-	}
 }

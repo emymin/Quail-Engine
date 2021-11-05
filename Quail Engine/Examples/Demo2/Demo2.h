@@ -1,7 +1,7 @@
 #pragma once
-#include "Game.h"
+#include "Behaviour.h"
 #include "NoClipController.h"
-class Demo2 : public Game
+class Demo2 : public Behaviour
 {
 public:
 	Demo2(){ name = "NekoWave"; }

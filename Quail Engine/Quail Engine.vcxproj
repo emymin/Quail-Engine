@@ -31,7 +31,7 @@
     <ClInclude Include="src\Resources\Resources.h" />
     <ClInclude Include="src\Engine\Console.h" />
     <ClInclude Include="src\Engine\Input.h" />
-    <ClInclude Include="src\Engine\Game.h" />
+    <ClInclude Include="src\Engine\Behaviour.h" />
     <ClInclude Include="src\Engine\Engine.h" />
     <ClInclude Include="src\Scene\Camera.h" />
     <ClInclude Include="src\Scene\Debug.h" />
@@ -342,6 +342,7 @@
     <ClInclude Include="src\Rendering\Shader.h" />
     <ClInclude Include="src\Rendering\Texture.h" />
     <ClInclude Include="src\Scene\Transform.h" />
+    <ClInclude Include="src\Utils\EngineUI.h" />
     <ClInclude Include="src\Utils\NoClipController.h" />
     <ClInclude Include="src\Utils\Utils.h" />
     <ClInclude Include="src\Rendering\VertexArray.h" />
@@ -501,6 +502,7 @@
     <ClCompile Include="Dependencies\fmt\src\format.cc" />
     <ClCompile Include="Examples\Demo2\Demo2.cpp" />
     <ClCompile Include="Examples\Demo1\ExampleGame.cpp" />
+    <ClCompile Include="src\Engine\Behaviour.cpp" />
     <ClCompile Include="src\Rendering\Skybox.cpp" />
     <ClCompile Include="src\Resources\Resources.cpp" />
     <ClCompile Include="src\Engine\Console.cpp" />

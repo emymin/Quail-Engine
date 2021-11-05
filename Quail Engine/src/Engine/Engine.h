@@ -1,22 +1,27 @@
 #pragma once
 #include "Renderer.h"
-#include "Game.h"
 #include "GameTime.h"
+#include "Input.h"
+#include "Behaviour.h"
+
+class Behaviour;
 
 class Engine
 {
 private:
 	static Engine* _instance;
 	Renderer m_Renderer;
-	Game* m_Game;
+	std::vector<Behaviour*> behaviours;
 	int m_Width, m_Height;
+	std::string m_Title;
 	static void HandleUI();
 	static void input_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	static void window_focus_callback(GLFWwindow* window, int focused);
 	bool m_Focused=true;
 public:
-	Engine(Game* game);
+	Engine(const std::string& title);
+	static void RegisterBehaviour(Behaviour* behaviour) { _instance->behaviours.push_back(behaviour); }
 	GameTime time;
 	Scene scene;
 	GLFWwindow* window;
@@ -36,7 +41,6 @@ public:
 	static Scene* Scene() { return &(_instance->scene); }
 	static GLFWwindow* Window() { return _instance->window; }
 	static GameTime Time() { return _instance->time; }
-	static Game* GetGame() { return _instance->m_Game; }
 
 	static Engine* GetInstance() { return _instance; }
 };

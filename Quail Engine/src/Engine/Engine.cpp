@@ -19,15 +19,14 @@ void Engine::window_focus_callback(GLFWwindow* window, int focused)
 	_instance->m_Focused = (focused != 0);
 }
 
-Engine::Engine(Game* game)
+Engine::Engine(const std::string& title)
 {
-	Console::Log(game->name);
 	if (_instance != nullptr) { 
 		Console::Warning("Attempted creation of a second Engine instance, ignoring");
 		return;
 	}
 	_instance = this;
-	m_Game = game;
+	m_Title = title;
 }
 
 bool Engine::Initialize(int width,int height)
@@ -43,7 +42,7 @@ bool Engine::Initialize(int width,int height)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	_instance->window = glfwCreateWindow(width, height, _instance->m_Game->name.c_str(), NULL, NULL);
+	_instance->window = glfwCreateWindow(width, height, _instance->m_Title.c_str(), NULL, NULL);
 	if (_instance->window == NULL) {
 		Console::Error("Error creating window!");
 		glfwTerminate();
@@ -94,7 +93,9 @@ bool Engine::Initialize(int width,int height)
 
 	Console::Log("Finished initializing Quail Engine, initializing game...");
 
-	_instance->m_Game->OnInitialize();
+	for (auto behaviour : _instance->behaviours) {
+		behaviour->OnInitialize();
+	}
 
 	return true;
 
@@ -140,7 +141,9 @@ void Engine::Update()
 	_instance->time.lastTime = _instance->time.currentTime;
 	_instance->time.fps = 1 / _instance->time.deltaTime;
 	
-	_instance->m_Game->OnUpdate();
+	for (auto behaviour : _instance->behaviours) {
+		behaviour->OnUpdate();
+	}
 	
 	_instance->m_Renderer.Clear();
 	_instance->m_Renderer.Draw(&_instance->scene);
@@ -159,7 +162,9 @@ void Engine::Update()
 
 void Engine::input_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	_instance->m_Game->OnKey(KeyEvent(key,action));
+	for (auto behaviour : _instance->behaviours) {
+		behaviour->OnKey(KeyEvent(key, action));
+	}
 }
 
 void Engine::HandleUI()
@@ -168,7 +173,9 @@ void Engine::HandleUI()
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
 
-	_instance->m_Game->OnGui();
+	for (auto behaviour : _instance->behaviours) {
+		behaviour->OnGui();
+	}
 
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -178,7 +185,11 @@ void Engine::HandleUI()
 void Engine::Destroy()
 {
 	Console::Log("Shutting down Quail Engine...");
-	_instance->m_Game->OnClose();
+
+	for (auto behaviour : _instance->behaviours) {
+		behaviour->OnClose();
+	}
+
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplGlfw_Shutdown();
 	ImGui::DestroyContext();

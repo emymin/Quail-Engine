@@ -50,9 +50,12 @@ void Renderer::Draw(const Scene* scene) const
 				
 				mesh.material->shader->SetUniformMat4f("u_MVP", MVP);
 				mesh.material->shader->SetUniformMat4f("u_M", M);
-				mesh.material->shader->SetUniform3f("u_ambientColor", ambientColor.r,ambientColor.g,ambientColor.b);
-				mesh.material->shader->SetUniform1f("u_ambientStrength",scene->skybox->ambientStrength);
 				mesh.material->shader->SetUniform3f("u_cameraPos", cameraPos.x, cameraPos.y, cameraPos.z);
+
+				if (scene->skybox != nullptr) {
+					mesh.material->shader->SetUniform3f("u_ambientColor", ambientColor.r,ambientColor.g,ambientColor.b);
+					mesh.material->shader->SetUniform1f("u_ambientStrength",scene->skybox->ambientStrength);
+				}
 				
 				glDrawElements(GL_TRIANGLES, mesh.indexBuffer.GetCount(), GL_UNSIGNED_INT, 0);
 			}

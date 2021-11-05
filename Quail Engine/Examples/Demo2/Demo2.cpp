@@ -3,13 +3,9 @@
 void Demo2::OnInitialize()
 {
 
-	Shader* shader = &(Shader::BasicShader);
-	ASSERT(shader->Compile());
-	shader->Bind();
-
 	Texture* nekoTexture = Texture::Create("./Examples/Assets/Textures/neko.png", false);
 
-	Material* material = new Material(shader);
+	Material* material = new Material(&Shader::BasicShader);
 	material->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
 
 	Mesh cube = Mesh::Cube();
@@ -24,7 +20,7 @@ void Demo2::OnInitialize()
 	}
 
 	PerspectiveCamera* camera = new PerspectiveCamera();
-	camera->transform.localPosition.z = -10;
+	camera->transform.localPosition.z = 10;
 	Engine::Scene()->camera=camera;
 
 	controller = NoClipController(&(camera->transform));
@@ -43,9 +39,6 @@ void Demo2::OnUpdate()
 
 void Demo2::OnGui()
 {
-	ImGui::Begin("Quail Engine");
-	ImGui::Text("Framerate: %1.f Render time: %1.f ms", Engine::Time().fps, Engine::Time().lastRenderTime * 1000);
-	ImGui::End();
 }
 
 void Demo2::OnClose()

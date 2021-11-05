@@ -1,7 +1,7 @@
 #pragma once
-#include "Game.h"
+#include "Behaviour.h"
 #include "NoClipController.h"
-class ExampleGame : public Game
+class ExampleGame : public Behaviour
 {
 
 public:

@@ -1,10 +1,13 @@
 #pragma once
-#include "Input.h"
+#include "Engine.h"
 
-class Game
+class Engine;
+
+class Behaviour
 {
 public:
 	std::string name;
+	Behaviour();
 	virtual void OnInitialize()=0;
 	virtual void OnUpdate() = 0;
 	virtual void OnGui() = 0;
