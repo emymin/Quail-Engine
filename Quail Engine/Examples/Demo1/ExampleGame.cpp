@@ -19,7 +19,8 @@ void ExampleGame::OnInitialize()
 	Material* material = new Material(standard);
 	material->GetProperty<TextureProperty>("u_mainTexture")->texture = testTexture;
 
-
+	PointLight* light = new PointLight(glm::vec3(1), 10, glm::vec3(1, 1, 1));
+	Engine::Scene()->pointLights.push_back(light);
 
 	GameObject* testbun = Engine::Scene()->CreateGameObject("bun", Mesh::LoadOBJ("./Examples/Assets/Models/bunny.obj"));
 	GameObject* nekoCube = Engine::Scene()->CreateGameObject("neko", Mesh::Cube());
@@ -51,6 +52,10 @@ void ExampleGame::OnUpdate()
 
 	GameObject* testbun = Engine::Scene()->Get("bun");
 	GameObject* nekoCube = Engine::Scene()->Get("neko");
+
+	PointLight* light = Engine::Scene()->pointLights[0];
+	light->pos.x = cos(Engine::Time().currentTime);
+	light->pos.z = sin(Engine::Time().currentTime);
 
 	testbun->transform.SetRotation(0, Engine::Time().currentTime, 0);
 	nekoCube->transform.SetRotation(sin(Engine::Time().currentTime), cos(Engine::Time().currentTime), cos(Engine::Time().currentTime));

@@ -3,6 +3,8 @@
 #include "GameObject.h"
 #include "Camera.h"
 #include "Skybox.h"
+#include "Light.h"
+
 class Scene
 {
 private:
@@ -11,6 +13,9 @@ private:
 public:
 	Camera* camera;
 	Skybox* skybox;
+
+	std::vector<PointLight*> pointLights;
+
 	GameObject* CreateGameObject(std::string name, std::vector<Mesh> meshes);
 	GameObject* CreateGameObject(std::string name, Mesh mesh);
 	GameObject* Get(std::string name);

@@ -21,7 +21,7 @@ public:
 	static Texture* Create(const std::string& path, bool clamp = true,bool mipmap=true);
 
 	void Bind(unsigned int slot = 0) const;
-	void Unbind();
+	void Unbind(unsigned int slot = 0)const;
 
 	inline int GetWidth() const { return m_Width; }
 	inline int GetHeight() const { return m_Height; }

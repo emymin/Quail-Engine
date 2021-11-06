@@ -50,11 +50,23 @@ void Renderer::Draw(const Scene* scene) const
 				
 				mesh.material->shader->SetUniformMat4f("u_MVP", MVP);
 				mesh.material->shader->SetUniformMat4f("u_M", M);
-				mesh.material->shader->SetUniform3f("u_cameraPos", cameraPos.x, cameraPos.y, cameraPos.z);
+				mesh.material->shader->SetUniform3f("rend.u_cameraPos", cameraPos.x, cameraPos.y, cameraPos.z);
+				for (int i = 0; i < 10; i++) {
+					std::string uniformName = fmt::format("rend.pointLights[{}]", i);
+					if (i < scene->pointLights.size()) {
+						PointLight* light = scene->pointLights[i];
+						light->Apply(mesh.material->shader, uniformName);
+					}
+					else {
+						PointLight::empty.Apply(mesh.material->shader, uniformName);
+					}
+				}
 
 				if (scene->skybox != nullptr) {
-					mesh.material->shader->SetUniform3f("u_ambientColor", ambientColor.r,ambientColor.g,ambientColor.b);
-					mesh.material->shader->SetUniform1f("u_ambientStrength",scene->skybox->ambientStrength);
+					mesh.material->shader->SetUniform3f("rend.u_ambientColor", ambientColor.r,ambientColor.g,ambientColor.b);
+					mesh.material->shader->SetUniform1f("rend.u_ambientStrength",scene->skybox->ambientStrength);
+					scene->skybox->texture->Bind(1);
+					mesh.material->shader->SetUniform1i("rend.u_environmentMap", 1);
 				}
 				
 				glDrawElements(GL_TRIANGLES, mesh.indexBuffer.GetCount(), GL_UNSIGNED_INT, 0);

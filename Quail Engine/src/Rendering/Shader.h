@@ -33,7 +33,13 @@ public:
 	void Bind() const;
 	void Unbind() const;
 	void SetUniform4f(const std::string& name,float x,float y,float z,float w);
+	void SetUniform4f(const std::string& name, glm::vec4 value) {
+		SetUniform4f(name, value.x, value.y, value.z, value.w);
+	}
 	void SetUniform3f(const std::string& name, float x, float y, float z);
+	void SetUniform3f(const std::string& name, glm::vec3 value) {
+		SetUniform3f(name, value.x, value.y, value.z);
+	}
 	void SetUniform1f(const std::string& name, float value);
 	void SetUniform1i(const std::string& name, int value);
 	void SetUniformMat4f(const std::string& name, glm::mat4& matrix);
