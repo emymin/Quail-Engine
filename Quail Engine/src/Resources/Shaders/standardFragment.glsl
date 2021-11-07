@@ -36,15 +36,24 @@ vec3 bounceRay(vec3 ray,vec3 normal){
     return ray - 2*dot(ray,normal)*normal;
 }
 
+struct Surface{
+    vec4 color;
+    float roughness;
+};
+
 //SURF
 struct Material {
     sampler2D u_mainTexture;
     vec4 u_mainColor;
+    float u_roughness;
 };
 uniform Material material;
-vec4 surf(){
+Surface surf(){
     vec4 texColor = texture(material.u_mainTexture, in_UV);
-    return texColor*material.u_mainColor;
+    Surface surf;
+    surf.color=texColor*material.u_mainColor;
+    surf.roughness=material.u_roughness;
+    return surf;
 }
 //
 
@@ -53,18 +62,30 @@ vec4 surf(){
 void main()
 {    
     
-    vec4 col = surf();
-    vec3 ray = rend.u_cameraPos-in_worldPos;
+    Surface surf = surf();
+    vec3 ray = normalize(rend.u_cameraPos-in_worldPos);
     vec3 bounce = bounceRay(ray,in_worldNormal);
     vec3 ambient = rend.u_ambientColor*rend.u_ambientStrength;
 
-    FragColor.a = col.a;
+    FragColor.a = surf.color.a;
+
+    if(FragColor.a<0.7){discard;}else{FragColor.a=1.;} //temporary cutout for lack of transparency sorting
 
     for(int i=0;i<POINTLIGHTSNUMBER;i++){
         PointLight light = rend.pointLights[i];
         vec3 lightDir = normalize(light.pos - in_worldPos);
+        float lightDist = length(light.pos-in_worldPos);
+        vec3 lightCol = light.col / (lightDist*lightDist);        
+
+        vec3 bounceLight = normalize(bounceRay(lightDir,in_worldNormal));
+        float specpow = mix(256,1,surf.roughness);
+        float spec = pow(max(dot(ray, bounceLight), 0.0), specpow);
+        vec3 specularHighlight = spec*lightCol;
+
         float cosTheta = clamp(dot(in_worldNormal,lightDir),0,1);
-        FragColor.rgb += (col.rgb+ambient)*cosTheta*light.col;
+        vec3 diffuse = cosTheta*lightCol;
+
+        FragColor.rgb += (diffuse+ambient+specularHighlight)*surf.color.rgb;
 
     }
 };

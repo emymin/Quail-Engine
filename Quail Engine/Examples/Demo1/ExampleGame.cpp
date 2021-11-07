@@ -13,7 +13,7 @@ void ExampleGame::OnInitialize()
 	Engine::Scene()->skybox = new Skybox(skytexture);
 
 	Material* material2 = new Material(standard);
-	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = &Texture::White;
+	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
 	material2->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(Engine::Scene()->skybox->ambientColor,1);
 
 	Material* material = new Material(standard);
@@ -54,9 +54,6 @@ void ExampleGame::OnUpdate()
 	GameObject* nekoCube = Engine::Scene()->Get("neko");
 
 	PointLight* light = Engine::Scene()->pointLights[0];
-	light->pos.x = cos(Engine::Time().currentTime);
-	light->pos.z = sin(Engine::Time().currentTime);
-
 	testbun->transform.SetRotation(0, Engine::Time().currentTime, 0);
 	nekoCube->transform.SetRotation(sin(Engine::Time().currentTime), cos(Engine::Time().currentTime), cos(Engine::Time().currentTime));
 
