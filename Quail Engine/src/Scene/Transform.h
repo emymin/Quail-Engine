@@ -1,14 +1,28 @@
 #pragma once
 #include "GLHeaders.h"
+#include <vector>
+
 class Transform
 {
+private:
+	Transform* parent;
+	std::vector<Transform*> children;
 public:
 	glm::vec3 localPosition;
 	glm::vec3 localScale;
 	glm::quat localRotation;
-	Transform() : localPosition(0), localScale(1), localRotation(glm::vec3(0)) {}
-	glm::mat4 GetModelMatrix() const;
-	glm::vec3 eulerAngles();
+
+	void SetParent(Transform* transform);
+	Transform* GetParent() const;
+	std::vector<Transform*> GetChildren() const;
+
+	glm::vec3 WorldPosition();
+	glm::quat WorldRotation();
+
+	Transform() : localPosition(0), localScale(1), localRotation(glm::vec3(0)),parent(nullptr) {}
+	inline glm::mat4 GetModelMatrix() const;
+	glm::mat4 GetLocalModelMatrix() const;
+	glm::vec3 eulerAngles() const;
 	void SetRotation(glm::vec3 eulerAngles);
 	void SetRotation(float x, float y, float z);
 	void Rotate(float angle, glm::vec3 axis);

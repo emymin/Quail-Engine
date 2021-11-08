@@ -45,3 +45,9 @@ static inline std::string find_directory_of_path(const std::string& fname)
 		? ""
 		: fname.substr(0, pos);
 }
+
+class NotImplementedException : public std::logic_error
+{
+public:
+	NotImplementedException() : std::logic_error("Feature not yet implemented") { };
+};
