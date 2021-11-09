@@ -12,16 +12,16 @@ private:
 	std::string m_FilePath;
 	unsigned char* m_LocalBuffer;
 	int m_Width, m_Height, m_BPP;
-//	~Texture();
 public:
 	Texture() {}
-	Texture(unsigned char* buffer,int width,int height);
+	Texture(unsigned char* buffer,int width,int height, unsigned int internalformat = GL_RGBA8, unsigned int format = GL_RGBA, unsigned int type = GL_UNSIGNED_BYTE);
 	Texture(const std::string& path,bool clamp=true,bool mipmap=true);
 
 	static Texture* Create(const std::string& path, bool clamp = true,bool mipmap=true);
 
 	void Bind(unsigned int slot = 0) const;
 	void Unbind(unsigned int slot = 0)const;
+	void Destroy();
 
 	inline int GetWidth() const { return m_Width; }
 	inline int GetHeight() const { return m_Height; }
@@ -31,5 +31,6 @@ public:
 	static Texture White;
 
 	friend class Resources;
+	friend class FrameBuffer;
 };
 

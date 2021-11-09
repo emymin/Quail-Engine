@@ -48,5 +48,6 @@ public:
 	static Shader BasicShader;
 	static Shader StandardShader;
 	static Shader SkyboxShader;
+	static Shader ScreenShader;
 	friend class Resources;
 };

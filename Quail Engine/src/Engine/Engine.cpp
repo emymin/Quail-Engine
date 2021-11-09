@@ -90,6 +90,7 @@ bool Engine::Initialize(int width,int height)
 	glEnable(GL_BLEND);
 
 	Resources::Initialize();
+	_instance->m_Renderer = new Renderer(width, height);
 
 	Console::Log("Finished initializing Quail Engine, initializing game...");
 
@@ -152,8 +153,7 @@ void Engine::Update()
 		behaviour->OnUpdate();
 	}
 	
-	_instance->m_Renderer.Clear();
-	_instance->m_Renderer.Draw(&_instance->scene);
+	_instance->m_Renderer->Draw(&_instance->scene);
 
 	HandleUI();
 

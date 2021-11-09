@@ -1,6 +1,11 @@
 #include "Renderer.h"
 #include "Console.h"
 
+Renderer::Renderer(unsigned int width, unsigned int height) :m_buffer(width, height), m_screenShader(&Shader::ScreenShader),m_screenMesh(Mesh::Plane(2.f))
+{
+	Material* screenMaterial = new Material(m_screenShader);
+	m_screenMesh.material = screenMaterial;
+}
 void Renderer::DrawSkybox(const Scene* scene) const
 {
 	glDepthMask(GL_FALSE);
@@ -15,13 +20,7 @@ void Renderer::DrawSkybox(const Scene* scene) const
 	glDepthMask(GL_TRUE);
 }
 
-void Renderer::Clear() const
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-
-void Renderer::Draw(const Scene* scene) const
+void Renderer::DrawScene(const Scene* scene) const
 {
 	if (scene->camera == nullptr) {
 		Console::Warning("Scene has no camera");
@@ -47,7 +46,7 @@ void Renderer::Draw(const Scene* scene) const
 		for (const Mesh& mesh : object->meshes) {
 			if (mesh.material != nullptr) {
 				mesh.Bind();
-				
+
 				mesh.material->shader->SetUniformMat4f("u_MVP", MVP);
 				mesh.material->shader->SetUniformMat4f("u_M", M);
 				mesh.material->shader->SetUniform3f("rend.u_cameraPos", cameraPos.x, cameraPos.y, cameraPos.z);
@@ -63,15 +62,39 @@ void Renderer::Draw(const Scene* scene) const
 				}
 
 				if (scene->skybox != nullptr) {
-					mesh.material->shader->SetUniform3f("rend.u_ambientColor", ambientColor.r,ambientColor.g,ambientColor.b);
-					mesh.material->shader->SetUniform1f("rend.u_ambientStrength",scene->skybox->ambientStrength);
+					mesh.material->shader->SetUniform3f("rend.u_ambientColor", ambientColor.r, ambientColor.g, ambientColor.b);
+					mesh.material->shader->SetUniform1f("rend.u_ambientStrength", scene->skybox->ambientStrength);
 					scene->skybox->texture->Bind(1);
 					mesh.material->shader->SetUniform1i("rend.u_environmentMap", 1);
 				}
-				
+
 				glDrawElements(GL_TRIANGLES, mesh.indexBuffer.GetCount(), GL_UNSIGNED_INT, 0);
 			}
 		}
 	}
+}
+
+
+void Renderer::Clear() const
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+
+void Renderer::Draw(const Scene* scene) const
+{
+	m_buffer.Bind();
+	Clear();
+	DrawScene(scene);
+	m_buffer.Unbind();
+
+	Clear();
+	glDisable(GL_DEPTH_TEST);
+	m_screenMesh.Bind();
+	m_buffer.m_ColorTexture.Bind();
+	(m_screenMesh.material->shader)->SetUniform1i("screenTexture",0);
+	glDrawElements(GL_TRIANGLES, m_screenMesh.indexBuffer.GetCount(), GL_UNSIGNED_INT, 0);
+	glEnable(GL_DEPTH_TEST);
+
 }
 

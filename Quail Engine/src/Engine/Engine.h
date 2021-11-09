@@ -10,7 +10,7 @@ class Engine
 {
 private:
 	static Engine* _instance;
-	Renderer m_Renderer;
+	Renderer* m_Renderer;
 	std::vector<Behaviour*> behaviours;
 	int m_Width, m_Height;
 	std::string m_Title;

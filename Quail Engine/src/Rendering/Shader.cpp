@@ -140,3 +140,5 @@ Shader Shader::BasicShader;
 Shader Shader::StandardShader;
 
 Shader Shader::SkyboxShader;
+
+Shader Shader::ScreenShader;

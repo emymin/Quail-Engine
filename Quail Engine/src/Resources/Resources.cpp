@@ -21,6 +21,12 @@ void Resources::Initialize()
 	const std::string skyboxFragment =
 #include "Resources/Shaders/skyboxFragment.glsl"
 		;
+	const std::string screenVertex =
+#include "Resources/Shaders/screenVert.glsl"
+		;
+	const std::string screenFragment =
+#include "Resources/Shaders/screenFrag.glsl"
+		;
 	
 	Shader::BasicShader = Shader(basicFragment, basicVertex);
 	Shader::BasicShader.Compile();
@@ -28,6 +34,9 @@ void Resources::Initialize()
 	Shader::StandardShader.Compile();
 	Shader::SkyboxShader = Shader(skyboxFragment,skyboxVertex);
 	Shader::SkyboxShader.Compile();
+	Shader::ScreenShader = Shader(screenFragment, screenVertex);
+	Shader::ScreenShader.Compile();
+
 	unsigned char whiteBuffer[4] = { 255,255,255,255 };
 	Texture::White = Texture(whiteBuffer, 1, 1);
 }

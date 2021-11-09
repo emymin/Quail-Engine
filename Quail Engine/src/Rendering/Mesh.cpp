@@ -38,10 +38,10 @@ Mesh Mesh::Plane(float size,Material* material)
 	float back = -0.5f * size;
 	float vertices[] = {
 		//positions        //uv           //normal
-		back,front,0.0f, 0.0f,0.0f,    0.f,0.f,1.f,
-		front,front,0.0f,  1.0f,0.0f,  0.f,0.f,1.f,
-		back,back,0.0f, 0.0f,1.0f,     0.f,0.f,1.f,
-		front,back,0.0f, 1.0f,1.0f,     0.f,0.f,1.f,
+		back,front,0.0f, 0.0f,1.0f,    0.f,0.f,1.f,
+		front,front,0.0f,  1.0f,1.0f,  0.f,0.f,1.f,
+		back,back,0.0f, 0.0f,0.0f,     0.f,0.f,1.f,
+		front,back,0.0f, 1.0f,0.0f,     0.f,0.f,1.f,
 	};
 	unsigned int indices[] = {
 		0,1,2,

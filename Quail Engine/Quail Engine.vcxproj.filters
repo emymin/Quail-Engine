@@ -1011,6 +1011,12 @@
     <ClInclude Include="src\Rendering\Light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Rendering\FrameBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Rendering\RenderBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\glm\detail\func_common.inl">
@@ -1429,6 +1435,8 @@
     <None Include="src\Resources\Shaders\basicFragment.glsl" />
     <None Include="src\Resources\Shaders\skyboxFragment.glsl" />
     <None Include="Examples\Assets\Models\sponza\sponza.mtl" />
+    <None Include="src\Resources\Shaders\screenFrag.glsl" />
+    <None Include="src\Resources\Shaders\screenVert.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dependencies\glm\detail\glm.cpp">
@@ -1525,6 +1533,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Rendering\Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\FrameBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Rendering\RenderBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
