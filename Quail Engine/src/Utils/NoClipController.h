@@ -8,13 +8,13 @@ private:
 public:
 	Transform* transform;
 	float speed;
-	float sensitivity = 0.007f;
+	float sensitivity = 0.003f;
 	MouseInfo lastMouse;
 	NoClipController() : transform(nullptr), speed(5.f) {}
 	NoClipController(Transform* transform, float speed = 5.f) : transform(transform), speed(speed) {}
 
 	void Update() {
-		if (!Engine::IsFocused()) {
+		if (!Engine::IsFocused() || !Engine::GetCursorCapture()) {
 			firstMouse = true;
 			return;
 		}

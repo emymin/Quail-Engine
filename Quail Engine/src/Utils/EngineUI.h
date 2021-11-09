@@ -9,6 +9,7 @@ public:
 
 	void OnInitialize() override
 	{
+		Engine::SetCursorCapture(true);
 	}
 
 
@@ -19,6 +20,9 @@ public:
 
 	void OnGui() override
 	{
+		if (Engine::GetCursorCapture()) {
+			return;
+		}
 		if (ImGui::BeginMainMenuBar())
 		{
 			if (ImGui::BeginMenu("Quail Engine"))
@@ -27,6 +31,8 @@ public:
 			}
 
 			ImGui::Text("Framerate: %1.f Render time: %.3f ms", Engine::Time().fps, Engine::Time().lastRenderTime * 1000.f);
+
+			ImGui::Button("Quit");
 
 			ImGui::EndMainMenuBar();
 		}
@@ -42,7 +48,7 @@ public:
 	{
 		if (key.action == KeyAction::PRESS) {
 			switch (key.key) {
-			case Key::Esc: {Engine::SetShouldClose(); break; }
+			case Key::Esc: {Engine::SetCursorCapture(!Engine::GetCursorCapture()); break; }
 			default: {break; }
 			}
 		}

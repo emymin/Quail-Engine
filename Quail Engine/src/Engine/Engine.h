@@ -19,6 +19,7 @@ private:
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	static void window_focus_callback(GLFWwindow* window, int focused);
 	bool m_Focused=true;
+	bool m_cursor_capture = false;
 public:
 	Engine(const std::string& title);
 	static void RegisterBehaviour(Behaviour* behaviour) { _instance->behaviours.push_back(behaviour); }
@@ -33,6 +34,8 @@ public:
 	static void SetResolution(int width, int height);
 	static void SetShouldClose();
 	static bool ShouldClose();
+	static void SetCursorCapture(bool value);
+	static bool GetCursorCapture();
 
 	static KeyEvent GetKey(Key key);
 	static MouseInfo GetMouse();

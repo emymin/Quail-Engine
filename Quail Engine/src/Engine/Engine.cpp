@@ -121,6 +121,22 @@ bool Engine::ShouldClose()
 	return glfwWindowShouldClose(_instance->window);
 }
 
+void Engine::SetCursorCapture(bool value)
+{
+	_instance->m_cursor_capture = value;
+	if (value) {
+		glfwSetInputMode(_instance->window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+	else {
+		glfwSetInputMode(_instance->window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+}
+
+bool Engine::GetCursorCapture()
+{
+	return _instance->m_cursor_capture;
+}
+
 KeyEvent Engine::GetKey(Key key)
 {
 	int state = glfwGetKey(_instance->window,(int)key);
