@@ -3,6 +3,7 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <vector>
 #include "Console.h"
 
 #if _DEBUG
@@ -44,6 +45,10 @@ static inline std::string find_directory_of_path(const std::string& fname)
 	return (std::string::npos == pos)
 		? ""
 		: fname.substr(0, pos);
+}
+template <typename T>
+static inline bool vector_contains(const std::vector<T> vector, const T value) {
+	return std::find(vector.begin(), vector.end(), value) != vector.end();
 }
 
 class NotImplementedException : public std::logic_error

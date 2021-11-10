@@ -16,8 +16,8 @@ public:
 	Transform* GetParent() const;
 	std::vector<Transform*> GetChildren() const;
 
-	glm::vec3 WorldPosition();
-	glm::quat WorldRotation();
+	glm::vec3 WorldPosition()const;
+	glm::quat WorldRotation()const;
 
 	Transform() : localPosition(0), localScale(1), localRotation(glm::vec3(0)),parent(nullptr) {}
 	inline glm::mat4 GetModelMatrix() const;

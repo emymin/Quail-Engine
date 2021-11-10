@@ -23,14 +23,15 @@ std::vector<Transform*> Transform::GetChildren() const
 	return children;
 }
 
-glm::vec3 Transform::WorldPosition()
+glm::vec3 Transform::WorldPosition() const
 {
 	return GetModelMatrix() * glm::vec4(localPosition,1);
 }
 
-glm::quat Transform::WorldRotation()
+glm::quat Transform::WorldRotation() const
 {
-	return toQuat(GetModelMatrix());
+//	return toQuat(GetModelMatrix());
+	return localRotation;
 }
 
 

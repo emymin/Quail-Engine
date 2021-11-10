@@ -32,7 +32,10 @@ public:
 
 			ImGui::Text("Framerate: %1.f Render time: %.3f ms", Engine::Time().fps, Engine::Time().lastRenderTime * 1000.f);
 
-			ImGui::Button("Quit");
+			ImGui::SameLine(ImGui::GetWindowWidth() - 60);
+			if (ImGui::Button("Quit")) {
+				Engine::SetShouldClose();
+			}
 
 			ImGui::EndMainMenuBar();
 		}
