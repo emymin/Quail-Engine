@@ -1017,6 +1017,21 @@
     <ClInclude Include="src\Rendering\RenderBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Dependencies\openvr\headers\openvr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\openvr\headers\openvr_capi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\openvr\headers\openvr_driver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\OpenVRApplication.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Examples\VRDemo\VRDemo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\glm\detail\func_common.inl">
@@ -1541,11 +1556,18 @@
     <ClCompile Include="src\Rendering\RenderBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\OpenVRApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Examples\VRDemo\VRDemo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\glfw\lib\glfw3.lib" />
     <Library Include="Dependencies\glfw\lib\glfw3_mt.lib" />
     <Library Include="Dependencies\glfw\lib\glfw3dll.lib" />
+    <Library Include="Dependencies\openvr\lib\win64\openvr_api.lib" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Examples\Assets\Textures\test.png">

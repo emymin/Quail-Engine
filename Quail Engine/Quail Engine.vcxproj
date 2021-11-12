@@ -23,10 +23,14 @@
     <ClInclude Include="Dependencies\fmt\fmt\format-inl.h" />
     <ClInclude Include="Dependencies\fmt\fmt\format.h" />
     <ClInclude Include="Dependencies\OBJ_Loader.h" />
+    <ClInclude Include="Dependencies\openvr\headers\openvr.h" />
+    <ClInclude Include="Dependencies\openvr\headers\openvr_capi.h" />
+    <ClInclude Include="Dependencies\openvr\headers\openvr_driver.h" />
     <ClInclude Include="Dependencies\tiny_obj_loader\tiny_obj_loader_opt.h" />
     <ClInclude Include="Dependencies\tiny_obj_loader\tiny_obj_loader.h" />
     <ClInclude Include="Examples\Demo2\Demo2.h" />
     <ClInclude Include="Examples\Demo1\ExampleGame.h" />
+    <ClInclude Include="src\Utils\OpenVRApplication.h" />
     <ClInclude Include="src\Rendering\FrameBuffer.h" />
     <ClInclude Include="src\Rendering\Light.h" />
     <ClInclude Include="src\Rendering\RenderBuffer.h" />
@@ -353,6 +357,7 @@
     <ClInclude Include="src\Rendering\VertexBuffer.h" />
     <ClInclude Include="src\Rendering\VertexBufferLayout.h" />
     <ClInclude Include="src\Engine\GameTime.h" />
+    <ClInclude Include="Examples\VRDemo\VRDemo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\glfw\lib\glfw3.dll" />
@@ -508,6 +513,7 @@
     <ClCompile Include="Dependencies\fmt\src\format.cc" />
     <ClCompile Include="Examples\Demo2\Demo2.cpp" />
     <ClCompile Include="Examples\Demo1\ExampleGame.cpp" />
+    <ClCompile Include="src\Utils\OpenVRApplication.cpp" />
     <ClCompile Include="src\Engine\Behaviour.cpp" />
     <ClCompile Include="src\Rendering\FrameBuffer.cpp" />
     <ClCompile Include="src\Rendering\Light.cpp" />
@@ -539,11 +545,13 @@
     <ClCompile Include="src\Scene\Transform.cpp" />
     <ClCompile Include="src\Rendering\VertexArray.cpp" />
     <ClCompile Include="src\Rendering\VertexBuffer.cpp" />
+    <ClCompile Include="Examples\VRDemo\VRDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Dependencies\glfw\lib\glfw3.lib" />
     <Library Include="Dependencies\glfw\lib\glfw3dll.lib" />
     <Library Include="Dependencies\glfw\lib\glfw3_mt.lib" />
+    <Library Include="Dependencies\openvr\lib\win64\openvr_api.lib" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\..\..\..\Desktop\skybox.png" />
@@ -686,13 +694,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/fmt;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Resources;$(ProjectDir)/src/Engine;$(ProjectDir)/src/Utils;$(ProjectDir)/src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)/Dependencies/glfw/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/fmt;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies/openvr/headers;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Resources;$(ProjectDir)/src/Engine;$(ProjectDir)/src/Utils;$(ProjectDir)/src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)/Dependencies/glfw/lib;$(ProjectDir)/Dependencies/openvr/lib/win64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/fmt;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Resources;$(ProjectDir)/src/Engine;$(ProjectDir)/src/Utils;$(ProjectDir)/src;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)/Dependencies/glfw/lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)/Dependencies/imgui;$(ProjectDir)/Dependencies/glfw/include;$(ProjectDir)/Dependencies/fmt;$(ProjectDir)/Dependencies/glad;$(ProjectDir)/Dependencies/openvr/headers;$(ProjectDir)/Dependencies;$(ProjectDir)/src/Scene;$(ProjectDir)/src/Rendering;$(ProjectDir)/src/Resources;$(ProjectDir)/src/Engine;$(ProjectDir)/src/Utils;$(ProjectDir)/src;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)/Dependencies/glfw/lib;$(ProjectDir)/Dependencies/openvr/lib/win64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -735,6 +743,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -752,6 +761,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>openvr_api.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

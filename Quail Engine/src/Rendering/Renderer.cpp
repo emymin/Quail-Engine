@@ -23,7 +23,7 @@ void Renderer::DrawSkybox(const Scene* scene) const
 void Renderer::DrawScene(const Scene* scene) const
 {
 	if (scene->camera == nullptr) {
-		Console::Warning("Scene has no camera");
+		//Console::Warning("Scene has no camera");
 		return;
 	}
 

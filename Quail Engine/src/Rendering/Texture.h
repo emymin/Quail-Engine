@@ -27,6 +27,7 @@ public:
 	inline int GetHeight() const { return m_Height; }
 
 	glm::vec4 GetAverageColor();
+	unsigned int GetRendererID() { return m_RendererID; }
 
 	static Texture White;
 
