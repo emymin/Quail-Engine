@@ -14,7 +14,7 @@ std::string OpenVRApplication::GetTrackedDeviceString(vr::IVRSystem* pHmd, vr::T
 	return sResult;
 }
 
-OpenVRApplication::OpenVRApplication() : width(0),height(0),hmd(nullptr)
+OpenVRApplication::OpenVRApplication() : m_width(0),m_height(0),m_instance(nullptr)
 {
 	if (!vr::VR_IsHmdPresent()) {
 		Console::Error("VR headset not detected!");
@@ -26,38 +26,55 @@ OpenVRApplication::OpenVRApplication() : width(0),height(0),hmd(nullptr)
 	}
 }
 
-void OpenVRApplication::Initialize()
+void OpenVRApplication::OnInitialize()
 {
+	Console::Log("Initializing OpenVR...");
+
 	vr::EVRInitError err = vr::VRInitError_None;
-	hmd = vr::VR_Init(&err, vr::VRApplication_Scene);
+	m_instance = vr::VR_Init(&err, vr::VRApplication_Scene);
 	if (err != vr::VRInitError_None) {
 		HandleInitError(err);
 	}
 
-	PrintTrackedDevices();
+	for (int i = vr::k_unTrackedDeviceIndex_Hmd; i < vr::k_unMaxTrackedDeviceCount; i++) {
+		vr::ETrackedDeviceClass td_class = m_instance->GetTrackedDeviceClass(i);
+		if (td_class != 0) {
+			std::string name = GetTrackedDeviceString(m_instance, i, vr::Prop_TrackingSystemName_String);
+			std::string serialNumber = GetTrackedDeviceString(m_instance, i, vr::Prop_SerialNumber_String);
+			VRDeviceType type;
+			if (td_class > 3) { type = VRDeviceType::Other; }
+			else {
+				type = (VRDeviceType)td_class;
+			}
+			m_devices.push_back(VRDevice{i,type,name,serialNumber,Transform()});
+			
+		}
+	}
 
 	if (!vr::VRCompositor()) {
 		Console::Error("Failed to initialize VR compositor");
 	}
 
-	hmd->GetRecommendedRenderTargetSize(&width, &height);
-	Console::Log(fmt::format("Recommended resolution: {} {}", width, height));
+
+
+	m_instance->GetRecommendedRenderTargetSize(&m_width, &m_height);
+	Console::Log(fmt::format("Recommended resolution: {} {}", m_width, m_height));
 	Console::Log("OpenVR initialization finished");
 
 }
 
-void OpenVRApplication::Destroy()
+void OpenVRApplication::OnClose()
 {
-	if (hmd)
+	if (m_instance)
 	{
 		vr::VR_Shutdown();
-		hmd = NULL;
+		m_instance = NULL;
 	}
 }
 
 void OpenVRApplication::SubmitFrames(Texture* leftTex, Texture* rightTex)
 {
-	if (!hmd) {
+	if (!m_instance) {
 		Console::Warning("Submitting frames to uninitialized headset, ignoring...");
 		return;
 	}
@@ -74,14 +91,14 @@ void OpenVRApplication::SubmitFrames(Texture* leftTex, Texture* rightTex)
 	vr::VRCompositor()->PostPresentHandoff();
 }
 
-void OpenVRApplication::Update()
+void OpenVRApplication::OnUpdate()
 {
-	if (!hmd) {
+	if (!m_instance) {
 		Console::Warning("OpenVR is not initialized, ignoring");
 		return;
 	}
 	vr::TrackedDevicePose_t poses[vr::k_unMaxTrackedDeviceCount];
-	hmd->GetDeviceToAbsoluteTrackingPose(vr::TrackingUniverseStanding, 0, poses, vr::k_unMaxTrackedDeviceCount);
+	m_instance->GetDeviceToAbsoluteTrackingPose(vr::TrackingUniverseStanding, 0, poses, vr::k_unMaxTrackedDeviceCount);
 	for (int i = 0; i < vr::k_unMaxTrackedDeviceCount; i++) {
 		if ((poses[i].bDeviceIsConnected) && (poses[i].bPoseIsValid)) {
 			glm::vec3 position = glm::vec3(
@@ -89,42 +106,19 @@ void OpenVRApplication::Update()
 				poses[i].mDeviceToAbsoluteTracking.m[1][3],
 				poses[i].mDeviceToAbsoluteTracking.m[2][3]
 			);
-			Console::Log(fmt::format("Device ID {} position: {} {} {}", i, position.x,position.y,position.z));
+			m_devices[i].transform.localPosition = position;
 		}
 	}
+
 }
 
-void OpenVRApplication::PrintTrackedDevices()
+
+void OpenVRApplication::OnGui()
 {
-	for (int i = vr::k_unTrackedDeviceIndex_Hmd; i < vr::k_unMaxTrackedDeviceCount; i++) {
+}
 
-		vr::ETrackedDeviceClass td_class = hmd->GetTrackedDeviceClass(i);
-		if (td_class != 0) {
-			std::string classname;
-			switch (td_class) {
-			case 1: {
-				classname = "HMD";
-				break;
-			}
-			case 2: {
-				classname = "Controller";
-				break;
-			}
-			case 3: {
-				classname = "Tracker";
-				break;
-			}
-			default: {
-				classname = "Other";
-				break;
-			}
-			}
-
-			std::string td_name = GetTrackedDeviceString(hmd, i, vr::Prop_TrackingSystemName_String);
-			Console::Log(fmt::format("Device ID {}: {} {}",i, classname, td_name));
-
-		}
-	}
+void OpenVRApplication::OnKey(KeyEvent key)
+{
 }
 
 void OpenVRApplication::HandleInitError(vr::EVRInitError err)

@@ -1,11 +1,12 @@
 #pragma once
 #include "Behaviour.h"
 #include "OpenVRApplication.h"
+#include "NoClipController.h"
 class VRDemo :
     public Behaviour
 {
 public:
-	OpenVRApplication application;
+	NoClipController controller;
 
 	void OnInitialize() override;
 

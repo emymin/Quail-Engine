@@ -1,19 +1,31 @@
 #include "Engine.h"
 
-#include "../Examples/Demo1/ExampleGame.h"
-#include "../Examples/Demo2/Demo2.h"
-#include "../Examples/VRDemo/VRDemo.h"
+#include "../Examples/Demo1/ExampleGame.h" //1
+#include "../Examples/Demo2/Demo2.h" //2
+#include "../Examples/VRDemo/VRDemo.h" //3
 #include "EngineUI.h"
 
-
+#define DEMO 3
 
 int main() {
 
 	Engine engine("Quail Engine Test");
-	VRDemo game;
+
+#if DEMO == 1
+	ExampleGame game;
 	EngineUI ui;
-	
 	engine.Initialize(1000,1000);
+#endif
+#if DEMO == 2
+	Demo2 game;
+	EngineUI ui;
+	engine.Initialize(1000, 1000);
+#endif
+#if DEMO == 3
+	VRDemo game;
+	OpenVRApplication application;
+	engine.Initialize(1000, 1000);
+#endif
 
 	float lastTime = 0;
 	while (!engine.ShouldClose()) {

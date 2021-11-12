@@ -27,7 +27,7 @@ public:
 	Scene scene;
 	GLFWwindow* window;
 
-	static bool Initialize(int window_width=1000,int window_height=1000);
+	static bool Initialize(int window_width=1000,int window_height=1000,RendererType rendererType=RendererType::DesktopRenderer);
 	static void Update();
 	static void Destroy();
 

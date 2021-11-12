@@ -4,8 +4,18 @@
 
 #include "FrameBuffer.h"
 
+enum class RendererType {
+	DesktopRenderer,
+	VRRenderer
+};
 
 class Renderer {
+public:
+	virtual void Clear() const = 0;
+	virtual void Draw(const Scene* scene) const = 0;
+};
+
+class DesktopRenderer:public Renderer {
 private:
 	FrameBuffer m_buffer;
 	Shader* m_screenShader;
@@ -13,7 +23,7 @@ private:
 	void DrawSkybox(const Scene* scene) const;
 	void DrawScene(const Scene* scene) const;
 public:
-	Renderer(unsigned int width,unsigned int height);;
-	void Clear() const;
-	void Draw(const Scene* scene) const;
+	DesktopRenderer(unsigned int width,unsigned int height);
+	void Clear() const override;
+	void Draw(const Scene* scene) const override;
 };

@@ -14,7 +14,7 @@ void ExampleGame::OnInitialize()
 
 	Material* material2 = new Material(standard);
 	material2->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
-	material2->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(Engine::Scene()->skybox->ambientColor,1);
+	material2->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(1);
 
 	Material* material = new Material(standard);
 	material->GetProperty<TextureProperty>("u_mainTexture")->texture = testTexture;

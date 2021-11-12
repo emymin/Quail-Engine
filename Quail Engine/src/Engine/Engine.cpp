@@ -29,7 +29,7 @@ Engine::Engine(const std::string& title)
 	m_Title = title;
 }
 
-bool Engine::Initialize(int width,int height)
+bool Engine::Initialize(int width,int height,RendererType rendererType)
 {
 
 	Console::Log("Initializing Quail Engine...");
@@ -90,7 +90,10 @@ bool Engine::Initialize(int width,int height)
 	glEnable(GL_BLEND);
 
 	Resources::Initialize();
-	_instance->m_Renderer = new Renderer(width, height);
+
+	if (rendererType == RendererType::DesktopRenderer) {
+		_instance->m_Renderer = new DesktopRenderer(width, height);
+	}
 
 	Console::Log("Finished initializing Quail Engine, initializing game...");
 

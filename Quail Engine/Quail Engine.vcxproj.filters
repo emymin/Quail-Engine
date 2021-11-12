@@ -1026,7 +1026,7 @@
     <ClInclude Include="Dependencies\openvr\headers\openvr_driver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utils\OpenVRApplication.h">
+    <ClInclude Include="src\Engine\OpenVRApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Examples\VRDemo\VRDemo.h">
@@ -1556,7 +1556,7 @@
     <ClCompile Include="src\Rendering\RenderBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Utils\OpenVRApplication.cpp">
+    <ClCompile Include="src\Engine\OpenVRApplication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Examples\VRDemo\VRDemo.cpp">

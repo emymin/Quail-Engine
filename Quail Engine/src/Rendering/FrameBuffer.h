@@ -15,6 +15,6 @@ public:
 	void Destroy();
 	void Resize(unsigned int width, unsigned int height);
 
-	friend class Renderer;
+	friend class DesktopRenderer;
 };
 

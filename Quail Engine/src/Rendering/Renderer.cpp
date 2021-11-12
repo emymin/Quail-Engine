@@ -1,12 +1,12 @@
 #include "Renderer.h"
 #include "Console.h"
 
-Renderer::Renderer(unsigned int width, unsigned int height) :m_buffer(width, height), m_screenShader(&Shader::ScreenShader),m_screenMesh(Mesh::Plane(2.f))
+DesktopRenderer::DesktopRenderer(unsigned int width, unsigned int height) :m_buffer(width, height), m_screenShader(&Shader::ScreenShader),m_screenMesh(Mesh::Plane(2.f))
 {
 	Material* screenMaterial = new Material(m_screenShader);
 	m_screenMesh.material = screenMaterial;
 }
-void Renderer::DrawSkybox(const Scene* scene) const
+void DesktopRenderer::DrawSkybox(const Scene* scene) const
 {
 	glDepthMask(GL_FALSE);
 	scene->skybox->m_Mesh.Bind();
@@ -20,7 +20,7 @@ void Renderer::DrawSkybox(const Scene* scene) const
 	glDepthMask(GL_TRUE);
 }
 
-void Renderer::DrawScene(const Scene* scene) const
+void DesktopRenderer::DrawScene(const Scene* scene) const
 {
 	if (scene->camera == nullptr) {
 		//Console::Warning("Scene has no camera");
@@ -75,13 +75,13 @@ void Renderer::DrawScene(const Scene* scene) const
 }
 
 
-void Renderer::Clear() const
+void DesktopRenderer::Clear() const
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 
-void Renderer::Draw(const Scene* scene) const
+void DesktopRenderer::Draw(const Scene* scene) const
 {
 	m_buffer.Bind();
 	Clear();
