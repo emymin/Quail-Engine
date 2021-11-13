@@ -21,7 +21,7 @@ public:
 	GameObject* Get(std::string name);
 	void Rename(GameObject* gameObject, std::string name);
 
-	friend class DesktopRenderer;
+	friend class Renderer;
 	friend class Application;
 
 };

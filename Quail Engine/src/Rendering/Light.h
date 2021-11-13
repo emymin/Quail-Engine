@@ -18,6 +18,6 @@ public:
 	static PointLight empty;
 private:
 	void Apply(Shader* shader, std::string uniformName) override;
-	friend class DesktopRenderer;
+	friend class Renderer;
 
 };

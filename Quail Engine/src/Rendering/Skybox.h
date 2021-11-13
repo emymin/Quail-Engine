@@ -12,7 +12,7 @@ public:
 	Texture* texture;
 	Skybox(Texture* texture);
 
-	friend class DesktopRenderer;
+	friend class Renderer;
 	friend class Scene;
 };
 

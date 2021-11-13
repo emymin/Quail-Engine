@@ -38,10 +38,12 @@ public:
 	void OnKey(KeyEvent key) override;
 
 private:
+	unsigned int m_width, m_height;
 	void HandleInitError(vr::EVRInitError err);
 	static std::string GetTrackedDeviceString(vr::IVRSystem* pHmd, vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop, vr::TrackedPropertyError* peError = NULL);
 	vr::IVRSystem* m_instance;
-	unsigned int m_width, m_height;
 	std::vector<VRDevice> m_devices;
+
+	friend class OpenVRRenderer;
 };
 

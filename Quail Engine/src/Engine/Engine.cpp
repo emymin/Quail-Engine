@@ -112,7 +112,9 @@ void Engine::SetResolution(int width, int height)
 {
 	Console::Log(fmt::format("Setting resolution to {} {}", width, height));
 	glViewport(0, 0, width, height);
-	_instance->scene.camera->SetAspectRatio(width, height);
+	if (_instance->scene.camera) {
+		_instance->scene.camera->SetAspectRatio(width, height);
+	}
 	_instance->m_Width = width;
 	_instance->m_Height = height;
 }
