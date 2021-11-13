@@ -94,6 +94,9 @@ bool Engine::Initialize(int width,int height,RendererType rendererType)
 	if (rendererType == RendererType::DesktopRenderer) {
 		_instance->m_Renderer = new DesktopRenderer(width, height);
 	}
+	else if (rendererType == RendererType::VRRenderer) { // TODO implement OpenVRRenderer
+		_instance->m_Renderer = new OpenVRRenderer();
+	}
 
 	Console::Log("Finished initializing Quail Engine, initializing game...");
 

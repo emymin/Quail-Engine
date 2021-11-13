@@ -24,7 +24,8 @@ int main() {
 #if DEMO == 3
 	VRDemo game;
 	OpenVRApplication application;
-	engine.Initialize(1000, 1000);
+	engine.Initialize(1000, 1000,RendererType::VRRenderer);
+	((OpenVRRenderer*)engine.GetRenderer())->application = &application;
 #endif
 
 	float lastTime = 0;

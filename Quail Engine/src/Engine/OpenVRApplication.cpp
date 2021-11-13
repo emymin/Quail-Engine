@@ -1,5 +1,6 @@
 #include "OpenVRApplication.h"
 #include "Console.h"
+#include "Engine.h"
 
 std::string OpenVRApplication::GetTrackedDeviceString(vr::IVRSystem* pHmd, vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop, vr::TrackedPropertyError* peError /*= NULL*/)
 {
@@ -89,6 +90,8 @@ void OpenVRApplication::SubmitFrames(Texture* leftTex, Texture* rightTex)
 	vr::VRCompositor()->Submit(vr::Eye_Right, &rightEyeTexture);
 
 	vr::VRCompositor()->PostPresentHandoff();
+
+	((OpenVRRenderer*)Engine::GetRenderer())->application = this;
 }
 
 void OpenVRApplication::OnUpdate()

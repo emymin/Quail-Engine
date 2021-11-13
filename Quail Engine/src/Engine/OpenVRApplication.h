@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "Transform.h"
 #include "Behaviour.h"
+#include "OpenVRRenderer.h"
 
 enum class ControllerSide {
 	Left,

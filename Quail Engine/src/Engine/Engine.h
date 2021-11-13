@@ -1,10 +1,8 @@
 #pragma once
-#include "Renderer.h"
 #include "GameTime.h"
 #include "Input.h"
-#include "Behaviour.h"
-
-class Behaviour;
+#include "DesktopRenderer.h"
+#include "OpenVRRenderer.h"
 
 class Engine
 {
@@ -45,6 +43,7 @@ public:
 	static GLFWwindow* Window() { return _instance->window; }
 	static const GameTime Time() { return _instance->time; }
 	static Behaviour* GetBehaviour(std::string name);
+	static Renderer* GetRenderer() { return _instance->m_Renderer; }
 
 	static Engine* GetInstance() { return _instance; }
 };

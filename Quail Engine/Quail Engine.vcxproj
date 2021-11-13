@@ -30,6 +30,8 @@
     <ClInclude Include="Dependencies\tiny_obj_loader\tiny_obj_loader.h" />
     <ClInclude Include="Examples\Demo2\Demo2.h" />
     <ClInclude Include="Examples\Demo1\ExampleGame.h" />
+    <ClInclude Include="src\Rendering\DesktopRenderer.h" />
+    <ClInclude Include="src\Rendering\OpenVRRenderer.h" />
     <ClInclude Include="src\Engine\OpenVRApplication.h" />
     <ClInclude Include="src\Rendering\FrameBuffer.h" />
     <ClInclude Include="src\Rendering\Light.h" />
@@ -513,12 +515,14 @@
     <ClCompile Include="Dependencies\fmt\src\format.cc" />
     <ClCompile Include="Examples\Demo2\Demo2.cpp" />
     <ClCompile Include="Examples\Demo1\ExampleGame.cpp" />
+    <ClCompile Include="src\Rendering\OpenVRRenderer.cpp" />
     <ClCompile Include="src\Engine\OpenVRApplication.cpp" />
     <ClCompile Include="src\Engine\Behaviour.cpp" />
     <ClCompile Include="src\Rendering\FrameBuffer.cpp" />
     <ClCompile Include="src\Rendering\Light.cpp" />
     <ClCompile Include="src\Rendering\RenderBuffer.cpp" />
     <ClCompile Include="src\Rendering\Skybox.cpp" />
+    <ClCompile Include="src\Rendering\DesktopRenderer.cpp" />
     <ClCompile Include="src\Resources\Resources.cpp" />
     <ClCompile Include="src\Engine\Console.cpp" />
     <ClCompile Include="src\Engine\Engine.cpp" />

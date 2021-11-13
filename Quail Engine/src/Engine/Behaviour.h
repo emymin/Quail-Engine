@@ -1,7 +1,5 @@
 #pragma once
-#include "Engine.h"
-
-class Engine;
+#include "Input.h"
 
 class Behaviour
 {
