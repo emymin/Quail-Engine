@@ -83,15 +83,18 @@ void OpenVRApplication::SubmitFrames(Texture* leftTex, Texture* rightTex)
 	vr::EColorSpace colorSpace = vr::ColorSpace_Gamma;
 	vr::ETextureType textureType = vr::TextureType_OpenGL;
 
-	vr::Texture_t leftEyeTexture = { (void*)leftTex->GetRendererID(),textureType,colorSpace };
-	vr::Texture_t rightEyeTexture = { (void*)rightTex->GetRendererID(),textureType,colorSpace };
+	leftTex->Bind();
+	vr::Texture_t leftEyeTexture = { (void*)(leftTex->GetRendererID()),textureType,colorSpace };
+	rightTex->Bind();
+	vr::Texture_t rightEyeTexture = { (void*)(rightTex->GetRendererID()),textureType,colorSpace };
+
+	vr::VRCompositor()->WaitGetPoses(nullptr, 0, nullptr, 0);
 
 	vr::VRCompositor()->Submit(vr::Eye_Left, &leftEyeTexture);
 	vr::VRCompositor()->Submit(vr::Eye_Right, &rightEyeTexture);
 
 	vr::VRCompositor()->PostPresentHandoff();
 
-	((OpenVRRenderer*)Engine::GetRenderer())->application = this;
 }
 
 void OpenVRApplication::OnUpdate()
@@ -100,18 +103,7 @@ void OpenVRApplication::OnUpdate()
 		Console::Warning("OpenVR is not initialized, ignoring");
 		return;
 	}
-	vr::TrackedDevicePose_t poses[vr::k_unMaxTrackedDeviceCount];
-	m_instance->GetDeviceToAbsoluteTrackingPose(vr::TrackingUniverseStanding, 0, poses, vr::k_unMaxTrackedDeviceCount);
-	for (int i = 0; i < vr::k_unMaxTrackedDeviceCount; i++) {
-		if ((poses[i].bDeviceIsConnected) && (poses[i].bPoseIsValid)) {
-			glm::vec3 position = glm::vec3(
-				poses[i].mDeviceToAbsoluteTracking.m[0][3],
-				poses[i].mDeviceToAbsoluteTracking.m[1][3],
-				poses[i].mDeviceToAbsoluteTracking.m[2][3]
-			);
-			m_devices[i].transform.localPosition = position;
-		}
-	}
+	UpdatePoses();
 
 }
 
@@ -127,5 +119,30 @@ void OpenVRApplication::OnKey(KeyEvent key)
 void OpenVRApplication::HandleInitError(vr::EVRInitError err)
 {
 	Console::Error(vr::VR_GetVRInitErrorAsEnglishDescription(err));
+}
+
+void OpenVRApplication::UpdatePoses()
+{
+	vr::TrackedDevicePose_t poses[vr::k_unMaxTrackedDeviceCount];
+	m_instance->GetDeviceToAbsoluteTrackingPose(vr::TrackingUniverseStanding, 0, poses, vr::k_unMaxTrackedDeviceCount);
+	for (int i = 0; i < vr::k_unMaxTrackedDeviceCount; i++) {
+		if ((poses[i].bDeviceIsConnected) && (poses[i].bPoseIsValid)) {
+			auto matrix = poses[i].mDeviceToAbsoluteTracking.m;
+			glm::vec3 position = glm::vec3(
+				matrix[0][3],
+				matrix[1][3],
+				matrix[2][3]
+			);
+			glm::mat3 rotmat = glm::mat3(
+				matrix[0][0], matrix[0][1], matrix[0][2],
+				matrix[1][0], matrix[1][1], matrix[1][2],
+				matrix[2][0], matrix[2][1], matrix[2][2]
+				);
+			glm::quat rotation = glm::toQuat(rotmat);
+
+			m_devices[i].transform.localPosition = position;
+			m_devices[i].transform.localRotation = rotation;
+		}
+	}
 }
 

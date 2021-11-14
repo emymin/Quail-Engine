@@ -19,6 +19,9 @@ void VRDemo::OnInitialize()
 	cubemat->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(1);
 	cube->meshes[0].material = cubemat;
 
+	OVRCamera* camera = new OVRCamera(0.1f);
+	Engine::Scene()->camera = camera;
+
 }
 
 void VRDemo::OnUpdate()

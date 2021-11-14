@@ -35,6 +35,9 @@ public:
 	static void SetCursorCapture(bool value);
 	static bool GetCursorCapture();
 
+	static unsigned int GetWidth();
+	static unsigned int GetHeight();
+
 	static KeyEvent GetKey(Key key);
 	static MouseInfo GetMouse();
 	static bool IsFocused() { return _instance->m_Focused; }

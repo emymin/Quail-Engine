@@ -30,6 +30,7 @@
     <ClInclude Include="Dependencies\tiny_obj_loader\tiny_obj_loader.h" />
     <ClInclude Include="Examples\Demo2\Demo2.h" />
     <ClInclude Include="Examples\Demo1\ExampleGame.h" />
+    <ClInclude Include="src\Scene\OVRCamera.h" />
     <ClInclude Include="src\Rendering\DesktopRenderer.h" />
     <ClInclude Include="src\Rendering\OpenVRRenderer.h" />
     <ClInclude Include="src\Engine\OpenVRApplication.h" />
@@ -346,6 +347,7 @@
     <ClInclude Include="src\Rendering\MaterialProperty.h" />
     <ClInclude Include="src\Rendering\Mesh.h" />
     <ClInclude Include="src\Rendering\Renderer.h" />
+    <ClInclude Include="src\Scene\PerspectiveCamera.h" />
     <ClInclude Include="src\Scene\Scene.h" />
     <ClInclude Include="src\Scene\GameObject.h" />
     <ClInclude Include="src\Rendering\Shader.h" />
@@ -515,6 +517,7 @@
     <ClCompile Include="Dependencies\fmt\src\format.cc" />
     <ClCompile Include="Examples\Demo2\Demo2.cpp" />
     <ClCompile Include="Examples\Demo1\ExampleGame.cpp" />
+    <ClCompile Include="src\Scene\OVRCamera.cpp" />
     <ClCompile Include="src\Rendering\OpenVRRenderer.cpp" />
     <ClCompile Include="src\Engine\OpenVRApplication.cpp" />
     <ClCompile Include="src\Engine\Behaviour.cpp" />
@@ -542,6 +545,7 @@
     <ClCompile Include="src\Rendering\Mesh.cpp" />
     <ClCompile Include="src\Rendering\Renderer.cpp" />
     <ClCompile Include="src\Scene\Camera.cpp" />
+    <ClCompile Include="src\Scene\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />
     <ClCompile Include="src\Scene\GameObject.cpp" />
     <ClCompile Include="src\Rendering\Shader.cpp" />

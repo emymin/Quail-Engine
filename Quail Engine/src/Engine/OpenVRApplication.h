@@ -40,6 +40,7 @@ public:
 private:
 	unsigned int m_width, m_height;
 	void HandleInitError(vr::EVRInitError err);
+	void UpdatePoses();
 	static std::string GetTrackedDeviceString(vr::IVRSystem* pHmd, vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop, vr::TrackedPropertyError* peError = NULL);
 	vr::IVRSystem* m_instance;
 	std::vector<VRDevice> m_devices;

@@ -9,8 +9,11 @@ private:
 	RenderBuffer m_DepthStencilBuffer;
 	Texture m_ColorTexture;
 	FrameBuffer(){}
+	unsigned int m_InternalFormat;
+	unsigned int m_Format;
+	unsigned int m_Width, m_Height;
 public:
-	FrameBuffer(unsigned int width,unsigned int height);
+	FrameBuffer(unsigned int width,unsigned int height,unsigned int format=GL_RGB,unsigned int internal_format=GL_RGB);
 	void Bind() const;
 	void Unbind() const;
 	void Destroy();

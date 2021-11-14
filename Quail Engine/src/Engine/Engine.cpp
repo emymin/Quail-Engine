@@ -145,6 +145,16 @@ bool Engine::GetCursorCapture()
 	return _instance->m_cursor_capture;
 }
 
+unsigned int Engine::GetWidth()
+{
+	return _instance->m_Width;
+}
+
+unsigned int Engine::GetHeight()
+{
+	return _instance->m_Height;
+}
+
 KeyEvent Engine::GetKey(Key key)
 {
 	int state = glfwGetKey(_instance->window,(int)key);

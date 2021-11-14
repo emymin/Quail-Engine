@@ -2,6 +2,8 @@
 #include <unordered_map>
 #include "GameObject.h"
 #include "Camera.h"
+#include "PerspectiveCamera.h"
+#include "OVRCamera.h"
 #include "Skybox.h"
 #include "Light.h"
 
