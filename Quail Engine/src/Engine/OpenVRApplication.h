@@ -40,15 +40,15 @@ public:
 	static VRDevice* GetHeadset();
 
 	static glm::mat4 GetProjectionMatrix(vr::Hmd_Eye eye);
-	static glm::mat4 GetViewMatrix(vr::Hmd_Eye eye);
+	static glm::mat4 GetHeadToEyeMatrix(vr::Hmd_Eye eye);
 
+	inline static glm::mat4 toGLM(const vr::HmdMatrix34_t& m);
+	inline static vr::HmdMatrix34_t toOpenVR(const glm::mat4& m);
 private:
 	static void HandleInitError(vr::EVRInitError err);
 	static void UpdatePoses();
 	static std::string GetTrackedDeviceString(vr::IVRSystem* pHmd, vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop, vr::TrackedPropertyError* peError = NULL);
 	
-	inline static glm::mat4 toGLM(const vr::HmdMatrix34_t& m);
-	inline static vr::HmdMatrix34_t toOpenVR(const glm::mat4& m);
 
 	static unsigned int m_width, m_height;
 	static vr::IVRSystem* m_instance;

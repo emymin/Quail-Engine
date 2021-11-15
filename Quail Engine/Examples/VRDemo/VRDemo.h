@@ -7,6 +7,7 @@ class VRDemo :
 {
 public:
 	NoClipController controller;
+	GameObject* cube;
 
 	void OnInitialize() override;
 

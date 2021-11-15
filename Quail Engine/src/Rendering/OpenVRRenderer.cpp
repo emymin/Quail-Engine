@@ -22,11 +22,21 @@ void OpenVRRenderer::Clear() const
 
 void OpenVRRenderer::Draw(const Scene* scene) const
 {
-	VRDevice* headset = OpenVRApplication::GetHeadset();
+	vr::TrackedDevicePose_t poses[vr::k_unMaxTrackedDeviceCount];
+	vr::VRCompositor()->WaitGetPoses(poses, vr::k_unMaxTrackedDeviceCount, NULL, 0);
+	
+	glm::mat4 headsetPose = OpenVRApplication::toGLM(poses[vr::k_unTrackedDeviceIndex_Hmd].mDeviceToAbsoluteTracking);
+	headsetPose = glm::inverse(headsetPose);
+
+	glm::mat4 leftP = OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye::Eye_Left);
+	glm::mat4 leftHTE = OpenVRApplication::GetHeadToEyeMatrix(vr::Hmd_Eye::Eye_Left);
+
+	glm::mat4 rightP = OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye::Eye_Right);
+	glm::mat4 rightHTE = OpenVRApplication::GetHeadToEyeMatrix(vr::Hmd_Eye::Eye_Right);
 
 
-	glm::mat4 leftVP = OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye::Eye_Left) * OpenVRApplication::GetViewMatrix(vr::Hmd_Eye::Eye_Left);
-	glm::mat4 rightVP = OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye::Eye_Right) * OpenVRApplication::GetViewMatrix(vr::Hmd_Eye::Eye_Right);
+	glm::mat4 leftVP = leftP*leftHTE*headsetPose;
+	glm::mat4 rightVP = rightP*rightHTE*headsetPose;
 
 	m_leftEyeBuffer->Bind();
 	Clear();

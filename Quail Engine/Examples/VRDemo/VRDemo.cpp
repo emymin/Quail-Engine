@@ -11,7 +11,7 @@ void VRDemo::OnInitialize()
 
 	Engine::Scene()->skybox = new Skybox(skytexture);
 
-	GameObject* cube = Engine::Scene()->CreateGameObject("cube", Mesh::Cube());
+	cube = Engine::Scene()->CreateGameObject("cube", Mesh::Cube());
 	cube->transform.localPosition.z = -2;
 
 
@@ -27,6 +27,7 @@ void VRDemo::OnInitialize()
 
 void VRDemo::OnUpdate()
 {
+	cube->transform.Rotate(Engine::Time().deltaTime, glm::vec3(0, 1, 0));
 }
 
 void VRDemo::OnGui()

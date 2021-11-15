@@ -116,8 +116,6 @@ void OpenVRApplication::SubmitFrames(Texture* leftTex, Texture* rightTex)
 	rightTex->Bind();
 	vr::Texture_t rightEyeTexture = { (void*)(rightTex->GetRendererID()),textureType,colorSpace };
 
-	vr::VRCompositor()->WaitGetPoses(nullptr, 0, nullptr, 0);
-
 	vr::VRCompositor()->Submit(vr::Eye_Left, &leftEyeTexture);
 	vr::VRCompositor()->Submit(vr::Eye_Right, &rightEyeTexture);
 
@@ -161,7 +159,7 @@ glm::mat4 OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye eye)
 		steamvr_proj_matrix.m[0][3], steamvr_proj_matrix.m[1][3], steamvr_proj_matrix.m[2][3], steamvr_proj_matrix.m[3][3]);
 }
 
-glm::mat4 OpenVRApplication::GetViewMatrix(vr::Hmd_Eye eye)
+glm::mat4 OpenVRApplication::GetHeadToEyeMatrix(vr::Hmd_Eye eye)
 {
 	vr::HmdMatrix34_t steamvr_eye_view_matrix = m_instance->GetEyeToHeadTransform(eye);
 
