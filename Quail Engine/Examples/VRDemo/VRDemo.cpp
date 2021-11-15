@@ -1,4 +1,5 @@
 #include "VRDemo.h"
+#include "OVRCamera.h"
 
 void VRDemo::OnInitialize()
 {
@@ -11,7 +12,7 @@ void VRDemo::OnInitialize()
 	Engine::Scene()->skybox = new Skybox(skytexture);
 
 	GameObject* cube = Engine::Scene()->CreateGameObject("cube", Mesh::Cube());
-	cube->transform.localPosition.z = 0;
+	cube->transform.localPosition.z = -2;
 
 
 	Material* cubemat = new Material(&Shader::StandardShader);
@@ -19,7 +20,7 @@ void VRDemo::OnInitialize()
 	cubemat->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(1);
 	cube->meshes[0].material = cubemat;
 
-	OVRCamera* camera = new OVRCamera(0.1f);
+	OVRCamera* camera = new OVRCamera();
 	Engine::Scene()->camera = camera;
 
 }

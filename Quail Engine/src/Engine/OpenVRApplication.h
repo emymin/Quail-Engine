@@ -22,29 +22,36 @@ struct VRDevice {
 	VRDeviceType deviceType;
 	std::string name;
 	std::string serialNumber;
-	Transform transform;
+	glm::mat4 transformation_matrix;
+	glm::vec3 GetPosition() { return transformation_matrix[3]; }
 };
 
-class OpenVRApplication : Behaviour
+class OpenVRApplication
 {
 public:
-	OpenVRApplication();
-	void OnInitialize()override;
-	void OnClose()override;
-	void SubmitFrames(Texture* leftTex,Texture* rightTex);
-	void OnUpdate()override;
+	static void Initialize();
+	static void Destroy();
+	static void SubmitFrames(Texture* leftTex,Texture* rightTex);
+	static void Update();
 
-	void OnGui() override;
-	void OnKey(KeyEvent key) override;
+	static unsigned int GetWidth();
+	static unsigned int GetHeight();
+
+	static VRDevice* GetHeadset();
+
+	static glm::mat4 GetProjectionMatrix(vr::Hmd_Eye eye);
+	static glm::mat4 GetViewMatrix(vr::Hmd_Eye eye);
 
 private:
-	unsigned int m_width, m_height;
-	void HandleInitError(vr::EVRInitError err);
-	void UpdatePoses();
+	static void HandleInitError(vr::EVRInitError err);
+	static void UpdatePoses();
 	static std::string GetTrackedDeviceString(vr::IVRSystem* pHmd, vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop, vr::TrackedPropertyError* peError = NULL);
-	vr::IVRSystem* m_instance;
-	std::vector<VRDevice> m_devices;
+	
+	inline static glm::mat4 toGLM(const vr::HmdMatrix34_t& m);
+	inline static vr::HmdMatrix34_t toOpenVR(const glm::mat4& m);
 
-	friend class OpenVRRenderer;
+	static unsigned int m_width, m_height;
+	static vr::IVRSystem* m_instance;
+	static std::vector<VRDevice> m_devices;
 };
 

@@ -9,5 +9,6 @@ public:
 	glm::mat4 GetViewMatrix() const;
 	glm::mat4 GetViewProjectionMatrix() const { return GetProjectionMatrix() * GetViewMatrix(); }
 	virtual void SetAspectRatio(float width, float height) = 0;
+	virtual glm::vec3 GetPosition()const { return transform.localPosition; }
 
 };

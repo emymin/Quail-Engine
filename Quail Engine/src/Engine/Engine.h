@@ -3,21 +3,11 @@
 #include "Input.h"
 #include "DesktopRenderer.h"
 #include "OpenVRRenderer.h"
+#include "Resources.h"
+
 
 class Engine
 {
-private:
-	static Engine* _instance;
-	Renderer* m_Renderer;
-	std::vector<Behaviour*> behaviours;
-	int m_Width, m_Height;
-	std::string m_Title;
-	static void HandleUI();
-	static void input_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
-	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-	static void window_focus_callback(GLFWwindow* window, int focused);
-	bool m_Focused=true;
-	bool m_cursor_capture = false;
 public:
 	Engine(const std::string& title);
 	static void RegisterBehaviour(Behaviour* behaviour) { _instance->behaviours.push_back(behaviour); }
@@ -25,7 +15,28 @@ public:
 	Scene scene;
 	GLFWwindow* window;
 
-	static bool Initialize(int window_width=1000,int window_height=1000,RendererType rendererType=RendererType::DesktopRenderer);
+	template <typename T=DesktopRenderer>
+	static bool Initialize(int width = 1000, int height = 1000) {
+		Console::Log("Initializing Quail Engine...");
+
+		_instance->m_Width = width;
+		_instance->m_Height = height;
+
+		InitGL();
+		InitIMGUI();
+		Resources::Initialize();
+		_instance->m_Renderer = new T();
+
+		Console::Log("Finished initializing Quail Engine, initializing game...");
+
+		for (auto behaviour : _instance->behaviours) {
+			behaviour->OnInitialize();
+		}
+
+		return true;
+	}
+
+
 	static void Update();
 	static void Destroy();
 
@@ -49,5 +60,24 @@ public:
 	static Renderer* GetRenderer() { return _instance->m_Renderer; }
 
 	static Engine* GetInstance() { return _instance; }
+
+private:
+
+	static Engine* _instance;
+	Renderer* m_Renderer;
+	std::vector<Behaviour*> behaviours;
+	int m_Width, m_Height;
+	std::string m_Title;
+
+	static void HandleUI();
+	static void input_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+	static void window_focus_callback(GLFWwindow* window, int focused);
+
+	static bool InitGL();
+	static bool InitIMGUI();
+
+	bool m_Focused=true;
+	bool m_cursor_capture = false;
 };
 

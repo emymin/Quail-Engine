@@ -58,7 +58,7 @@ void Renderer::_DrawScene(const Scene* scene, glm::mat4 VP)
 
 		glm::mat4 M = object->transform.GetModelMatrix();
 		glm::mat4 MVP = VP * M;
-		glm::vec3 cameraPos = scene->camera->transform.localPosition;
+		glm::vec3 cameraPos = scene->camera->GetPosition();
 
 		for (const Mesh& mesh : object->meshes) {
 			_DrawMesh(mesh, cameraPos, MVP, M, scene, ambientColor);

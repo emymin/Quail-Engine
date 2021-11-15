@@ -10,7 +10,10 @@ private:
 	void DrawSkybox(const Scene* scene) const;
 	void DrawScene(const Scene* scene) const;
 public:
-	DesktopRenderer(unsigned int width, unsigned int height);
+	DesktopRenderer();
 	void Clear() const override;
 	void Draw(const Scene* scene) const override;
+
+	void OnResize(unsigned int width, unsigned int height) override;
+
 };

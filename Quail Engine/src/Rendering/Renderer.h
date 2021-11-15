@@ -3,11 +3,6 @@
 #include "Scene.h"
 
 
-enum class RendererType {
-	DesktopRenderer,
-	VRRenderer
-};
-
 class Renderer {
 protected:
 	static void _Clear();
@@ -17,4 +12,5 @@ protected:
 public:
 	virtual void Clear() const = 0;
 	virtual void Draw(const Scene* scene) const = 0;
+	virtual void OnResize(unsigned int width, unsigned int height)=0;
 };

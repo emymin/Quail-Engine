@@ -5,8 +5,6 @@
 #include "Debug.h"
 #endif
 
-#include "Resources.h"
-
 Engine* Engine::_instance;
 
 void Engine::framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -19,30 +17,14 @@ void Engine::window_focus_callback(GLFWwindow* window, int focused)
 	_instance->m_Focused = (focused != 0);
 }
 
-Engine::Engine(const std::string& title)
+bool Engine::InitGL()
 {
-	if (_instance != nullptr) { 
-		Console::Warning("Attempted creation of a second Engine instance, ignoring");
-		return;
-	}
-	_instance = this;
-	m_Title = title;
-}
-
-bool Engine::Initialize(int width,int height,RendererType rendererType)
-{
-
-	Console::Log("Initializing Quail Engine...");
-
-	_instance->m_Width = width;
-	_instance->m_Height = height;
-
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	_instance->window = glfwCreateWindow(width, height, _instance->m_Title.c_str(), NULL, NULL);
+	_instance->window = glfwCreateWindow(_instance->m_Width,_instance->m_Height, _instance->m_Title.c_str(), NULL, NULL);
 	if (_instance->window == NULL) {
 		Console::Error("Error creating window!");
 		glfwTerminate();
@@ -74,8 +56,10 @@ bool Engine::Initialize(int width,int height,RendererType rendererType)
 	glViewport(0, 0, _instance->m_Width, _instance->m_Height);
 	glClearColor(0.f, 0.f, 0.f, 1.0f);
 	Console::Log("OpenGL initialized");
-	
+}
 
+bool Engine::InitIMGUI()
+{
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -83,29 +67,17 @@ bool Engine::Initialize(int width,int height,RendererType rendererType)
 	ImGui_ImplGlfw_InitForOpenGL(_instance->window, true);
 	ImGui_ImplOpenGL3_Init("#version 430");
 	Console::Log("ImGui initialized");
-
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-
-	Resources::Initialize();
-
-	if (rendererType == RendererType::DesktopRenderer) {
-		_instance->m_Renderer = new DesktopRenderer(width, height);
-	}
-	else if (rendererType == RendererType::VRRenderer) { // TODO implement OpenVRRenderer
-		_instance->m_Renderer = new OpenVRRenderer();
-	}
-
-	Console::Log("Finished initializing Quail Engine, initializing game...");
-
-	for (auto behaviour : _instance->behaviours) {
-		behaviour->OnInitialize();
-	}
-
 	return true;
+}
 
+Engine::Engine(const std::string& title)
+{
+	if (_instance != nullptr) { 
+		Console::Warning("Attempted creation of a second Engine instance, ignoring");
+		return;
+	}
+	_instance = this;
+	m_Title = title;
 }
 
 void Engine::SetResolution(int width, int height)
@@ -117,6 +89,7 @@ void Engine::SetResolution(int width, int height)
 	}
 	_instance->m_Width = width;
 	_instance->m_Height = height;
+	_instance->m_Renderer->OnResize(width, height);
 }
 
 void Engine::SetShouldClose()

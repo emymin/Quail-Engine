@@ -28,6 +28,9 @@ void FrameBuffer::Destroy()
 
 void FrameBuffer::Resize(unsigned int width, unsigned int height)
 {
+	m_Width = width;
+	m_Height = height;
+
 	m_ColorTexture.Destroy();
 	m_DepthStencilBuffer.Destroy();
 	Bind();

@@ -1,8 +1,14 @@
 #include "DesktopRenderer.h"
-DesktopRenderer::DesktopRenderer(unsigned int width, unsigned int height) :m_buffer(width, height), m_screenShader(&Shader::ScreenShader), m_screenMesh(Mesh::Plane(2.f))
+#include "Engine.h"
+DesktopRenderer::DesktopRenderer() :m_buffer(Engine::GetWidth(),Engine::GetHeight()), m_screenShader(&Shader::ScreenShader), m_screenMesh(Mesh::Plane(2.f))
 {
 	Material* screenMaterial = new Material(m_screenShader);
 	m_screenMesh.material = screenMaterial;
+
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_BLEND);
 }
 void DesktopRenderer::DrawSkybox(const Scene* scene) const
 {
@@ -48,5 +54,10 @@ void DesktopRenderer::Draw(const Scene* scene) const
 	glDrawElements(GL_TRIANGLES, m_screenMesh.indexBuffer.GetCount(), GL_UNSIGNED_INT, 0);
 	glEnable(GL_DEPTH_TEST);
 
+}
+
+void DesktopRenderer::OnResize(unsigned int width, unsigned int height)
+{
+	m_buffer.Resize(width, height);
 }
 
