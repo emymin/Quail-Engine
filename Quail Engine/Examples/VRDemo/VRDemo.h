@@ -9,6 +9,9 @@ public:
 	NoClipController controller;
 	GameObject* cube;
 
+	GameObject* leftCube;
+	GameObject* rightCube;
+
 	void OnInitialize() override;
 
 

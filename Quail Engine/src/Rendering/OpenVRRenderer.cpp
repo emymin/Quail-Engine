@@ -22,10 +22,9 @@ void OpenVRRenderer::Clear() const
 
 void OpenVRRenderer::Draw(const Scene* scene) const
 {
-	vr::TrackedDevicePose_t poses[vr::k_unMaxTrackedDeviceCount];
-	vr::VRCompositor()->WaitGetPoses(poses, vr::k_unMaxTrackedDeviceCount, NULL, 0);
-	
-	glm::mat4 headsetPose = OpenVRApplication::toGLM(poses[vr::k_unTrackedDeviceIndex_Hmd].mDeviceToAbsoluteTracking);
+	OpenVRApplication::UpdatePoses();
+
+	glm::mat4 headsetPose = OpenVRApplication::GetHeadset()->transformation_matrix;
 	headsetPose = glm::inverse(headsetPose);
 
 	glm::mat4 leftP = OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye::Eye_Left);

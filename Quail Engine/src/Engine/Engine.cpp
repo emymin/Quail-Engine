@@ -17,7 +17,7 @@ void Engine::window_focus_callback(GLFWwindow* window, int focused)
 	_instance->m_Focused = (focused != 0);
 }
 
-bool Engine::InitGL()
+bool Engine::InitGL(bool vsync)
 {
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -31,7 +31,7 @@ bool Engine::InitGL()
 		return false;
 	}
 	glfwMakeContextCurrent(_instance->window);
-	glfwSwapInterval(1);
+	glfwSwapInterval(vsync?1:0);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		Console::Error("Failed to initialize GLAD");
 		return false;

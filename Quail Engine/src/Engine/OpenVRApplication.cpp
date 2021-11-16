@@ -123,16 +123,6 @@ void OpenVRApplication::SubmitFrames(Texture* leftTex, Texture* rightTex)
 
 }
 
-void OpenVRApplication::Update()
-{
-	if (!m_instance) {
-		Console::Warning("OpenVR is not initialized, ignoring");
-		return;
-	}
-	UpdatePoses();
-
-}
-
 
 unsigned int OpenVRApplication::GetWidth()
 {
@@ -144,9 +134,14 @@ unsigned int OpenVRApplication::GetHeight()
 	return m_height;
 }
 
+VRDevice* OpenVRApplication::GetDevice(unsigned int index)
+{
+	return &(m_devices[index]);
+}
+
 VRDevice* OpenVRApplication::GetHeadset()
 {
-	return &m_devices[0];
+	return &m_devices[vr::k_unTrackedDeviceIndex_Hmd];
 }
 
 glm::mat4 OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye eye)
@@ -178,8 +173,7 @@ void OpenVRApplication::HandleInitError(vr::EVRInitError err)
 
 void OpenVRApplication::UpdatePoses()
 {
-	vr::TrackedDevicePose_t poses[vr::k_unMaxTrackedDeviceCount];
-	m_instance->GetDeviceToAbsoluteTrackingPose(vr::TrackingUniverseStanding, 0, poses, vr::k_unMaxTrackedDeviceCount);
+	vr::VRCompositor()->WaitGetPoses(poses, vr::k_unMaxTrackedDeviceCount, NULL, 0);
 	for (int i = 0; i < vr::k_unMaxTrackedDeviceCount; i++) {
 		if ((poses[i].bDeviceIsConnected) && (poses[i].bPoseIsValid)) {
 			vr::HmdMatrix34_t matrix = poses[i].mDeviceToAbsoluteTracking;
@@ -188,4 +182,6 @@ void OpenVRApplication::UpdatePoses()
 		}
 	}
 }
+
+vr::TrackedDevicePose_t OpenVRApplication::poses[vr::k_unMaxTrackedDeviceCount];
 

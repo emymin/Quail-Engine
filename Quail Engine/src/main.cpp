@@ -5,7 +5,7 @@
 #include "../Examples/VRDemo/VRDemo.h" //3
 #include "EngineUI.h"
 
-#define DEMO 1
+#define DEMO 3
 
 int main() {
 
@@ -25,7 +25,7 @@ int main() {
 	VRDemo game;
 	EngineUI ui;
 	OpenVRApplication::Initialize();
-	engine.Initialize<OpenVRRenderer>(1000, 1000);
+	engine.Initialize<OpenVRRenderer>(1000, 1000,false); //WaitGetPoses wastes a lot of time if VSync is enabled
 
 #endif
 

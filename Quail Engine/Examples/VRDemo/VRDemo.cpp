@@ -11,14 +11,15 @@ void VRDemo::OnInitialize()
 
 	Engine::Scene()->skybox = new Skybox(skytexture);
 
-	cube = Engine::Scene()->CreateGameObject("cube", Mesh::Cube());
-	cube->transform.localPosition.z = -2;
-
-
 	Material* cubemat = new Material(&Shader::StandardShader);
 	cubemat->GetProperty<TextureProperty>("u_mainTexture")->texture = nekoTexture;
 	cubemat->GetProperty<Float4Property>("u_mainColor")->value = glm::vec4(1);
-	cube->meshes[0].material = cubemat;
+
+	cube = Engine::Scene()->CreateGameObject("cube", Mesh::Cube(1,1,1,cubemat));
+	cube->transform.localPosition.z = -2;
+
+	leftCube = Engine::Scene()->CreateGameObject("leftcube", Mesh::Cube(0.1f, 0.1f, 0.1f,cubemat));
+	rightCube = Engine::Scene()->CreateGameObject("rightcube", Mesh::Cube(0.1, 0.1, 0.1, cubemat));
 
 	OVRCamera* camera = new OVRCamera();
 	Engine::Scene()->camera = camera;
@@ -28,6 +29,9 @@ void VRDemo::OnInitialize()
 void VRDemo::OnUpdate()
 {
 	cube->transform.Rotate(Engine::Time().deltaTime, glm::vec3(0, 1, 0));
+	leftCube->transform.localPosition = OpenVRApplication::GetDevice(1)->GetPosition();
+	rightCube->transform.localPosition = OpenVRApplication::GetDevice(2)->GetPosition();
+
 }
 
 void VRDemo::OnGui()

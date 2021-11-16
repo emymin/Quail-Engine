@@ -16,13 +16,13 @@ public:
 	GLFWwindow* window;
 
 	template <typename T=DesktopRenderer>
-	static bool Initialize(int width = 1000, int height = 1000) {
+	static bool Initialize(int width = 1000, int height = 1000,bool vsync=true) {
 		Console::Log("Initializing Quail Engine...");
 
 		_instance->m_Width = width;
 		_instance->m_Height = height;
 
-		InitGL();
+		InitGL(vsync);
 		InitIMGUI();
 		Resources::Initialize();
 		_instance->m_Renderer = new T();
@@ -74,7 +74,7 @@ private:
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 	static void window_focus_callback(GLFWwindow* window, int focused);
 
-	static bool InitGL();
+	static bool InitGL(bool vsync=true);
 	static bool InitIMGUI();
 
 	bool m_Focused=true;

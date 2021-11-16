@@ -32,11 +32,11 @@ public:
 	static void Initialize();
 	static void Destroy();
 	static void SubmitFrames(Texture* leftTex,Texture* rightTex);
-	static void Update();
 
 	static unsigned int GetWidth();
 	static unsigned int GetHeight();
 
+	static VRDevice* GetDevice(unsigned int index);
 	static VRDevice* GetHeadset();
 
 	static glm::mat4 GetProjectionMatrix(vr::Hmd_Eye eye);
@@ -44,14 +44,16 @@ public:
 
 	inline static glm::mat4 toGLM(const vr::HmdMatrix34_t& m);
 	inline static vr::HmdMatrix34_t toOpenVR(const glm::mat4& m);
+
+	static void UpdatePoses();
 private:
 	static void HandleInitError(vr::EVRInitError err);
-	static void UpdatePoses();
 	static std::string GetTrackedDeviceString(vr::IVRSystem* pHmd, vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop, vr::TrackedPropertyError* peError = NULL);
 	
 
 	static unsigned int m_width, m_height;
 	static vr::IVRSystem* m_instance;
 	static std::vector<VRDevice> m_devices;
+	static vr::TrackedDevicePose_t poses[vr::k_unMaxTrackedDeviceCount];
 };
 
