@@ -19,7 +19,8 @@ void ExampleGame::OnInitialize()
 	Material* material = new Material(standard);
 	material->GetProperty<TextureProperty>("u_mainTexture")->texture = testTexture;
 
-	PointLight* light = new PointLight(glm::vec3(1), 10, glm::vec3(1, 1, 1));
+	PointLight* light = new PointLight(glm::vec3(1), 10);
+	light->transform.localPosition = glm::vec3(1, 1, 1);
 	Engine::Scene()->pointLights.push_back(light);
 
 	GameObject* testbun = Engine::Scene()->CreateGameObject("bun", Mesh::LoadOBJ("./Examples/Assets/Models/bunny.obj"));

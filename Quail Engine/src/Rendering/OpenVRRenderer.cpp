@@ -24,28 +24,40 @@ void OpenVRRenderer::Draw(const Scene* scene) const
 {
 	OpenVRApplication::UpdatePoses();
 
-	glm::mat4 headsetPose = OpenVRApplication::GetHeadset()->transformation_matrix;
+	glm::mat4 headsetPose = OpenVRApplication::GetHeadset()->GetPose();
+	headsetPose = OpenVRApplication::playSpace.GetModelMatrix() * headsetPose;
 	headsetPose = glm::inverse(headsetPose);
 
-	glm::mat4 leftP = OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye::Eye_Left);
-	glm::mat4 leftHTE = OpenVRApplication::GetHeadToEyeMatrix(vr::Hmd_Eye::Eye_Left);
+	glm::mat4 leftVP = OpenVRApplication::leftProjectionMatrix*OpenVRApplication::leftHeadtoEyeMatrix;
+	glm::mat4 rightVP = OpenVRApplication::rightProjectionMatrix * OpenVRApplication::rightHeadtoEyeMatrix ;
 
-	glm::mat4 rightP = OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye::Eye_Right);
-	glm::mat4 rightHTE = OpenVRApplication::GetHeadToEyeMatrix(vr::Hmd_Eye::Eye_Right);
-
-
-	glm::mat4 leftVP = leftP*leftHTE*headsetPose;
-	glm::mat4 rightVP = rightP*rightHTE*headsetPose;
+	glm::mat4 skyBoxPose;
+	if (scene->skybox) {
+		skyBoxPose = OpenVRApplication::GetHeadset()->GetPose();
+		skyBoxPose[3][0] = 0;
+		skyBoxPose[3][1] = 0;
+		skyBoxPose[3][2] = 0;
+		glm::mat4 parentPose = OpenVRApplication::playSpace.GetModelMatrix();
+		parentPose[3][0] = 0;
+		parentPose[3][1] = 0;
+		parentPose[3][2] = 0;
+		skyBoxPose = parentPose * skyBoxPose;
+		skyBoxPose = glm::inverse(skyBoxPose);
+	}
 
 	m_leftEyeBuffer->Bind();
 	Clear();
-	_DrawSkybox(scene->skybox, scene->camera->GetPosition(), leftVP);
-	_DrawScene(scene, leftVP);
+	if (scene->skybox) {
+		_DrawSkybox(scene->skybox, scene->camera->GetPosition(), leftVP*skyBoxPose);
+	}
+	_DrawScene(scene, leftVP*headsetPose);
 
 	m_rightEyeBuffer->Bind();
 	Clear();
-	_DrawSkybox(scene->skybox, scene->camera->GetPosition(), rightVP);
-	_DrawScene(scene, rightVP);
+	if (scene->skybox) {
+		_DrawSkybox(scene->skybox, scene->camera->GetPosition(), rightVP*skyBoxPose);
+	}
+	_DrawScene(scene, rightVP*headsetPose);
 	m_rightEyeBuffer->Unbind();
 	
 

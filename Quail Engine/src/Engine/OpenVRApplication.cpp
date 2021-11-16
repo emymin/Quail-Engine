@@ -37,6 +37,19 @@ vr::HmdMatrix34_t OpenVRApplication::toOpenVR(const glm::mat4& m)
 	return result;
 }
 
+glm::quat OpenVRApplication::toQuaternion(const vr::HmdMatrix34_t& matrix)
+{
+	glm::quat q;
+	q.w = sqrt(fmax(0, 1 + matrix.m[0][0] + matrix.m[1][1] + matrix.m[2][2])) / 2;
+	q.x = sqrt(fmax(0, 1 + matrix.m[0][0] - matrix.m[1][1] - matrix.m[2][2])) / 2;
+	q.y = sqrt(fmax(0, 1 - matrix.m[0][0] + matrix.m[1][1] - matrix.m[2][2])) / 2;
+	q.z = sqrt(fmax(0, 1 - matrix.m[0][0] - matrix.m[1][1] + matrix.m[2][2])) / 2;
+	q.x = copysign(q.x, matrix.m[2][1] - matrix.m[1][2]);
+	q.y = copysign(q.y, matrix.m[0][2] - matrix.m[2][0]);
+	q.z = copysign(q.z, matrix.m[1][0] - matrix.m[0][1]);
+	return q;
+}
+
 vr::IVRSystem* OpenVRApplication::m_instance;
 
 std::vector<VRDevice> OpenVRApplication::m_devices;
@@ -75,7 +88,9 @@ void OpenVRApplication::Initialize()
 			else {
 				type = (VRDeviceType)td_class;
 			}
-			m_devices.push_back(VRDevice{i,type,name,serialNumber,glm::mat4(1.0f)});
+			VRDevice device = VRDevice(i, type, name, serialNumber);
+			device.transform.SetParent(&playSpace);
+			m_devices.push_back(device);
 			
 		}
 	}
@@ -84,7 +99,10 @@ void OpenVRApplication::Initialize()
 		Console::Error("Failed to initialize VR compositor");
 	}
 
-
+	leftProjectionMatrix = OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye::Eye_Left);
+	leftHeadtoEyeMatrix = OpenVRApplication::GetHeadToEyeMatrix(vr::Hmd_Eye::Eye_Left);
+	rightProjectionMatrix = OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye::Eye_Right);
+	rightHeadtoEyeMatrix = OpenVRApplication::GetHeadToEyeMatrix(vr::Hmd_Eye::Eye_Right);
 
 	m_instance->GetRecommendedRenderTargetSize(&m_width, &m_height);
 	Console::Log(fmt::format("Recommended resolution: {} {}", m_width, m_height));
@@ -144,6 +162,16 @@ VRDevice* OpenVRApplication::GetHeadset()
 	return &m_devices[vr::k_unTrackedDeviceIndex_Hmd];
 }
 
+VRDevice* OpenVRApplication::GetLeftController()
+{
+	return &m_devices[1];
+}
+
+VRDevice* OpenVRApplication::GetRightController()
+{
+	return &m_devices[2];
+}
+
 glm::mat4 OpenVRApplication::GetProjectionMatrix(vr::Hmd_Eye eye)
 {
 	vr::HmdMatrix44_t steamvr_proj_matrix = m_instance->GetProjectionMatrix(eye, 0.1f, 15.f);
@@ -179,9 +207,21 @@ void OpenVRApplication::UpdatePoses()
 			vr::HmdMatrix34_t matrix = poses[i].mDeviceToAbsoluteTracking;
 			glm::mat4 transform_matrix = toGLM(matrix);
 			m_devices[i].transformation_matrix = transform_matrix;
+			m_devices[i].transform.localPosition = transform_matrix[3];
+			m_devices[i].transform.localRotation = toQuaternion(matrix);
 		}
 	}
 }
+
+glm::mat4 OpenVRApplication::leftProjectionMatrix;
+
+glm::mat4 OpenVRApplication::rightProjectionMatrix;
+
+glm::mat4 OpenVRApplication::leftHeadtoEyeMatrix;
+
+glm::mat4 OpenVRApplication::rightHeadtoEyeMatrix;
+
+Transform OpenVRApplication::playSpace;
 
 vr::TrackedDevicePose_t OpenVRApplication::poses[vr::k_unMaxTrackedDeviceCount];
 
