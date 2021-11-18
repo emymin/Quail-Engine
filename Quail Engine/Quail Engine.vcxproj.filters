@@ -1772,4 +1772,7 @@
     <Media Include="Examples\Assets\Models\sphere.obj" />
     <Media Include="Examples\Assets\Models\sponza\sponza.obj" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Examples\Assets\Models\nekogun.obj" />
+  </ItemGroup>
 </Project>

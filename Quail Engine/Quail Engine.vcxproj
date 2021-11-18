@@ -638,6 +638,11 @@
       <FileType>Document</FileType>
     </Media>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Examples\Assets\Models\nekogun.obj">
+      <FileType>Document</FileType>
+    </Text>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

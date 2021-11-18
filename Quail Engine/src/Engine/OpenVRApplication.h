@@ -25,6 +25,7 @@ public:
 	std::string serialNumber;
 	glm::mat4 GetPose() const { return transformation_matrix; }
 	Transform transform;
+	bool isButtonPressed(vr::EVRButtonId button);
 private:
 	VRDevice(int id, VRDeviceType type, std::string name, std::string serialNumber) : id(id), deviceType(type), name(name), serialNumber(serialNumber) {}
 	glm::mat4 transformation_matrix;
@@ -61,15 +62,16 @@ public:
 	static glm::mat4 rightHeadtoEyeMatrix;
 
 	static Transform playSpace;
-
 private:
+	static vr::IVRSystem* m_instance;
+	static std::vector<VRDevice> m_devices;
 	static void HandleInitError(vr::EVRInitError err);
 	static std::string GetTrackedDeviceString(vr::IVRSystem* pHmd, vr::TrackedDeviceIndex_t unDevice, vr::TrackedDeviceProperty prop, vr::TrackedPropertyError* peError = NULL);
 	
 
 	static unsigned int m_width, m_height;
-	static vr::IVRSystem* m_instance;
-	static std::vector<VRDevice> m_devices;
 	static vr::TrackedDevicePose_t poses[vr::k_unMaxTrackedDeviceCount];
+
+	friend class VRDevice;
 };
 

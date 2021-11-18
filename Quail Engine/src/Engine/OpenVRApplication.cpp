@@ -225,3 +225,14 @@ Transform OpenVRApplication::playSpace;
 
 vr::TrackedDevicePose_t OpenVRApplication::poses[vr::k_unMaxTrackedDeviceCount];
 
+bool VRDevice::isButtonPressed(vr::EVRButtonId button)
+{
+	vr::VRControllerState_t controller_state;
+	OpenVRApplication::m_instance->GetControllerState(id, &controller_state, sizeof(vr::VRControllerState_t));
+	if ((vr::ButtonMaskFromId(button) & controller_state.ulButtonPressed)) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}

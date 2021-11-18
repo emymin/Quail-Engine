@@ -48,14 +48,14 @@ void OpenVRRenderer::Draw(const Scene* scene) const
 	m_leftEyeBuffer->Bind();
 	Clear();
 	if (scene->skybox) {
-		_DrawSkybox(scene->skybox, scene->camera->GetPosition(), leftVP*skyBoxPose);
+	//	_DrawSkybox(scene->skybox, scene->camera->GetPosition(), leftVP*skyBoxPose);
 	}
 	_DrawScene(scene, leftVP*headsetPose);
 
 	m_rightEyeBuffer->Bind();
 	Clear();
 	if (scene->skybox) {
-		_DrawSkybox(scene->skybox, scene->camera->GetPosition(), rightVP*skyBoxPose);
+	//	_DrawSkybox(scene->skybox, scene->camera->GetPosition(), rightVP*skyBoxPose);
 	}
 	_DrawScene(scene, rightVP*headsetPose);
 	m_rightEyeBuffer->Unbind();
