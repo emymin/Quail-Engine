@@ -7,5 +7,3 @@ It features:
 - A material system with dynamic material properties
 - Standard shader with diffuse and specular lighting
 - OpenVR support
-
-This is meant to be more of a learning project than a practical engine to make games in

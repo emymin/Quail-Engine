@@ -1,0 +1,40 @@
+{
+    "name": "quailengine",
+    "version": "0.1.0",
+    "dependencies": [
+    {
+          "name":"glfw3",
+          "platform": "(windows & x64)"
+    },
+    {
+        "name":"glad",
+        "platform": "(windows & x64)"
+    },
+    {
+        "name":"glm",
+        "platform": "(windows & x64)"
+    },
+    {
+        "name":"stb",
+        "platform": "(windows & x64)"
+    },
+    {
+        "name":"fmt",
+        "platform": "(windows & x64)"
+    },
+    {
+        "name":"openvr",
+        "platform": "(windows & x64)"
+    },
+    {
+        "name":"tinyobjloader",
+        "platform": "(windows & x64)"
+    },
+    {
+        "name": "imgui",
+        "platform": "(windows & x64)",
+        "features": ["glfw-binding", "opengl3-binding"]
+    }
+    ]
+  }
+  

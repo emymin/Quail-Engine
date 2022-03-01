@@ -361,5 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
 Quail Engine/imgui.ini
 Quail Engine/src/imgui.ini
+build
+CMakePresets.json
+.vscode

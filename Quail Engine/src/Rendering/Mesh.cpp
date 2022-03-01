@@ -4,7 +4,7 @@
 #define TINYOBJLOADER_IMPLEMENTATION
 
 #ifdef TINYOBJLOADER_IMPLEMENTATION
-#include <tiny_obj_loader/tiny_obj_loader.h>
+#include <tiny_obj_loader.h>
 #else
 #include <OBJ_Loader.h>
 #endif

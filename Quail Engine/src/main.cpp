@@ -5,7 +5,7 @@
 #include "../Examples/VRDemo/VRDemo.h" //3
 #include "EngineUI.h"
 
-#define DEMO 3
+#define DEMO 1
 
 int main() {
 

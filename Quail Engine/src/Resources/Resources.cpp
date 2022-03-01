@@ -7,25 +7,25 @@
 void Resources::Initialize()
 {
 	const std::string basicFragment =
-#include "Resources/Shaders/basicFragment.glsl"
+#include <Shaders/basicFragment.glsl>
 		;
 	const std::string basicVertex =
-#include "Resources/Shaders/basicVertex.glsl"
+#include <Shaders/basicVertex.glsl>
 		;
 	const std::string standardFragment =
-#include "Resources/Shaders/standardFragment.glsl"
+#include <Shaders/standardFragment.glsl>
 		;
 	const std::string skyboxVertex =
-#include "Resources/Shaders/skyboxVertex.glsl"
+#include <Shaders/skyboxVertex.glsl>
 		;
 	const std::string skyboxFragment =
-#include "Resources/Shaders/skyboxFragment.glsl"
+#include <Shaders/skyboxFragment.glsl>
 		;
 	const std::string screenVertex =
-#include "Resources/Shaders/screenVert.glsl"
+#include <Shaders/screenVert.glsl>
 		;
 	const std::string screenFragment =
-#include "Resources/Shaders/screenFrag.glsl"
+#include <Shaders/screenFrag.glsl>
 		;
 	
 	Shader::BasicShader = Shader(basicFragment, basicVertex);
